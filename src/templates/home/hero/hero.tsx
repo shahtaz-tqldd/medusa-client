@@ -1,14 +1,18 @@
-import HeroText from "@/components/custom-ui/hero-text";
-import HeroModel from "@/components/custom-ui/model-viewer";
-import Link from "next/link";
 import React from "react";
-import { Dot } from "lucide-react";
-import Image from "next/image";
+import Link from "next/link";
 
-const Hero = () => {
+// components
+import HeroText from "@/components/text/hero-text";
+import HeroEve from "@/components/3d-models/hero-eve";
+
+// icons
+import { Dot } from "lucide-react";
+
+const Hero : React.FC = () => {
   return (
     <section className="h-screen w-screen center">
       <div className="container flbx relative">
+        
         <div className="mt-20">
           <HeroText className="max-w-2xl text-4xl">
             Hey, this is Shahtaz. I am a software developer by passion, and a
@@ -24,24 +28,15 @@ const Hero = () => {
             <span className=" opacity-75">by the way</span>
           </p>
           <div className="mt-32 flex items-center gap-2 text-sm">
-            <h2>React</h2>
+            <h2 className="opacity-80 font-medium">React</h2>
             <Dot />
-            <h2>Node JS</h2>
+            <h2 className="opacity-80 font-medium">Node JS</h2>
             <Dot />
-            <h2>Django</h2>
+            <h2 className="opacity-80 font-medium">Python & Django</h2>
           </div>
         </div>
 
-        <HeroModel />
-        <div className="absolute -right-28 -top-36 z-0">
-          <Image
-            src="/elipse_1.svg"
-            height={800}
-            width={800}
-            alt="bg"
-            className=""
-          />
-        </div>
+        <HeroEve />
       </div>
     </section>
   );

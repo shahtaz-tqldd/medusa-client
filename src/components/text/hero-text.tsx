@@ -1,14 +1,19 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const HeroText = ({ children, className }) => {
-  const [isVisible, setIsVisible] = useState(false);
+interface HeroTextProps {
+  children: string;
+  className?: string;
+}
+
+const HeroText: React.FC<HeroTextProps> = ({ children, className }) => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  const words = children?.split(" ");
+  const words = children?.split(" ") ?? [];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -39,7 +44,7 @@ const HeroText = ({ children, className }) => {
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}
     >
-      {words.map((word, index) => (
+      {words.map((word: string, index: number) => (
         <motion.span
           key={index}
           variants={wordVariants}

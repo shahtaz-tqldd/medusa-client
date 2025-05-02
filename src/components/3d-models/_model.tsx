@@ -1,5 +1,5 @@
-import { useEffect, useRef, Suspense } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
+import { useEffect, useRef, Suspense, Component, ReactNode } from "react";
+import { Canvas } from "@react-three/fiber";
 import {
   useGLTF,
   OrbitControls,
@@ -9,13 +9,22 @@ import {
   Html,
 } from "@react-three/drei";
 import dynamic from "next/dynamic";
-import { Component } from "react";
+import LordIcon from "@/assets/icons/lord-icon";
+
 
 // Error Boundary
-class ErrorBoundary extends Component {
-  state = { hasError: false };
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
 
-  static getDerivedStateFromError(error) {
+interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  state: ErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(_: Error): ErrorBoundaryState {
     return { hasError: true };
   }
 
@@ -32,8 +41,12 @@ class ErrorBoundary extends Component {
 }
 
 // Model Component
-function Model({ url }) {
-  const groupRef = useRef();
+interface ModelProps {
+  url: string;
+}
+
+function Model({ url }: ModelProps) {
+  const groupRef = useRef(null);
   const { scene, animations = [] } = useGLTF(url);
   const { actions = {} } = useAnimations(animations, groupRef);
 
@@ -62,16 +75,7 @@ function Model({ url }) {
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="red" />
         <Html position={[0, 1.5, 0]} center>
-          <div
-            style={{
-              color: "white",
-              background: "rgba(0,0,0,0.7)",
-              padding: "10px",
-              borderRadius: "5px",
-            }}
-          >
-            Error loading model
-          </div>
+          Error loading model
         </Html>
       </mesh>
     );
@@ -85,13 +89,17 @@ function Model({ url }) {
 }
 
 // ModelViewer Component
-function ModelViewer({ modelPath }) {
-  const containerRef = useRef();
+interface ModelViewerProps {
+  modelPath: string;
+}
+
+function ModelViewer({ modelPath }: ModelViewerProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   return (
     <div
       ref={containerRef}
-      style={{ width: "100%", height: "500px", position: "relative" }}
-      onContextMenu={(e) => e.preventDefault()}
+      style={{ width: "100%", height: "100%", position: "relative" }}
+      onContextMenu={(e: React.MouseEvent) => e.preventDefault()}
     >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50, near: 0.1, far: 1000 }}
@@ -104,23 +112,13 @@ function ModelViewer({ modelPath }) {
         <Suspense
           fallback={
             <Html center>
-              <div
-                style={{
-                  color: "white",
-                  background: "rgba(0,0,0,0.7)",
-                  padding: "10px",
-                  borderRadius: "5px",
-                }}
-              >
-                Loading model...
-              </div>
+              <LordIcon icon="pxwxddbb" height={60} width={60} trigger="in-reveal" />
             </Html>
           }
         >
           <Center>
             <Model url={modelPath} />
           </Center>
-
           <Environment preset="dawn" />
         </Suspense>
         <OrbitControls
@@ -139,25 +137,11 @@ function ModelViewer({ modelPath }) {
 }
 
 // Dynamic Import
-const DynamicModelViewer = dynamic(() => Promise.resolve(ModelViewer), {
+export const DynamicModelViewer = dynamic(() => Promise.resolve(ModelViewer), {
   ssr: false,
   loading: () => (
-    <div className="w-full flex items-center justify-center">
-      Initializing 3D viewer...
+    <div className="w-full h-full flex items-center justify-center">
+      <LordIcon icon="pxwxddbb" height={60} width={60} trigger="in-reveal" />
     </div>
   ),
 });
-
-// Usage
-const isBrowser = typeof window !== "undefined";
-export default function HeroModel() {
-  return (
-    <div className="w-2/5 relative z-10">
-      {isBrowser && (
-        <ErrorBoundary>
-          <DynamicModelViewer modelPath="/robot.glb" />
-        </ErrorBoundary>
-      )}
-    </div>
-  );
-}

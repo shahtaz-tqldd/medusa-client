@@ -2,12 +2,18 @@
 
 import { useEffect, useRef } from "react";
 
-const LordIcon = () => {
+interface LordIconProps {
+  icon: string;
+  height?: number;
+  width?: number;
+  trigger?: string;
+}
+
+const LordIcon: React.FC<LordIconProps> = ({ icon = "", height = 60, width = 60, trigger = "hover" }) => {
   const iconRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.customElements) {
-      // Ensure lord-icon is registered
       if (!customElements.get("lord-icon")) {
         import("https://cdn.lordicon.com/lordicon.js");
       }
@@ -17,10 +23,10 @@ const LordIcon = () => {
   return (
     <lord-icon
       ref={iconRef}
-      src="https://cdn.lordicon.com/ggmzvoah.json"
-      trigger="loop"
+      src={`https://cdn.lordicon.com/${icon}.json`}
+      trigger={trigger}
       colors="primary:#9cf4a7,secondary:#30c9e8"
-      style={{ width: "180px", height: "180px" }}
+      style={{ width: `${width}px`, height: `${height}px` }}
     />
   );
 };
