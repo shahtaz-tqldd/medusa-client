@@ -8,7 +8,7 @@ export const HEADER_LINKS = [
   },
   {
     title: "Articles",
-    link: "/",
+    link: "/blogs",
     icon: CodeXml,
   },
   {

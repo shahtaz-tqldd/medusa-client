@@ -5,7 +5,7 @@ import { WORK_EXPERIENCES } from "./data";
 const Experiences = () => {
   return (
     <section className="container pb-32">
-      <HeroText className="text-4xl">Professional Experiences</HeroText>
+      <HeroText className="text-4xl">Work Experiences</HeroText>
       <div className="mt-12 grid grid-cols-2 gap-8">
         {WORK_EXPERIENCES?.map((item, index) => (
           <div
