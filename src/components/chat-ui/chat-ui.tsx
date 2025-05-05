@@ -26,7 +26,7 @@ const ChatUi: React.FC = () => {
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="dark:bg-[#121212]/50 bg-violet-600/5 backdrop-blur-2xl h-[620px] w-[400px] mr-10 -mb-12 border dark:border-white/20 border-emerald-600/10 rounded-2xl px-5 py-4 flex flex-col">
+        <DropdownMenuContent className="dark:bg-[#121212]/50 bg-violet-600/5 backdrop-blur-2xl h-[620px] w-[400px] mr-10 -mb-14 border dark:border-white/20 border-emerald-600/10 rounded-2xl px-5 py-4 flex flex-col">
           <ChatHeader setIsOpen={setIsOpen}/>
           <InitialUI/>
           <ChatInputBox message={message} setMessage={setMessage}/>

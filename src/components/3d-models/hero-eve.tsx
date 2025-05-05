@@ -5,10 +5,10 @@ const HeroEve: React.FC = () => {
     const isBrowser = typeof window !== "undefined";
     return (
         <div className="w-2/5 h-full relative">
-            <div className="relative z-10 h-[500px] w-full">
+            <div className="relative z-[1] h-[500px] w-full pointer-events-none">
                 {isBrowser && (
                     <ErrorBoundary>
-                        <DynamicModelViewer modelPath="/robot.glb" />
+                        <DynamicModelViewer modelPath="/robot2.glb" />
                     </ErrorBoundary>
                 )}
             </div>

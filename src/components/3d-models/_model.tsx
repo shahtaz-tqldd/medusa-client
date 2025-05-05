@@ -67,7 +67,7 @@ function Model({ url }: ModelProps) {
         });
       }
     };
-  }, [actions]);
+  }, []);
 
   if (!scene) {
     return (
@@ -83,7 +83,7 @@ function Model({ url }: ModelProps) {
 
   return (
     <group ref={groupRef}>
-      <primitive object={scene} scale={1} position={[0, 0, 0]} dispose={null} />
+      <primitive object={scene} scale={4.5} position={[0, 0, 0]} dispose={null} />
     </group>
   );
 }
@@ -130,6 +130,7 @@ function ModelViewer({ modelPath }: ModelViewerProps) {
           minPolarAngle={0}
           maxPolarAngle={Math.PI}
           makeDefault
+          zoom0={100}
         />
       </Canvas>
     </div>

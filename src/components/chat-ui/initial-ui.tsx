@@ -42,7 +42,7 @@ export const ChatInputBox: React.FC <MessageInputInterface>  = ({ message, setMe
   return (
     <div>
       <textarea
-        className="py-2 px-4 rounded-full border border-white/40 w-full outline-none h-full min-h-[40px] max-h-[144px] resize-none"
+        className="py-2 px-4 rounded-full border border-white/40 w-full outline-none h-[42px] resize-none"
         placeholder="Write your message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}

@@ -16,15 +16,15 @@ const ThemeToggle: React.FC = () => {
 
   return (
     <button
-      className="hover:bg-violet-600/5 dark:hover:bg-white/10 p-2 text-orange-500 rounded-full tr"
+      className="hover:bg-violet-600/5 dark:hover:bg-white/10 p-2 rounded-full tr"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       {theme === "dark" ? (
-        <div className="flx">
+        <div className="flx text-orange-300">
           <Sun className="h-5 w-5" />
         </div>
       ) : (
-        <div className="flx text-violet-800">
+        <div className="flx text-nui">
           <Moon className="h-5 w-5" />
         </div>
       )}

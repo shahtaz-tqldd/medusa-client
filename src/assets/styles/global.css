@@ -5,34 +5,53 @@
 :root,
 html.light {
   --primary: #2563eb;
-  --secondary: #6b7280; 
-  --accent: #22c55e; 
-  --threat: #ef4444; 
-  --background: #f6f1ff; 
-  --foreground: #171717; 
+  --secondary: #6b7280;
+  --accent: #22c55e;
+  --threat: #ef4444;
+  --background: #f6f1ff;
+  --foreground: #171717;
+  --nui: #1a2417;
 }
 
 html.dark {
   --primary: #60a5fa;
-  --secondary: #9ca3af; 
-  --accent: #4ade80; 
-  --threat: #f87171; 
-  --background: #151b1d; 
-  --foreground: #ededed; 
+  --secondary: #9ca3af;
+  --accent: #4ade80;
+  --threat: #f87171;
+  --background: #151b1d;
+  --foreground: #ededed;
+  --nui: #f7fdff;
 }
 
-.bg-bg{
-  background-color: var(--background);
+.elo-nui {
+  background-color: var(--nui);
+  color: var(--background);
 }
-
+.text-nui {
+  color: var(--nui);
+}
+.bg-nui {
+  background-color: var(--nui);
+}
 
 body {
   overflow-x: hidden;
   width: 100vw !important;
 }
 
-button, a{
+button,
+a {
   cursor: pointer;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 /* 

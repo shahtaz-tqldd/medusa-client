@@ -4,11 +4,12 @@ import { cn } from "@/lib/utils";
 
 interface ButtonProps {
   children: React.ReactNode;
-  icon: LucideIcon;
+  icon?: LucideIcon;
   className?: string;
-  variant?: "primary" | "secondary" | "accent" | "rubix";
+  variant?: "primary" | "secondary" | "accent" | "rubix" | "nemo";
   size?: "xs" | "sm" | "md";
   role?: "button" | "presentation" | "a";
+  onClick?: () => void;
 }
 
 const variantClasses = {
@@ -18,8 +19,8 @@ const variantClasses = {
     "bg-blue-600/5 text-blue-900 dark:bg-white/10 dark:text-white border-blue-600/15 dark:border-blue-600/30",
   accent:
     "bg-blue-600/5 text-blue-900 dark:bg-white/10 dark:text-white border-blue-600/15 dark:border-blue-600/30",
-  rubix:
-    "bg-violet-900 dark:bg-white text-white dark:text-violet-900",
+  rubix: "elo-nui",
+  nemo: "elo-nui",
 };
 
 const sizeClasses = {
@@ -33,20 +34,28 @@ const Button: React.FC<ButtonProps> = ({
   icon: Icon,
   className = "",
   variant = "primary",
-  size="sm",
-  role="button"
+  size = "sm",
+  ...props
 }) => {
+  const commonClasses = cn(
+    "rounded-full border flx gap-2",
+    variantClasses[variant],
+    sizeClasses[size],
+    className
+  );
+
+  if (props.role === "presentation") {
+    return (
+      <span className={commonClasses} {...props}>
+        {Icon && <Icon className="h-4 w-4" />}
+        {children}
+      </span>
+    );
+  }
+
   return (
-    <button
-      className={cn(
-        "rounded-full border flx gap-2",
-        variantClasses[variant],
-        sizeClasses[size],
-        className,
-      )}
-      role={role}
-    >
-      <Icon className="h-4 w-4" />
+    <button className={commonClasses} {...props}>
+      {Icon && <Icon className="h-4 w-4" />}
       {children}
     </button>
   );

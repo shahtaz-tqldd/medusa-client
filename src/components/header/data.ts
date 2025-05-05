@@ -1,4 +1,4 @@
-import { ChartNoAxesGantt, FileText, Github, Linkedin } from "lucide-react";
+import { ChartNoAxesGantt, CodeXml, FileText, Github, Linkedin, Text, User } from "lucide-react";
 
 export const HEADER_LINKS = [
   {
@@ -7,18 +7,13 @@ export const HEADER_LINKS = [
     icon: ChartNoAxesGantt,
   },
   {
+    title: "Articles",
+    link: "/",
+    icon: CodeXml,
+  },
+  {
     title: "Get Resume",
     link: "/",
-    icon: FileText,
-  },
-  {
-    title: "Github",
-    link: "/",
-    icon: Github,
-  },
-  {
-    title: "Linkedin",
-    link: "/",
-    icon: Linkedin,
+    icon: User,
   },
 ];

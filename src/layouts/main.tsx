@@ -1,4 +1,5 @@
 import ChatUi from "@/components/chat-ui/chat-ui";
+import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
 import React from "react";
 
@@ -11,6 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <React.Fragment>
       <Header />
       {children}
+      <Footer />
       <ChatUi />
     </React.Fragment>
   );

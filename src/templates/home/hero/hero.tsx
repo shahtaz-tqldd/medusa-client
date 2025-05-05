@@ -1,30 +1,44 @@
-import React from "react";
-import Link from "next/link";
+"use client";
+
+import React, { useState } from "react";
+import Image from "next/image";
 
 // components
 import HeroText from "@/components/text/hero-text";
 import HeroEve from "@/components/3d-models/hero-eve";
+import DevJourneyModal from "./dev-journey-modal";
 
 // icons
 import { Dot } from "lucide-react";
 
-const Hero : React.FC = () => {
+const Hero: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <section className="h-screen w-screen center">
       <div className="container flbx relative">
-        
         <div className="mt-20">
-          <HeroText className="max-w-2xl text-4xl">
+          <HeroText className="max-w-2xl text-4xl leading-[48px]">
             Hey, this is Shahtaz. I am a software developer by passion, and a
             full-metal alchemist by choice!
           </HeroText>
-          <p className="text-lg mt-8">
+          <p className="text-lg mt-8 relative">
             <span className=" opacity-75">
               Feel free to read my developer journey
             </span>{" "}
-            <Link href={"/"} className="text-violet-900 dark:text-orange-500">
+            <button
+              onClick={() => setIsOpen(true)}
+              className="text-orange-600 dark:text-orange-300"
+            >
               from here
-            </Link>{" "}
+              <Image
+                src="/elipse_3.svg"
+                width={160}
+                height={160}
+                className="absolute -top-16 left-68 opacity-50"
+                alt=""
+              ></Image>
+            </button>{" "}
             <span className=" opacity-75">by the way</span>
           </p>
           <div className="mt-32 flex items-center gap-2 text-sm">
@@ -38,6 +52,7 @@ const Hero : React.FC = () => {
 
         <HeroEve />
       </div>
+      <DevJourneyModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </section>
   );
 };
