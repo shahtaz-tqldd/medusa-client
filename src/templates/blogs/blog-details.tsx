@@ -22,14 +22,14 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
   ];
   return (
     <section className="container flex gap-10 py-20 mt-8">
-      <div className="lg:w-[2/3] w-full">
+      <div className="lg:w-2/3">
         <p className={`py-1 px-3 rounded-full text-xs w-fit ${colors[0]}`}>
           {topic}
         </p>
         <h2 className="text-4xl font-medium mt-2">{title}</h2>
         <p className="opacity-75 mt-5">{body}</p>
       </div>
-      <div className="lg:w[1/3] flex flex-col gap-10 sticky top-20 mt-5">
+      <div className="lg:w-1/3 flex flex-col gap-10 sticky top-20 mt-5">
         {BLOGS.filter((b) => slugify(b.title) !== name)?.map((data, index) => (
           <Link key={index} href={`/blogs/${slugify(data?.title)}`}>
             <div className="flx gap-4 text-sm">
