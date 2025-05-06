@@ -19,16 +19,15 @@ const HadronModal: React.FC<HadronModalProps> = ({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsOpen(false);
     };
-
     if (isOpen) {
-      document.body.style.overflowY = "hidden";
+      document.documentElement.classList.add("hadron-modal-open");
       window.addEventListener("keydown", handleKeyDown);
     } else {
       const timeout = setTimeout(() => {
-        document.body.style.overflowY = "auto";
-      }, 700);
+        document.documentElement.classList.remove("hadron-modal-open");
+      }, 500);
 
-      return () => clearTimeout(timeout); // cancel timeout if component unmounts early
+      return () => clearTimeout(timeout);
     }
 
     return () => {
@@ -39,6 +38,8 @@ const HadronModal: React.FC<HadronModalProps> = ({
   const handleCloseModal = () => {
     setIsOpen(false);
   };
+
+  const opacities = [30, 40, 50, 60, 70, 60, 50, 40, 30];
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden pointer-events-none">
@@ -60,17 +61,13 @@ const HadronModal: React.FC<HadronModalProps> = ({
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: "-100%", opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="absolute inset-0 bg-yellow-400 pointer-events-none center flex-col gap-4 text-7xl overflow-hidden"
+              className="absolute inset-0 bg-yellow-400 pointer-events-none center flex-col gap-4 text-7xl overflow-hidden uppercase"
             >
-              <h2 className="opacity-30">I BET YOU ARE A GOOD SOUL</h2>
-              <h2 className="opacity-40">I BET YOU ARE A GOOD SOUL</h2>
-              <h2 className="opacity-50">I BET YOU ARE A GOOD SOUL</h2>
-              <h2 className="opacity-60">I BET YOU ARE A GOOD SOUL</h2>
-              <h2 className="opacity-70">I BET YOU ARE A GOOD SOUL</h2>
-              <h2 className="opacity-60">I BET YOU ARE A GOOD SOUL</h2>
-              <h2 className="opacity-50">I BET YOU ARE A GOOD SOUL</h2>
-              <h2 className="opacity-40">I BET YOU ARE A GOOD SOUL</h2>
-              <h2 className="opacity-30">I BET YOU ARE A GOOD SOUL</h2>
+              {opacities.map((opacity, index) => (
+                <h2 key={index} className={`opacity-${opacity}`}>
+                  hope you are doing good
+                </h2>
+              ))}
             </motion.div>
 
             {/* Final Content Slide */}

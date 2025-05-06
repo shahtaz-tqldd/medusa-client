@@ -24,9 +24,9 @@ const variantClasses = {
 };
 
 const sizeClasses = {
-  xs: "pb-1.5 pt-2 pr-3 pl-2.5 text-xs",
-  sm: "pt-2.5 pb-2 pr-4 pl-3.5 text-sm",
-  md: "pt-3 pb-2.5 pr-5 pl-4",
+  xs: "py-1.5 pr-3 pl-2.5 text-xs",
+  sm: "py-2 pr-4 pl-3.5 text-sm",
+  md: "py-3 pr-5 pl-4",
 };
 
 const Button: React.FC<ButtonProps> = ({

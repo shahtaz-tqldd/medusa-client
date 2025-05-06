@@ -5,7 +5,6 @@ import HeroText from "@/components/text/hero-text";
 import { WORK_EXPERIENCES } from "./data";
 import ExperienceModal from "./experience-modal";
 import { ExperienceProps } from "./types";
-import LordIcon from "@/assets/icons/lord-icon";
 import SecondaryButton from "@/components/buttons/secondary-button";
 
 const Experiences = () => {
@@ -29,7 +28,7 @@ const Experiences = () => {
               {item.timeline}
             </p>
             <h2 className="text-xl mt-4 font-medium">{item.position}</h2>
-            <p className={`mt-2 text-sm uppercase ${item.companyColor}`}>{item.comapny}</p>
+            <p className={`mt-2 text-sm ${item.companyColor}`}>{item.comapny}</p>
             <p className="opacity-60 mt-4">{item.description}</p>
             
             <SecondaryButton onClick={()=>handleReadMore(item)} className="mt-6">

@@ -5,6 +5,13 @@ import { ThemeProvider } from "next-themes";
 import "@/assets/styles/global.css";
 import "@/assets/styles/layout.css";
 
+import { Figtree } from "next/font/google";
+
+const feetgree = Figtree({
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Shahtaz Rahman",
   description:
@@ -24,7 +31,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
         />
       </head>
-      <body cz-shortcut-listen="false">
+      <body className={feetgree.className} cz-shortcut-listen="false">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
         </ThemeProvider>

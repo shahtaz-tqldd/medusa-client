@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import HadronModal from "@/components/modals/hadron-modal";
+import HadronModal from "@/components/ui/hadron-modal";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, CircleCheck, Dot } from "lucide-react";
 import type { Project } from "./types";

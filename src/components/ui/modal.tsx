@@ -49,10 +49,7 @@ export const ModalTrigger = ({
 }) => {
   const { setOpen } = useModal();
   return (
-    <button
-      className={cn(className)}
-      onClick={() => setOpen(true)}
-    >
+    <button className={cn(className)} onClick={() => setOpen(true)}>
       {children}
     </button>
   );
@@ -69,10 +66,21 @@ export const ModalBody = ({
 
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
+      document.documentElement.classList.add("hadron-modal-open");
     } else {
-      document.body.style.overflow = "auto";
+      const timeout = setTimeout(() => {
+        document.body.classList.remove("modal-open");
+        document.documentElement.classList.remove("hadron-modal-open");
+      }, 500);
+
+      return () => clearTimeout(timeout);
     }
+
+    return () => {
+      document.body.classList.remove("modal-open");
+      document.documentElement.classList.remove("hadron-modal-open");
+    };
   }, [open]);
 
   const modalRef = useRef(null);
@@ -88,20 +96,23 @@ export const ModalBody = ({
           }}
           animate={{
             opacity: 1,
-            backdropFilter: "blur(10px)",
           }}
           exit={{
             opacity: 0,
-            backdropFilter: "blur(0px)",
           }}
-          className="fixed [transform-style:preserve-3d] inset-0 center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
+          style={{
+            perspective: "1200px",
+            width: "100%",
+            height: "100%",
+          }}
         >
           <Overlay />
 
           <motion.div
             ref={modalRef}
             className={cn(
-              "min-h-[50%] max-h-[90%] md:max-w-[600px] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden",
+              "min-h-[50%] max-h-[90%] w-[95%] md:max-w-[600px] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 md:rounded-2xl relative z-50 flex flex-col overflow-hidden",
               className
             )}
             initial={{
@@ -144,12 +155,11 @@ export const ModalContent = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("p-8", className)}>
+    <div className={cn("p-8 overflow-y-auto overflow-x-hidden", className)}>
       {children}
     </div>
   );
 };
-
 
 const Overlay = ({ className }: { className?: string }) => {
   return (
@@ -159,13 +169,14 @@ const Overlay = ({ className }: { className?: string }) => {
       }}
       animate={{
         opacity: 1,
-        backdropFilter: "blur(10px)",
       }}
       exit={{
         opacity: 0,
-        backdropFilter: "blur(0px)",
       }}
-      className={`fixed inset-0 bg-black/50 z-50 ${className}`}
+      className={cn(
+        "fixed inset-0 bg-black/75 backdrop-blur-sm z-40",
+        className
+      )}
     ></motion.div>
   );
 };
@@ -177,13 +188,12 @@ const CloseIcon = () => {
       onClick={() => setOpen(false)}
       className="absolute top-4 right-4 group"
     >
-     <X size={20}/>
+      <X size={20} />
     </button>
   );
 };
 
 // Hook to detect clicks outside of a component.
-// Add it in a separate file, I've added here for simplicity
 export const useOutsideClick = (
   ref: React.RefObject<HTMLDivElement | null>,
   callback: Function

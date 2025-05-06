@@ -42,9 +42,24 @@ html.dark {
   background-color: var(--nui);
 }
 
-html{
+html, body {
   overflow-x: hidden;
-  width: 100vw !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Set box-sizing globally */
+* {
+  box-sizing: border-box;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+html.hadron-modal-open {
+  overflow-y: hidden;
 }
 
 button,

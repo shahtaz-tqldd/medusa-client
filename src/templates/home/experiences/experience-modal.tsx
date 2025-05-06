@@ -1,5 +1,5 @@
 import React from "react";
-import HadronModal from "@/components/modals/hadron-modal";
+import HadronModal from "@/components/ui/hadron-modal";
 import { ExperienceProps } from "./types";
 
 interface ExperienceModalProps {
