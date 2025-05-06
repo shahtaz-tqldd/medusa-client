@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, CircleCheck, Dot } from "lucide-react";
 import type { Project } from "./types";
 import { projects } from "./data";
 import type { MetaProps } from "./types";
+import { colors } from "@/lib/colors";
 
 interface ProjectModalProps {
   meta: MetaProps;
@@ -32,7 +33,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   // Avoid rendering modal content if project is not loaded
   if (!project) return null;
 
-  const { name, description, img, screens, featureList, techs } = project;
+  const { name, description, img, screens, featureList, techs, projectType } = project;
 
   const handleNext = () => {
     const nextId =
@@ -66,10 +67,19 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
     }
   };
 
+  const getColors = (pt : string)=>{
+    return colors[pt.toLocaleLowerCase()==="software"? 1 : 2]
+  }
+
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
       <div className="space-y-5 max-w-4xl mx-auto py-12">
-        <h2 className="text-4xl">{name}</h2>
+        <p
+          className={`pt-2 pb-1.5 px-4 rounded-full text-sm w-fit ${getColors(projectType)}`}
+        >
+          {projectType}
+        </p>
+        <h2 className="text-4xl leading-[48px]">{name}</h2>
         <p className="opacity-75 leading-relaxed">{description}</p>
         <div className="grid grid-cols-2 gap-6">
           <Image

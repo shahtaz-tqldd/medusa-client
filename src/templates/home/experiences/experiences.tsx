@@ -1,8 +1,20 @@
-import React from "react";
+"use client"
+
+import React, { useState } from "react";
 import HeroText from "@/components/text/hero-text";
 import { WORK_EXPERIENCES } from "./data";
+import ExperienceModal from "./experience-modal";
+import { ExperienceProps } from "./types";
+import LordIcon from "@/assets/icons/lord-icon";
 
 const Experiences = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [expData, setExpData] = useState<ExperienceProps| null>(null)
+
+  const handleReadMore =(data:ExperienceProps)=>{
+    setIsOpen(true)
+    setExpData(data)
+  }
   return (
     <section className="container pb-32">
       <HeroText className="text-4xl">Work Experiences</HeroText>
@@ -16,11 +28,20 @@ const Experiences = () => {
               {item.timeline}
             </p>
             <h2 className="text-xl mt-4 font-medium">{item.position}</h2>
-            <p className="opacity-75 mt-2 text-sm">{item.comapny}</p>
+            <p className={`mt-2 text-sm uppercase ${item.companyColor}`}>{item.comapny}</p>
             <p className="opacity-60 mt-4">{item.description}</p>
+
+            <button onClick={()=>handleReadMore(item)} className="flx gap-2 mt-6">
+              <span>Read More</span>
+              <LordIcon icon="ircnfpus" height={18} width={18} primary="#fff" target="button"/>
+            </button>
+
           </div>
+
         ))}
       </div>
+
+      <ExperienceModal data={expData} isOpen={isOpen} setIsOpen={setIsOpen}/>
     </section>
   );
 };

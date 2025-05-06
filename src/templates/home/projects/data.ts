@@ -9,6 +9,21 @@ import ecom4 from "@/assets/images/ecom4.png";
 import genomart from "@/assets/images/genomart.png";
 import algostar from "@/assets/images/algostar.png";
 
+export const projectTabs = [
+  {
+    title: "All Projects",
+    value: "all-projects"
+  },
+  {
+    title: "Web App",
+    value: "web-app",
+  },
+  {
+    title: "Software",
+    value: "software",
+  },
+];
+
 export const projects = [
   {
     id: "1",
@@ -17,7 +32,7 @@ export const projects = [
       "Dzul Nutra is a pharmaceutical manufacturer company, it manufactures quality customizable vitamins, supplements, and nutraceuticals for other brands.",
     tags: ["Landing Page", "Ecommerce", "Service Selling"],
     img: ecom1,
-    projectType: "Company Website",
+    projectType: "Web App",
     techs: [
       "React JS",
       "Tailwind CSS",
@@ -52,7 +67,7 @@ export const projects = [
       "GenoMart is a comprehensive e-commerce platform that integrates customer relationship management (CRM) to streamline both product sales and customer interactions.",
     tags: ["Ecommerce", "CRM", "Single Vendor"],
     img: ecom2,
-    projectType: "Ecommerce",
+    projectType: "Software",
     techs: [
       "React JS",
       "Tailwind CSS",
@@ -98,7 +113,7 @@ export const projects = [
       email: "shahtaz67@gmail.com",
       password: "tesT@1234",
     },
-    projectType: "Trading Platform",
+    projectType: "Software",
     techs: [
       "React JS",
       "Redux",
@@ -142,7 +157,7 @@ export const projects = [
       "Data Visualization",
     ],
     img: ecom4,
-    projectType: "Courier Website",
+    projectType: "Software",
     techs: [
       "React JS",
       "TypeScript",
@@ -179,7 +194,7 @@ export const projects = [
       "Algostar is a web development agancey specialized in building CRM, ERP and SaaS. They provide you web design and development solutions.",
     tags: ["Landing Page", "Portfolio", "Company Website"],
     img: ecom3,
-    projectType: "Portfolio Website",
+    projectType: "Web App",
     techs: [
       "Next JS",
       "TypeScript",

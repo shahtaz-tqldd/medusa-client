@@ -1,16 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
+
+// components
 import HeroText from "@/components/text/hero-text";
 import ProjectCard from "./project-card";
-import { projects } from "./data";
 import ProjectModal from "./project-modal";
-import type { MetaProps } from "./types";
+import { Tabs } from "@/components/ui/tabs";
 
-const tabs = ["All Projects", "Web App", "Software", "Backend Project"];
+// types
+import type { MetaProps } from "./types";
+import type { Tab } from "@/assets/types/tabs";
+
+// data
+import { projects, projectTabs } from "./data";
 
 const ProjectList = () => {
-  const [activeTab, setActiveTab] = useState("All Projects");
+  const [active, setActive] = useState<Tab>(projectTabs[0]);
   const [meta, setMeta] = useState<MetaProps | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,18 +39,8 @@ const ProjectList = () => {
     <section className="container pb-32">
       <div className="flbx">
         <HeroText className="text-4xl">Project List</HeroText>
-        <div className="flex">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-5 py-2 rounded-full text-sm transition-all-600
-                ${activeTab === tab ? "elo-nui" : ""}
-              `}
-            >
-              {tab}
-            </button>
-          ))}
+        <div className="relative">
+          <Tabs tabs={projectTabs} active={active} setActive={setActive} />
         </div>
       </div>
       <div className="grid grid-cols-3 gap-x-8 gap-y-12 mt-12">

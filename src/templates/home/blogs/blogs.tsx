@@ -12,7 +12,7 @@ const Blogs = () => {
         <HeroText className="text-4xl">Blogs & Articles</HeroText>
         <Link href={'/blogs'} className="flx gap-2 text-orange-300">
           Explore More
-          <LordIcon icon="ircnfpus" height={24} width={24} primary="#ffb86a" target="button"/>
+          <LordIcon icon="ircnfpus" height={24} width={24} primary="#ffb86a" target="a"/>
         </Link>
       </div>
       <div className="mt-12 grid grid-cols-3 gap-8">

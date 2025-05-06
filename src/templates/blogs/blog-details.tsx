@@ -1,8 +1,10 @@
 import React from "react";
-import { BLOGS } from "./demo-data";
-import { slugify } from "@/lib/slugify";
-import { Dot } from "lucide-react";
 import Link from "next/link";
+
+import { BLOGS } from "./demo-data";
+
+import { slugify } from "@/lib/slugify";
+import { colors } from "@/lib/colors";
 
 type Props = {
   name: string;
@@ -15,11 +17,6 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
 
   const { img, title, body, published, topic } = blog;
 
-  const colors = [
-    "bg-blue-500/15 dar:bg-blue-500/30 text-blue-500",
-    "bg-green-500/15 dar:bg-green-500/30 text-green-500",
-    "bg-yellow-500/15 dar:bg-yellow-500/30 text-yellow-500",
-  ];
   return (
     <section className="container flex gap-10 py-20 mt-8">
       <div className="lg:w-2/3">

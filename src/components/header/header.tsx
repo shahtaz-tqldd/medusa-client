@@ -14,13 +14,13 @@ const Header: React.FC = () => {
   const [isEmailDrawerOpen, setIsEmailDrawerOpen] = useState(false);
   return (
     <nav className="container flbx h-20 relative z-50 -mb-20">
-      <h2>_shahtaz</h2>
+      <Link href={'/'}>_shahtaz</Link>
       <div className="flx gap-10">
-        <div className="flx gap-8 text-sm">
+        <div className="flx gap-10 text-sm">
           {HEADER_LINKS?.map(({ title, link, icon: Icon }, index) => (
-            <Link key={index} href={link} className="flx gap-2">
-              <Icon className="h-4 w-4" />
-              {title}
+            <Link key={index} href={link} className="flx gap-2.5">
+              <Icon size={16} />
+              <span className="block mt-1">{title}</span>
             </Link>
           ))}
         </div>

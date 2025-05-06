@@ -1,19 +1,24 @@
-import { ChartNoAxesGantt, CodeXml, FileText, Github, Linkedin, Text, User } from "lucide-react";
+import { BlogIcon, GithubIcon, ProjectIcon, ResumeIcon } from "@/assets/icons/icons";
 
 export const HEADER_LINKS = [
+  // {
+  //   title: "Projects",
+  //   link: "/",
+  //   icon: ProjectIcon,
+  // },
   {
-    title: "Project List",
-    link: "/",
-    icon: ChartNoAxesGantt,
+    title: "Blogs",
+    link: "/blogs",
+    icon: BlogIcon,
   },
   {
-    title: "Articles",
-    link: "/blogs",
-    icon: CodeXml,
+    title: "Github",
+    link: "/",
+    icon: GithubIcon,
   },
   {
     title: "Get Resume",
     link: "/",
-    icon: User,
+    icon: ResumeIcon,
   },
 ];
