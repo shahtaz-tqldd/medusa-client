@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
+import SecondaryButton from "@/components/buttons/secondary-button";
 
 interface FeatureCardProps {
     data: {
@@ -11,6 +12,9 @@ interface FeatureCardProps {
   
 const FeatureCard: React.FC<FeatureCardProps> = ({ data }) => {
     const {title, text, icon: Icon } =data
+    const handleKnowDetails = (data)=>{
+        console.log(data)
+    }
     return (
         <div className="p-5 border border-dashed dark:border-white/10 border-violet-600/10 dark:bg-white/[0.01] bg-emerald-600/[0.02] rounded-2xl flex flex-col justify-between gap-8">
             <div>
@@ -20,10 +24,12 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ data }) => {
                 </div>
                 <p className="opacity-60">{text}</p>
             </div>
-            <div className="flx gap-2 text-sm">
-                <h2>Know Details</h2>
-                <ArrowRight className="h-4 w-4" />
-            </div>
+            <SecondaryButton 
+                onClick={()=>handleKnowDetails(data)} 
+                className=""
+            >
+              Know Details
+            </SecondaryButton>
         </div>
     );
 };

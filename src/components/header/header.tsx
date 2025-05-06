@@ -1,17 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 
-import Button from "@/components/buttons/primary-button";
 import ThemeToggle from "@/components/theme";
-import SendEmailDrawer from "./send-email";
+import EmailModal from "./email-modal";
 
-import { Mail } from "lucide-react";
 import { HEADER_LINKS } from "./data";
 
 const Header: React.FC = () => {
-  const [isEmailDrawerOpen, setIsEmailDrawerOpen] = useState(false);
   return (
     <nav className="container flbx h-20 relative z-50 -mb-20">
       <Link href={'/'}>_shahtaz</Link>
@@ -25,22 +22,10 @@ const Header: React.FC = () => {
           ))}
         </div>
         <div className="flx gap-2">
-          <Button
-            icon={Mail}
-            variant="rubix"
-            onClick={() => setIsEmailDrawerOpen(!isEmailDrawerOpen)}
-          >
-            Send Email
-          </Button>
+          <EmailModal/>
           <ThemeToggle />
         </div>
       </div>
-      {isEmailDrawerOpen && (
-        <SendEmailDrawer
-          isOpen={isEmailDrawerOpen}
-          setIsOpen={setIsEmailDrawerOpen}
-        />
-      )}
     </nav>
   );
 };

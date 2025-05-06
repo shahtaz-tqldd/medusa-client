@@ -6,6 +6,7 @@ import { WORK_EXPERIENCES } from "./data";
 import ExperienceModal from "./experience-modal";
 import { ExperienceProps } from "./types";
 import LordIcon from "@/assets/icons/lord-icon";
+import SecondaryButton from "@/components/buttons/secondary-button";
 
 const Experiences = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,12 +31,10 @@ const Experiences = () => {
             <h2 className="text-xl mt-4 font-medium">{item.position}</h2>
             <p className={`mt-2 text-sm uppercase ${item.companyColor}`}>{item.comapny}</p>
             <p className="opacity-60 mt-4">{item.description}</p>
-
-            <button onClick={()=>handleReadMore(item)} className="flx gap-2 mt-6">
-              <span>Read More</span>
-              <LordIcon icon="ircnfpus" height={18} width={18} primary="#fff" target="button"/>
-            </button>
-
+            
+            <SecondaryButton onClick={()=>handleReadMore(item)} className="mt-6">
+              Read More
+            </SecondaryButton>
           </div>
 
         ))}
