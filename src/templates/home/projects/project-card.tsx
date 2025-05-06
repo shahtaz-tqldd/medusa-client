@@ -17,16 +17,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data, handleSetProject }) => 
     <section>
       <Image src={img} className="h-72 object-cover rounded-2xl" alt={name} />
       <h2 className="text-sm mt-4 text-orange-300">{projectType}</h2>
-      <div className="flx gap-4">
+      <div className="flx gap-4 cursor-pointer" onClick={() => handleSetProject(id)}>
         <div className="flex-1">
-          <h2 className="text-xl mt-2">{name}</h2>
+          <h2 className="text-xl mt-2 opacity-90 hover:opacity-100 tr">{name}</h2>
         </div>
-        <button
-          onClick={() => handleSetProject(id)}
-          className="h-12 w-12 border border-white/10 hover:bg-white/5 tr rounded-full center mt-4 -rotate-45"
-        >
+        <span className="h-12 w-12 border border-white/10 hover:bg-white/5 tr rounded-full center mt-4 -rotate-45">
           <LordIcon icon="ircnfpus" height={28} width={28} primary="#ffb86a" />
-        </button>
+        </span>
       </div>
     </section>
   );

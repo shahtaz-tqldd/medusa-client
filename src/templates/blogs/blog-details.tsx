@@ -11,7 +11,7 @@ type Props = {
 const BlogDetailsPage: React.FC<Props> = ({ name }) => {
   const blog = BLOGS.find((b) => slugify(b.title) === name);
 
-  if (!blog) return <div>Blog not found</div>;
+  if (!blog) return <div className="container py-80 center">Blog not found</div>;
 
   const { img, title, body, published, topic } = blog;
 
