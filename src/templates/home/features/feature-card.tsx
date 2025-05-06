@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import SecondaryButton from "@/components/buttons/secondary-button";
+import { FeatureProps } from "./types";
 
 interface FeatureCardProps {
     data: {
@@ -12,7 +13,7 @@ interface FeatureCardProps {
   
 const FeatureCard: React.FC<FeatureCardProps> = ({ data }) => {
     const {title, text, icon: Icon } =data
-    const handleKnowDetails = (data)=>{
+    const handleKnowDetails = (data: FeatureProps)=>{
         console.log(data)
     }
     return (
