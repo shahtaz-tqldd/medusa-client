@@ -1,10 +1,11 @@
 import Layout from "@/layouts/main";
 import BlogDetailsPage from "@/templates/blogs/blog-details";
 
-export default function BlogDetails({ params }: { params: { name: string } }) {
+export default async function BlogDetails({ params }: { params: { name: string } }) {
+  const {name} = await params
   return (
     <Layout>
-      <BlogDetailsPage name={params?.name} />
+      <BlogDetailsPage name={name} />
     </Layout>
   );
 }

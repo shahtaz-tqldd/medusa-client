@@ -64,7 +64,7 @@ const SkillSearch: React.FC = () => {
   };
 
   return (
-    <div className="mt-12">
+    <div className="mt-20">
       <h2 className="opacity-75 mb-5">Looking for any particular skillset?</h2>
 
       <div className="flex w-full relative h-10">
