@@ -18,11 +18,11 @@ const Hero: React.FC = () => {
     <section className="h-screen w-screen center">
       <div className="container flbx relative">
         <div className="mt-20">
-          <HeroText className="max-w-2xl text-4xl leading-[48px]">
+          <HeroText className="max-w-2xl text-4xl leading-[48px] font-medium">
             Hey, this is Shahtaz. I am a software developer by passion, and a
             full-metal alchemist by choice!
           </HeroText>
-          <p className="text-lg mt-8 relative">
+          <p className="text-lg mt-12 relative">
             <span className=" opacity-75">
               Feel free to read my developer journey
             </span>{" "}

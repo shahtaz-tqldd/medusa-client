@@ -22,12 +22,12 @@ const Experiences = () => {
         {WORK_EXPERIENCES?.map((item, index) => (
           <div
             key={index}
-            className="border dark:border-white/20 dark:bg-white/[0.02] border-purple-500/20 border-dashed p-6 rounded-2xl"
+            className="border border-dashed dark:border-white/10 border-violet-600/10 dark:bg-white/[0.03] bg-emerald-600/[0.02] p-6 rounded-2xl"
           >
-            <p className="dark:text-orange-300 text-orange-500">
+            <p className="dark:text-orange-300 text-black/50">
               {item.timeline}
             </p>
-            <h2 className="text-xl mt-4 font-medium">{item.position}</h2>
+            <h2 className="text-xl mt-4 font-semibold dark:opacity-100 opacity-80">{item.position}</h2>
             <p className={`mt-2 text-sm ${item.companyColor}`}>{item.comapny}</p>
             <p className="opacity-60 mt-4">{item.description}</p>
             

@@ -39,7 +39,7 @@ const HadronModal: React.FC<HadronModalProps> = ({
     setIsOpen(false);
   };
 
-  const opacities = [30, 40, 50, 60, 70, 60, 50, 40, 30];
+  const opacities = ["text-white/5", "text-white/10", "text-white/15", "text-white/20", "text-white/15", "text-white/10", "text-white/5"];
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden pointer-events-none">
@@ -61,11 +61,11 @@ const HadronModal: React.FC<HadronModalProps> = ({
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: "-100%", opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="absolute inset-0 bg-yellow-400 pointer-events-none center flex-col gap-4 text-7xl overflow-hidden uppercase"
+              className="absolute inset-0 bg-[#ffb86a] pointer-events-none center flex-col gap-4 text-8xl text-nowrap overflow-hidden uppercase"
             >
               {opacities.map((opacity, index) => (
-                <h2 key={index} className={`opacity-${opacity}`}>
-                  hope you are doing good
+                <h2 key={index} className={opacity}>
+                  software development is fun
                 </h2>
               ))}
             </motion.div>
@@ -80,7 +80,7 @@ const HadronModal: React.FC<HadronModalProps> = ({
             >
               <button
                 onClick={handleCloseModal}
-                className="absolute top-10 right-10 text-white hover:text-red-400 transition"
+                className="absolute top-10 right-10 text-white hover:text-orange-500 tr"
               >
                 <X size={40} strokeWidth={1} />
               </button>

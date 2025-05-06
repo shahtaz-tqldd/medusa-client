@@ -37,7 +37,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
       />
       <Link href={`/blogs/${slugify(title)}`}>
         <p
-          className={`py-1 px-3 rounded-full text-xs w-fit mt-4 ${colors[index]}`}
+          className={`pt-1.5 pb-1 px-3 rounded-full text-xs w-fit mt-4 ${colors[index]}`}
         >
           {topic}
         </p>

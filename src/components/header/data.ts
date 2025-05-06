@@ -1,4 +1,9 @@
-import { BlogIcon, GithubIcon, ProjectIcon, ResumeIcon } from "@/assets/icons/icons";
+import {
+  BlogIcon,
+  GithubIcon,
+  ProjectIcon,
+  ResumeIcon,
+} from "@/assets/icons/icons";
 
 export const HEADER_LINKS = [
   // {
@@ -7,18 +12,21 @@ export const HEADER_LINKS = [
   //   icon: ProjectIcon,
   // },
   {
+    id: 0,
     title: "Blogs",
     link: "/blogs",
     icon: BlogIcon,
   },
   {
+    id: 1,
     title: "Github",
-    link: "/",
+    link: "https://github.com/shahtaz-tqldd/",
     icon: GithubIcon,
   },
   {
+    id: 1,
     title: "Get Resume",
-    link: "/",
+    link: "https://drive.google.com/file/d/1lV9dIwZU1Ede97Fao-GY1s3EjLPyjvO-/view?pli=1",
     icon: ResumeIcon,
   },
 ];

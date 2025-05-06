@@ -14,8 +14,13 @@ const Header: React.FC = () => {
       <Link href={"/"}>_shahtaz</Link>
       <div className="flx gap-10">
         <div className="flx gap-10 text-sm">
-          {HEADER_LINKS?.map(({ title, link, icon: Icon }, index) => (
-            <Link key={index} href={link} className="flx gap-2.5">
+          {HEADER_LINKS?.map(({ title, link, icon: Icon, id }, index) => (
+            <Link
+              key={index}
+              href={link}
+              target={id === 1 ? "_blank" : "_self"}
+              className="flx gap-2.5"
+            >
               <Icon size={16} />
               <span className="block">{title}</span>
             </Link>
