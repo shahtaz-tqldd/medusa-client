@@ -62,7 +62,7 @@ const Features: React.FC = () => {
           height={800}
           width={800}
           alt="bg"
-          className="dark:opacity-60 opacity-40"
+          className="opacity-40"
         />
       </div>
       <FeatureDrawer data={featureData} isOpen={isOpen} setIsOpen={setIsOpen} />

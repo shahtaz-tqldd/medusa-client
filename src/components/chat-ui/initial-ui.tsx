@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 // icons
 import LordIcon from "@/assets/icons/lord-icon";
@@ -50,14 +50,40 @@ export const ChatInputBox: React.FC<MessageInputInterface> = ({
   message,
   setMessage,
 }) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  
+  // Function to adjust height based on content
+  const adjustHeight = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    
+    // Reset height to auto to get the correct scrollHeight
+    textarea.style.height = "43px";
+    
+    // Calculate new height (with a max of 120px)
+    const newHeight = Math.min(120, textarea.scrollHeight);
+    
+    // Apply the new height
+    textarea.style.height = `${newHeight}px`;
+    
+    // Set overflow only if content height exceeds max height
+    textarea.style.overflowY = textarea.scrollHeight > 120 ? "auto" : "hidden";
+  };
+  
+  // Adjust height whenever message changes
+  useEffect(() => {
+    adjustHeight();
+  }, [message]);
+  
   return (
     <div>
       <textarea
-        className="py-2 px-4 rounded-full border-2 dark:border-white/40 border-black/30 w-full bg-white/75 dark:bg-white/20 outline-none h-[43px] resize-none"
+        ref={textareaRef}
+        className="py-2 px-4 rounded-xl border dark:border-white/20 border-black/30 w-full bg-white/75 dark:bg-white/10 outline-none h-[43px] resize-none"
         placeholder="Write your message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        style={{ overflowY: "auto" }}
+        style={{ overflowY: "hidden" }}
       />
     </div>
   );

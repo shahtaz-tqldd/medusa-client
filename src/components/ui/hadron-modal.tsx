@@ -3,6 +3,7 @@
 import React, { ReactNode, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { useScrollLock } from "@/lib/scroll-lock";
 
 interface HadronModalProps {
   children: ReactNode;
@@ -15,26 +16,9 @@ const HadronModal: React.FC<HadronModalProps> = ({
   isOpen,
   setIsOpen,
 }) => {
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
-    };
-    if (isOpen) {
-      document.documentElement.classList.add("hadron-modal-open");
-      window.addEventListener("keydown", handleKeyDown);
-    } else {
-      const timeout = setTimeout(() => {
-        document.documentElement.classList.remove("hadron-modal-open");
-      }, 500);
 
-      return () => clearTimeout(timeout);
-    }
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, setIsOpen]);
-
+  useScrollLock(isOpen)
+   
   const handleCloseModal = () => {
     setIsOpen(false);
   };
@@ -76,7 +60,7 @@ const HadronModal: React.FC<HadronModalProps> = ({
               animate={{ y: 0, opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ delay: 0.3, duration: 0.5, ease: "easeInOut" }}
-              className="absolute inset-0 bg-[#151b1d] text-white pointer-events-auto overflow-y-auto"
+              className="absolute inset-0 bg-[#151b1d] text-white pointer-events-auto overflow-y-auto modal-content"
             >
               <button
                 onClick={handleCloseModal}
