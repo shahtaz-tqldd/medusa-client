@@ -1,67 +1,90 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function useScrollLock(isLocked: boolean) {
-    useEffect(() => {
-      if (!isLocked) return;
-      
-      // Save initial body style and scroll position
-      const originalStyle = window.getComputedStyle(document.body);
-      const scrollY = window.scrollY;
-      
-      // Prevent scrolling while maintaining scrollbar visibility
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.bottom = '0';
-      // Don't set overflow - this keeps the scrollbar visible
-      
-      // Prevent various events that could cause scrolling
-      const preventDefault = (e: Event) => {
-        // Allow scrolling within elements inside the modal
-        if (e.target && 
-            e.target instanceof Element && 
-            (e.target.closest('.modal-content') || 
-             e.target.classList.contains('modal-content'))) {
-          return;
-        }
-        e.preventDefault();
+  // Store the scroll position in a ref to maintain it across renders
+  const scrollYRef = useRef<number>(0);
+
+  useEffect(() => {
+    if (!isLocked) return;
+
+    // Calculate scrollbar width to add padding and prevent layout shift
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+
+    // Save initial scroll position when locking
+    scrollYRef.current = window.scrollY;
+
+    // Save original padding to restore later
+    const originalPaddingRight = document.body.style.paddingRight;
+
+    // Apply fixed position to body while preserving scrollbar
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollYRef.current}px`;
+    document.body.style.width = "100%";
+    document.body.style.paddingRight = `${scrollbarWidth}px`; // Add padding equal to scrollbar width
+
+    // Prevent various events that could cause scrolling
+    const preventDefault = (e: Event) => {
+      // Allow scrolling within elements inside the modal
+      if (
+        e.target &&
+        e.target instanceof Element &&
+        (e.target.closest(".modal-content") ||
+          e.target.classList.contains("modal-content"))
+      ) {
+        return;
+      }
+      e.preventDefault();
+    };
+
+    // These are the events that could potentially scroll the page
+    const wheelOpt = { passive: false };
+    window.addEventListener("wheel", preventDefault, wheelOpt);
+    window.addEventListener("touchmove", preventDefault, wheelOpt);
+
+    // Handle keyboard scrolling
+    const preventDefaultForScrollKeys = (e: KeyboardEvent) => {
+      const keys = {
+        ArrowUp: 1,
+        ArrowDown: 1,
+        ArrowLeft: 1,
+        ArrowRight: 1,
+        " ": 1,
+        PageUp: 1,
+        PageDown: 1,
+        Home: 1,
+        End: 1,
       };
-      
-      // These are the events that could potentially scroll the page
-      const wheelOpt = { passive: false };
-      window.addEventListener('wheel', preventDefault, wheelOpt);
-      window.addEventListener('touchmove', preventDefault, wheelOpt);
-      
-      // Handle keyboard scrolling
-      const preventDefaultForScrollKeys = (e: KeyboardEvent) => {
-        const keys = { 
-          ArrowUp: 1, ArrowDown: 1, ArrowLeft: 1, ArrowRight: 1,
-          ' ': 1, PageUp: 1, PageDown: 1, Home: 1, End: 1
-        };
-        
-        if (keys[e.key as keyof typeof keys]) {
-          preventDefault(e);
-          return false;
-        }
-      };
-      window.addEventListener('keydown', preventDefaultForScrollKeys);
-      
-      return () => {
-        // Clean up and restore original position
-        window.removeEventListener('wheel', preventDefault, wheelOpt as EventListenerOptions);
-        window.removeEventListener('touchmove', preventDefault, wheelOpt as EventListenerOptions);
-        window.removeEventListener('keydown', preventDefaultForScrollKeys);
-        
-        // Restore body style
-        document.body.style.position = originalStyle.position;
-        document.body.style.top = originalStyle.top;
-        document.body.style.left = originalStyle.left;
-        document.body.style.right = originalStyle.right;
-        document.body.style.bottom = originalStyle.bottom;
-        
-        // Restore scroll position
-        window.scrollTo(0, scrollY);
-      };
-    }, [isLocked]);
-  }
+
+      if (keys[e.key as keyof typeof keys]) {
+        preventDefault(e);
+        return false;
+      }
+    };
+    window.addEventListener("keydown", preventDefaultForScrollKeys);
+
+    return () => {
+      // Clean up event listeners
+      window.removeEventListener(
+        "wheel",
+        preventDefault,
+        wheelOpt as EventListenerOptions
+      );
+      window.removeEventListener(
+        "touchmove",
+        preventDefault,
+        wheelOpt as EventListenerOptions
+      );
+      window.removeEventListener("keydown", preventDefaultForScrollKeys);
+
+      // Reset body styles
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.paddingRight = originalPaddingRight;
+
+      // Restore scroll position
+      window.scrollTo(0, scrollYRef.current);
+    };
+  }, [isLocked]);
+}

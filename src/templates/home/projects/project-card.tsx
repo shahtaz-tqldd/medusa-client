@@ -15,7 +15,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data, handleSetProject }) => 
 
   return (
     <section>
-      <Image src={img} className="h-72 object-cover rounded-2xl" alt={name} />
+      <Image src={img} className="h-72 w-full object-cover rounded-2xl" alt={name} />
       <h2 className="text-sm mt-4 text-orange-300">{projectType}</h2>
       <div className="flx gap-4 cursor-pointer" onClick={() => handleSetProject(id)}>
         <div className="flex-1">

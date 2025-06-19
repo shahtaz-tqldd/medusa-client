@@ -112,7 +112,7 @@ function ModelViewer({ modelPath }: ModelViewerProps) {
         <Suspense
           fallback={
             <Html center>
-              <LordIcon icon="pxwxddbb" height={60} width={60} trigger="in-reveal" />
+              <LordIcon icon="pxwxddbb" height={60} width={60} trigger="loop" primary="#fff" />
             </Html>
           }
         >
@@ -142,7 +142,7 @@ export const DynamicModelViewer = dynamic(() => Promise.resolve(ModelViewer), {
   ssr: false,
   loading: () => (
     <div className="w-full h-full flex items-center justify-center">
-      <LordIcon icon="pxwxddbb" height={60} width={60} trigger="in-reveal" />
+      <LordIcon icon="pxwxddbb" height={60} width={60} trigger="loop" primary="#fff" />
     </div>
   ),
 });

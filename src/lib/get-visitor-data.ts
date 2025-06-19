@@ -1,22 +1,13 @@
-import { getCookieId } from "./get-cookie";
-import { getDeviceInfo } from "./get-device";
-import { getIpAndLocation } from "./get-location";
+import { UAParser } from "ua-parser-js";
+import { getDeviceInfo } from "./device-info";
 
-export const sendVisitorData = async () => {
-  const locationData = await getIpAndLocation();
-  const deviceData = getDeviceInfo();
-  const cookieId = getCookieId();
-
-  const visitorData = {
-    ip_address: locationData.ip,
-    device_name: deviceData.deviceName,
-    device_type: deviceData.deviceType,
-    longitude: locationData.longitude,
-    latitude: locationData.latitude,
-    country: locationData.country,
-    city: locationData.city,
-    cookie_id: cookieId,
+export const getVisitorData = async () => {
+  const res = await fetch("/api/visitor");
+  const data = await res.json();
+  const deviceInfo = getDeviceInfo();
+  const allInfo = {
+    ...data,
+    ...deviceInfo,
   };
-
-  return visitorData
+  return allInfo;
 };

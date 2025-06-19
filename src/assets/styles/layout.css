@@ -22,3 +22,29 @@
 .tr {
   transition: 300ms;
 }
+
+/* styles/globals.css or your global stylesheet */
+
+.medusa-scroll {
+  overflow-y: auto;
+  scrollbar-gutter: stable overlay; /* Prevents layout shift */
+  position: relative;
+}
+
+.medusa-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.medusa-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.medusa-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #a9ff7e, #75daff);
+  border-radius: 8px;
+}
+
+.medusa-scroll::-webkit-scrollbar-button {
+  display: none;
+}
+

@@ -8,7 +8,7 @@ import { useTheme } from "next-themes";
 export const InitialUI: React.FC = () => {
   const { theme } = useTheme();
   return (
-    <div className="flex-1 h-full center flex-col">
+    <div className="h-full center flex-col">
       <LordIcon
         icon="ggmzvoah"
         height={140}
@@ -44,37 +44,54 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ setIsOpen }) => {
 interface MessageInputInterface {
   message: string;
   setMessage: (message: string) => void;
+  setMessages: React.Dispatch<
+    React.SetStateAction<{ sender: string; text: string }[]>
+  >;
 }
 
 export const ChatInputBox: React.FC<MessageInputInterface> = ({
   message,
   setMessage,
+  setMessages,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  
+
   // Function to adjust height based on content
   const adjustHeight = () => {
     const textarea = textareaRef.current;
     if (!textarea) return;
-    
+
     // Reset height to auto to get the correct scrollHeight
     textarea.style.height = "43px";
-    
+
     // Calculate new height (with a max of 120px)
     const newHeight = Math.min(120, textarea.scrollHeight);
-    
+
     // Apply the new height
     textarea.style.height = `${newHeight}px`;
-    
+
     // Set overflow only if content height exceeds max height
     textarea.style.overflowY = textarea.scrollHeight > 120 ? "auto" : "hidden";
   };
-  
+
   // Adjust height whenever message changes
   useEffect(() => {
     adjustHeight();
   }, [message]);
-  
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (message.trim()) {
+        setMessages((prev: any) => [
+          ...prev,
+          { sender: "user", text: message },
+        ]);
+        setMessage(""); // clear input
+      }
+    }
+  };
+
   return (
     <div>
       <textarea
@@ -83,6 +100,7 @@ export const ChatInputBox: React.FC<MessageInputInterface> = ({
         placeholder="Write your message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={handleKeyDown}
         style={{ overflowY: "hidden" }}
       />
     </div>

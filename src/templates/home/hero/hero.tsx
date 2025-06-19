@@ -10,12 +10,13 @@ import DevJourneyModal from "./dev-journey-modal";
 
 // icons
 import { Dot } from "lucide-react";
+import FadingGrid from "./fade-grid";
 
 const Hero: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section className="h-screen w-screen center">
+    <section className="h-screen w-screen center relative">
       <div className="container flbx relative">
         <div className="mt-20">
           <HeroText className="max-w-2xl text-4xl leading-[48px] font-medium">
@@ -49,10 +50,10 @@ const Hero: React.FC = () => {
             <h2 className="opacity-80 font-medium">Python & Django</h2>
           </div>
         </div>
-
         <HeroEve />
       </div>
       <DevJourneyModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <FadingGrid />
     </section>
   );
 };

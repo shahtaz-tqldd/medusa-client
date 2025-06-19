@@ -1,5 +1,5 @@
 "use client";
-import { sendVisitorData } from "@/lib/get-visitor-data";
+import { getVisitorData } from "@/lib/get-visitor-data";
 import Blogs from "./blogs/blogs";
 import Experiences from "./experiences/experiences";
 import Features from "./features/features";
@@ -9,8 +9,12 @@ import { useEffect } from "react";
 
 export default function Homepage() {
   useEffect(() => {
-    const visitor = sendVisitorData();
-    console.log(visitor)
+    const fetchVisitorData = async () => {
+      const visitor = await getVisitorData();
+      console.log(visitor);
+    };
+
+    fetchVisitorData();
   }, []);
   return (
     <>
