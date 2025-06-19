@@ -1,9 +1,9 @@
 import React from "react";
 import HadronModal from "@/components/ui/hadron-modal";
-import { ExperienceProps } from "./types";
+import { ExperienceProps } from "./constants";
 
 interface ExperienceModalProps {
-  data: ExperienceProps | null;
+  data: ExperienceProps;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }

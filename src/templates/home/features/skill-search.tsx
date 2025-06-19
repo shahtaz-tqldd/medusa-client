@@ -37,13 +37,12 @@ const SkillSearch: React.FC = () => {
   };
 
   const buttonVariants = {
-    hidden: { opacity: 0, x: -20 },
+    hidden: { opacity: 0},
     visible: {
       opacity: 1,
-      x: 0,
-      transition: { duration: 0.4, ease: [0.6, -0.05, 0.01, 0.99], delay: 0.1 },
+      transition: { duration: 0.4, ease: [0.6, -0.05, 0.01, 0.99], delay: 0.3 },
     },
-    exit: { opacity: 0, x: 20, transition: { duration: 0.3 } },
+    exit: { opacity: 0, transition: { duration: 0.3 } },
   };
 
   return (

@@ -52,7 +52,9 @@ const Hero: React.FC = () => {
         </div>
         <HeroEve />
       </div>
-      <DevJourneyModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      {
+        isOpen && <DevJourneyModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      }
       <FadingGrid />
     </section>
   );

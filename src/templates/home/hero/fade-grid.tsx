@@ -21,7 +21,7 @@ const FadingGrid: React.FC = () => {
               d="M 5 0 L 0 0 0 5"
               fill="none"
               stroke="currentColor"
-              strokeWidth="0.2"
+              strokeWidth="0.1"
             />
           </pattern>
 
@@ -30,7 +30,7 @@ const FadingGrid: React.FC = () => {
             <rect width="100%" height="100%" fill="url(#fadeGradient)" />
           </mask>
 
-          <radialGradient id="fadeGradient" cx="25%" cy="45%" r="40%">
+          <radialGradient id="fadeGradient" cx="28%" cy="50%" r="40%">
             <stop offset="0%" stopColor="white" stopOpacity="0.1" />
             <stop offset="70%" stopColor="white" stopOpacity="0" />
           </radialGradient>
