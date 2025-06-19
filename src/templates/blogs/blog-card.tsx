@@ -32,7 +32,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
         src={img}
         height={500}
         width={700}
-        className="w-full h-60 object-cover rounded-2xl"
+        className="w-full h-60 object-cover rounded-3xl"
         alt=""
       />
       <Link href={`/blogs/${slugify(title)}`}>
@@ -41,8 +41,8 @@ const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
         >
           {topic}
         </p>
-        <h2 className="text-xl font-medium mt-2">{title}</h2>
-        <p className="opacity-75 mt-2">{body.slice(0, 100)}</p>
+        <h2 className="text-xl font-medium mt-2 dark:text-gray-300 text-slate-800">{title}</h2>
+        <p className="mt-2 dark:text-gray-400 text-slate-600 line-clamp-2">{body}</p>
       </Link>
       <div className="flbx mt-6">
         <p className="opacity-60  text-sm">{published}</p>
@@ -53,7 +53,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
               height={18}
               width={18}
               target="button"
-              primary="#ffb86a"
+              primary="#2b7fff"
             />
           </button>
           <button className="h-8 w-8 center rounded-full bg-orange-500/5 dark:bg-white/5 dark:hover:bg-white/10 hover:bg-orange-600/10 tr">

@@ -9,7 +9,7 @@ const Blogs = () => {
   return (
     <section className="container pb-32">
       <div className="flbx">
-        <HeroText className="text-4xl">Blogs & Articles</HeroText>
+        <HeroText>Blogs & Articles</HeroText>
         <Link href={'/blogs'} className="flx gap-2 text-orange-300">
           Explore More
           <LordIcon icon="ircnfpus" height={24} width={24} primary="#ffb86a" target="a"/>

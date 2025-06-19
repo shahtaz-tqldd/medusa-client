@@ -36,9 +36,9 @@ const ProjectList = () => {
   };
 
   return (
-    <section className="container pb-32">
+    <section className="container py-24">
       <div className="flbx">
-        <HeroText className="text-4xl">Project List</HeroText>
+        <HeroText>Project List</HeroText>
         <div className="relative">
           <Tabs tabs={projectTabs} active={active} setActive={setActive} />
         </div>

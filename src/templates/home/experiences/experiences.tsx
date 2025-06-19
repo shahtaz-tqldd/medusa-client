@@ -72,10 +72,8 @@ const Experiences: React.FC = () => {
   };
 
   return (
-    <section className="container pb-32">
-      <HeroText className="text-4xl">
-        Work Experiences
-      </HeroText>
+    <section className="container py-20">
+      <HeroText>Work Experiences</HeroText>
       <div className="pl-6 mt-20">
         <div className="relative" ref={timelineRef}>
           <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-white/10"></div>

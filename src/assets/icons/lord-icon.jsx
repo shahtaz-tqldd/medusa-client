@@ -8,6 +8,7 @@ const LordIcon = ({
   trigger = "hover",
   primary = "#9cf4a7",
   secondary = "#30c9e8",
+  rotate = "0deg",
 }) => {
   return (
     <lord-icon
@@ -15,7 +16,7 @@ const LordIcon = ({
       src={`https://cdn.lordicon.com/${icon}.json`}
       trigger={trigger}
       colors={`primary:${primary},secondary:${secondary}`}
-      style={{ width: `${width}px`, height: `${height}px` }}
+      style={{ width: `${width}px`, height: `${height}px`, rotate: rotate }}
     />
   );
 };

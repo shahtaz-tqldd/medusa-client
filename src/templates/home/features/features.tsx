@@ -20,11 +20,11 @@ const Features: React.FC = () => {
     setFeatureData(data);
   };
   return (
-    <div className="container pb-40 relative">
+    <div className="container py-24 relative">
       <div className="grid grid-cols-5 gap-20">
         <div className="col-span-2 relative z-10">
-          <HeroText className="text-4xl">Let me Introduce myself</HeroText>
-          <p className="mt-5 opacity-75">
+          <HeroText>Let me Introduce myself</HeroText>
+          <p className="mt-5 dark:text-gray-400 text-slate-600">
             Hey, I have been in web development for almost 3 years, I have
             developed enormous amount of software to get the perfection. I have
             worked with React, Node Js.

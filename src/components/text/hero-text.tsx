@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ interface HeroTextProps {
   className?: string;
 }
 
-const HeroText: React.FC<HeroTextProps> = ({ children, className }) => {
+const HeroText: React.FC<HeroTextProps> = ({ children, className = "" }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const HeroText: React.FC<HeroTextProps> = ({ children, className }) => {
 
   return (
     <motion.h2
-      className={className}
+      className={`leading-[48px] text-4xl font-medium mt-4 dark:text-gray-300 text-slate-800 ${className}`}
       variants={containerVariants}
       initial="hidden"
       animate={isVisible ? "visible" : "hidden"}

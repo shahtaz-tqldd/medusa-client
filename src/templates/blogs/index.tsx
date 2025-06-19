@@ -8,7 +8,7 @@ const BlogPage = () => {
   return (
     <section className="container py-20">
       <div className="flbx mt-12">
-        <HeroText className="text-4xl">Blogs</HeroText>
+        <HeroText>Blogs</HeroText>
         <div className="relative w-[300px]">
           <input
             type="text"
