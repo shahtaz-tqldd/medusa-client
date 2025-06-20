@@ -1,9 +1,9 @@
 "use client";
 
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
 import { useScrollLock } from "@/lib/scroll-lock";
+import { X } from "lucide-react";
 
 interface HadronModalProps {
   children: ReactNode;
@@ -45,7 +45,7 @@ const HadronModal: React.FC<HadronModalProps> = ({
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: "-100%", opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="absolute inset-0 bg-[#ffb86a] pointer-events-none center flex-col gap-4 text-8xl text-nowrap overflow-hidden uppercase"
+              className="absolute inset-0 bg-[#2b7fff] pointer-events-none center flex-col gap-4 text-8xl text-nowrap overflow-hidden uppercase"
             >
               {opacities.map((opacity, index) => (
                 <h2 key={index} className={opacity}>
@@ -60,11 +60,11 @@ const HadronModal: React.FC<HadronModalProps> = ({
               animate={{ y: 0, opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ delay: 0.3, duration: 0.5, ease: "easeInOut" }}
-              className="absolute inset-0 bg-[#151b1d] text-white pointer-events-auto overflow-y-auto modal-content"
+              className="absolute inset-0 dark:bg-[#151b1d] bg-gray-50 pointer-events-auto medusa-scroll h-screen modal-content"
             >
               <button
                 onClick={handleCloseModal}
-                className="absolute top-10 right-10 text-white hover:text-orange-500 tr"
+                className="absolute top-5 md:top-10 right-5 md:right-10 text-white/90 hover:text-red-500 tr z-[999]"
               >
                 <X size={40} strokeWidth={1} />
               </button>

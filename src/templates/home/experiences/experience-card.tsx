@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { ExperienceProps } from "./constants";
 import PrimaryCard from "@/components/cards/primary-card";
+import LabelText from "@/components/text/label-text";
+import BodyText from "@/components/text/body-text";
 
 interface ExperienceCardProps {
   item: ExperienceProps;
@@ -32,8 +34,8 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
   };
 
   return (
-    <PrimaryCard className="p-8 rounded-3xl">
-      <div className="grid lg:grid-cols-3 gap-6 items-start">
+    <PrimaryCard className="md:p-8 rounded-3xl">
+      <div className="grid lg:grid-cols-3 md:gap-6 gap-8 items-start">
         {/* Left Column - Main Info */}
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-start gap-4">
@@ -47,29 +49,28 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
               <p className={`${item.companyColor}`}>{item.company}</p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-6 mt-3 text-sm text-gray-600 dark:text-gray-400">
-            <div className="flex items-center gap-1">
+          <div className="flex flex-wrap gap-x-5 md:gap-x-8 gap-y-3 mt-3 text-sm text-blue-600 dark:text-blue-400">
+            <div className="flex items-center gap-1.5">
               <Calendar size={14} />
-              <span className="block pt-0.5">{item.timeline}</span>
+              <span>{item.timeline}</span>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <Clock size={14} />
-              <span className="block pt-0.5">{item.duration}</span>
+              <span>{item.duration}</span>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <MapPin size={14} />
-              <span className="block pt-0.5">{item.location}</span>
+              <span>{item.location}</span>
             </div>
           </div>
-
-          <p className="text-sm opacity-70 leading-relaxed line-clamp-4">
-            {item.description}
-          </p>
+        
+          <BodyText>{item.description}</BodyText>
+          
 
           {/* Highlights */}
-          <div className="flex flex-wrap gap-5 mt-8 -ml-3">
+          <div className="flex flex-wrap mt-8 -ml-3 gap-x-5 md:gap-x-8 gap-y-2">
             {item.highlights.map((highlight, idx) => (
-              <span key={idx} className="text-sm flex opacity-50">
+              <span key={idx} className="text-sm flx opacity-50">
                 <Dot />
                 {highlight}
               </span>
@@ -78,12 +79,10 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
         </div>
 
         {/* Right Column - Technologies & Action */}
-        <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col justify-between h-full gap-6">
           <div className="space-y-6">
-            <div className="flex items-center gap-2 mb-3">
-              <Code className={`w-5 h-5 ${item.companyColor}`} />
-              <h4 className="font-medium opacity-80">Technologies</h4>
-            </div>
+            <LabelText icon={Code}>Technologies</LabelText>
+
             <div className="flex flex-wrap gap-2">
               {item.technologies.slice(0, 4).map((tech, idx) => (
                 <span

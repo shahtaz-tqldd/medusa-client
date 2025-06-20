@@ -3,28 +3,28 @@
 import React, { useState } from "react";
 
 // components
+import DevJourneyModal from "./dev-journey-modal";
+import FadingGrid from "./fade-grid";
 import HeroText from "@/components/text/hero-text";
 import HeroEve from "@/components/3d-models/hero-eve";
-import DevJourneyModal from "./dev-journey-modal";
+import { AnimatedShinyText } from "@/components/text/shiny-text";
 
 // icons
 import { Dot } from "lucide-react";
-import FadingGrid from "./fade-grid";
-import { AnimatedShinyText } from "@/components/text/shiny-text";
 
 const Hero: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <section className="h-screen w-screen center relative">
-      <div className="container flbx relative">
+      <div className="container flbx md:flex-row flex-col-reverse relative">
         <div className="mt-20">
           <AnimatedShinyText>✨ Software Developer</AnimatedShinyText>
           <HeroText className="max-w-2xl">
             Hey, this is Shahtaz. I am a software developer by passion, and a
             full-metal alchemist by choice!
           </HeroText>
-          <p className="text-lg mt-12 relative">
+          <p className="text-base md:text-lg mt-12 relative">
             <span className="dark:text-gray-400 text-slate-600">
               Interested to know my development journey?
             </span>{" "}
@@ -45,8 +45,8 @@ const Hero: React.FC = () => {
         </div>
         <HeroEve />
       </div>
-      {isOpen && <DevJourneyModal isOpen={isOpen} setIsOpen={setIsOpen} />}
       <FadingGrid />
+      {isOpen && <DevJourneyModal isOpen={isOpen} setIsOpen={setIsOpen} />}
     </section>
   );
 };

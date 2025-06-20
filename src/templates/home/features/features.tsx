@@ -5,11 +5,12 @@ import Image from "next/image";
 import HeroText from "@/components/text/hero-text";
 import SkillSearch from "./skill-search";
 import FeatureCard from "./feature-card";
+import FeatureModal from "./feature-modal";
 
 // data
 import { features, skills } from "./data";
-import FeatureDrawer from "./feature-drawer";
 import { FeatureProps } from "./types";
+import BodyText from "@/components/text/body-text";
 
 const Features: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,14 +23,13 @@ const Features: React.FC = () => {
   return (
     <div className="container py-24 relative">
       <div className="grid grid-cols-5 gap-20">
-        <div className="col-span-2 relative z-10">
+        <div className="col-span-5 md:col-span-2 relative z-10">
           <HeroText>Let me Introduce myself</HeroText>
-          <p className="mt-5 dark:text-gray-400 text-slate-600">
+          <BodyText className="mt-5">
             Hey, I have been in web development for almost 3 years, I have
             developed enormous amount of software to get the perfection. I have
             worked with React, Node Js.
-          </p>
-
+          </BodyText>
           <div className="flex flex-wrap mt-12 gap-3">
             {skills.slice(0, 9)?.map(({ name, icon: Icon }, index) => (
               <div
@@ -46,7 +46,7 @@ const Features: React.FC = () => {
           </div>
           <SkillSearch />
         </div>
-        <div className="col-span-3 grid grid-cols-2 gap-5">
+        <div className="col-span-5 md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-5">
           {features?.map((data, index) => (
             <FeatureCard
               key={index}
@@ -56,7 +56,7 @@ const Features: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="absolute -left-80 -top-68 z-0">
+      <div className="absolute -left-[380px] -top-68 z-0 pointer-events-none">
         <Image
           src="/elipse_4.svg"
           height={800}
@@ -65,7 +65,10 @@ const Features: React.FC = () => {
           className="opacity-40"
         />
       </div>
-      <FeatureDrawer data={featureData} isOpen={isOpen} setIsOpen={setIsOpen} />
+      {
+        isOpen &&
+        <FeatureModal data={featureData} isOpen={isOpen} setIsOpen={setIsOpen} />
+      }
     </div>
   );
 };

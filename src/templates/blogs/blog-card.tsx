@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +9,8 @@ import { Ellipsis } from "lucide-react";
 import { slugify } from "@/lib/slugify";
 import Capsule from "@/components/status/capsule";
 import IconButton from "@/components/buttons/icon-button";
+import { useRouter } from "next/navigation";
+
 
 type BlogData = {
   img: string;
@@ -23,7 +27,11 @@ type BlogCardProps = {
 
 const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
   const { img, title, body, published, topic } = data;
-  const handleSave = () => {};
+  
+  const router = useRouter()
+  const handleSave = () => {
+    router.push('/blogs')
+  };
   return (
     <div>
       <Image

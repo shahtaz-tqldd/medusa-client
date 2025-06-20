@@ -37,13 +37,13 @@ const ProjectList = () => {
 
   return (
     <section className="container py-24">
-      <div className="flbx">
+      <div className="flbx flex-col md:flex-row gap-5">
         <HeroText>Project List</HeroText>
         <div className="relative">
           <Tabs tabs={projectTabs} active={active} setActive={setActive} />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-x-8 gap-y-12 mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mt-12">
         {projects?.map((data, index) => (
           <ProjectCard
             key={index}
@@ -54,7 +54,7 @@ const ProjectList = () => {
       </div>
 
       {/* Render modal only when data exists */}
-      {meta && (
+      {meta && isOpen && (
         <ProjectModal
           meta={meta}
           setMeta={setMeta}
