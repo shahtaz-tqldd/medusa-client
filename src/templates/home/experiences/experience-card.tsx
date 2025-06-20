@@ -12,16 +12,11 @@ import {
   Zap,
   Dot,
 } from "lucide-react";
-import { ExperienceProps } from "./_data";
 import PrimaryCard from "@/components/cards/primary-card";
 import LabelText from "@/components/text/label-text";
 import BodyText from "@/components/text/body-text";
 
-interface ExperienceCardProps {
-  item: ExperienceProps;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setExpData: (data: ExperienceProps) => void;
-}
+import { ExperienceCardProps, ExperienceProps } from "./_types";
 
 const ExperienceCard: React.FC<ExperienceCardProps> = ({
   item,
@@ -63,9 +58,8 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
               <span>{item.location}</span>
             </div>
           </div>
-        
+
           <BodyText>{item.description}</BodyText>
-          
 
           {/* Highlights */}
           <div className="flex flex-wrap mt-8 -ml-3 gap-x-5 md:gap-x-8 gap-y-2">

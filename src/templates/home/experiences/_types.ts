@@ -22,3 +22,9 @@ export interface ExperienceModalProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
+
+export interface ExperienceCardProps {
+  item: ExperienceProps;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setExpData: (data: ExperienceProps) => void;
+}
