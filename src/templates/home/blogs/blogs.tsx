@@ -2,7 +2,7 @@ import React from "react";
 import TextButton from "@/components/buttons/text-button";
 import HeroText from "@/components/text/hero-text";
 import BlogCard from "@/templates/blogs/blog-card";
-import { BLOGS } from "@/templates/blogs/demo-data";
+import { BLOGS } from "@/templates/blogs/_demo-data";
 
 
 const Blogs = () => {

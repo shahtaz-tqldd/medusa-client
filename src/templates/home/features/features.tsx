@@ -1,16 +1,17 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 
 // components
+import BodyText from "@/components/text/body-text";
 import HeroText from "@/components/text/hero-text";
 import SkillSearch from "./skill-search";
 import FeatureCard from "./feature-card";
 import FeatureModal from "./feature-modal";
 
 // data
-import { features, skills } from "./data";
-import { FeatureProps } from "./types";
-import BodyText from "@/components/text/body-text";
+import { features, skills } from "./_demo-data";
+import { FeatureProps } from "./_types";
 
 const Features: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,10 +66,13 @@ const Features: React.FC = () => {
           className="opacity-40"
         />
       </div>
-      {
-        isOpen &&
-        <FeatureModal data={featureData} isOpen={isOpen} setIsOpen={setIsOpen} />
-      }
+      {isOpen && (
+        <FeatureModal
+          data={featureData}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
+      )}
     </div>
   );
 };

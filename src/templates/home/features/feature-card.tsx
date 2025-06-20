@@ -1,7 +1,7 @@
 import React from "react";
 
 // types
-import { FeatureProps } from "./types";
+import type { FeatureCardProps } from "./_types";
 
 // compoennts
 import TextButton from "@/components/buttons/text-button";
@@ -9,20 +9,11 @@ import PrimaryCard from "@/components/cards/primary-card";
 import TitleText from "@/components/text/title-text";
 import BodyText from "@/components/text/body-text";
 
-interface FeatureCardProps {
-  data: {
-    title: string;
-    text: string;
-    icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  };
-  handleFeatureOpen: (data: FeatureProps) => void;
-}
-
 const FeatureCard: React.FC<FeatureCardProps> = ({
   data,
   handleFeatureOpen,
 }) => {
-  const { title, text, icon} = data;
+  const { title, text, icon } = data;
 
   return (
     <PrimaryCard>

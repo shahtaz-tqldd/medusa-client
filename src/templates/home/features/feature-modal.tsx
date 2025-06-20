@@ -4,20 +4,9 @@ import React from "react";
 import BodyText from "@/components/text/body-text";
 import HeroText from "@/components/text/hero-text";
 import HadronModal from "@/components/ui/hadron-modal";
-import LabelText from "@/components/text/label-text";
 
 // data
-import { FeatureProps } from "./types";
-
-
-// icons
-import { Award, Code } from "lucide-react";
-
-interface FeatureModalProps {
-  data: FeatureProps | null;
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-}
+import type { FeatureModalProps} from "./_types";
 
 const FeatureModal: React.FC<FeatureModalProps> = ({
   data,

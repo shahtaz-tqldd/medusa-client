@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import Image from "next/image";
@@ -10,7 +10,8 @@ import { slugify } from "@/lib/slugify";
 import Capsule from "@/components/status/capsule";
 import IconButton from "@/components/buttons/icon-button";
 import { useRouter } from "next/navigation";
-
+import BodyText from "@/components/text/body-text";
+import { HeaderText } from "@/components/text/title-text";
 
 type BlogData = {
   img: string;
@@ -27,10 +28,10 @@ type BlogCardProps = {
 
 const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
   const { img, title, body, published, topic } = data;
-  
-  const router = useRouter()
+
+  const router = useRouter();
   const handleSave = () => {
-    router.push('/blogs')
+    router.push("/blogs");
   };
   return (
     <div>
@@ -54,12 +55,8 @@ const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
         >
           {topic}
         </Capsule>
-        <h2 className="text-xl font-medium mt-2.5 dark:text-gray-300 text-slate-800">
-          {title}
-        </h2>
-        <p className="mt-2 dark:text-gray-400 text-slate-600 line-clamp-2">
-          {body}
-        </p>
+        <HeaderText className="mt-2.5">{title}</HeaderText>
+        <BodyText className="line-clamp-2 mt-2">{body}</BodyText>
       </Link>
       <div className="flbx mt-6 px-1">
         <p className="dark:text-white/60 text-slate-600 text-sm">

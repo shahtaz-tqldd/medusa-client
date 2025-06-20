@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import Button from "@/components/buttons/primary-button";
 import { Search, X } from "lucide-react";
-import { skills } from "./data";
+import { skills } from "./_demo-data";
 
 const SkillSearch: React.FC = () => {
   const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
@@ -84,7 +84,7 @@ const SkillSearch: React.FC = () => {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute z-50 top-full mt-2 w-[360px] bg-white dark:bg-[#222] border border-dashed border-black/10 dark:border-white/10 rounded-2xl overflow-hidden shadow-lg"
+                    className="absolute z-[999999] top-full mt-2 w-[360px] bg-white dark:bg-[#222] border border-dashed border-black/10 dark:border-white/10 rounded-2xl overflow-hidden shadow-lg"
                   >
                     {filteredSkills.length > 0 ? (
                       filteredSkills.map((skill) => (

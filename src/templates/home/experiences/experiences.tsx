@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 // components
@@ -9,7 +10,8 @@ import ExperienceModal from "./experience-modal";
 import ExperienceCard from "./experience-card";
 
 // data
-import { ExperienceProps, WORK_EXPERIENCES } from "./constants";
+import { WORK_EXPERIENCES } from "./_data";
+import type { ExperienceProps } from "./_types";
 
 const Experiences: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +27,11 @@ const Experiences: React.FC = () => {
   });
 
   // Changed to 0.85 as requested
-  const progressHeight = useTransform(scrollYProgress, [0, 0.85], ["0%", "100%"]);
+  const progressHeight = useTransform(
+    scrollYProgress,
+    [0, 0.85],
+    ["0%", "100%"]
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,10 +41,11 @@ const Experiences: React.FC = () => {
       const timelineTop = timelineRect.top;
       const timelineHeight = timelineRect.height;
       const currentScrollProgress = scrollYProgress.get();
-      
+
       // Adjust progress line position calculation for the new 0.85 limit
       const adjustedProgress = Math.min(currentScrollProgress / 0.85, 1);
-      const progressLinePosition = timelineTop + (adjustedProgress * timelineHeight);
+      const progressLinePosition =
+        timelineTop + adjustedProgress * timelineHeight;
 
       const newVisibleCards = new Set<number>();
       circleRefs.current.forEach((circleRef, index) => {
@@ -77,7 +84,7 @@ const Experiences: React.FC = () => {
   };
 
   return (
-    <section className="container py-20">
+    <section className="container py-20 relative">
       <HeroText className="md:text-left text-center">Work Experiences</HeroText>
       <div className="mt-8 md:mt-20">
         <div className="relative" ref={timelineRef}>
@@ -89,8 +96,11 @@ const Experiences: React.FC = () => {
           <div className="space-y-8 relative">
             <div className="hidden md:block bg-gradient-to-b dark:from-[#121212] from-white dark:to-black/0 to-white/0 h-20 w-0.5 absolute top-0 left-6"></div>
             {WORK_EXPERIENCES?.map((item, index) => (
-              <div key={index} className="relative" ref={setCardRef(index)}>
-                <div className="hidden md:block absolute left-[17px] top-1/2 -translate-y-1/2 z-10" ref={setCircleRef(index)}>
+              <div key={index} className="relative z-10" ref={setCardRef(index)}>
+                <div
+                  className="hidden md:block absolute left-[17px] top-1/2 -translate-y-1/2 z-10"
+                  ref={setCircleRef(index)}
+                >
                   <div
                     className={`w-4 h-4 rounded-full border-2 transition-all duration-300 ${
                       visibleCards.has(index)
@@ -123,6 +133,16 @@ const Experiences: React.FC = () => {
       {isOpen && (
         <ExperienceModal data={expData} isOpen={isOpen} setIsOpen={setIsOpen} />
       )}
+
+      <div className="absolute -right-72 -top-72 z-0 pointer-events-none">
+        <Image
+          src="/elipse_3.svg"
+          height={800}
+          width={800}
+          alt="bg"
+          className="opacity-30"
+        />
+      </div>
     </section>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { BLOGS } from "./demo-data";
+import { BLOGS } from "./_demo-data";
 import BlogCard from "./blog-card";
 import HeroText from "@/components/text/hero-text";
 import { Search } from "lucide-react";

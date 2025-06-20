@@ -6,6 +6,11 @@ interface TitleTextProps {
   className?: string;
 }
 
+interface HeaderTextProps {
+  children: ReactNode;
+  className?: string;
+}
+
 export default function TitleText({ children, icon: Icon, className = "" }: TitleTextProps) {
   return (
     <div className={`flex items-center gap-3 mb-4 ${className}`}>
@@ -16,5 +21,13 @@ export default function TitleText({ children, icon: Icon, className = "" }: Titl
         {children}
       </h2>
     </div>
+  );
+}
+
+export function HeaderText({ children, className = "" }: HeaderTextProps) {
+  return (
+    <h2 className={`text-xl font-medium dark:text-gray-300 text-slate-800 ${className}`}>
+      {children}
+    </h2>
   );
 }

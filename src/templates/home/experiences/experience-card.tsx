@@ -12,7 +12,7 @@ import {
   Zap,
   Dot,
 } from "lucide-react";
-import { ExperienceProps } from "./constants";
+import { ExperienceProps } from "./_data";
 import PrimaryCard from "@/components/cards/primary-card";
 import LabelText from "@/components/text/label-text";
 import BodyText from "@/components/text/body-text";

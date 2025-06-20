@@ -1,11 +1,14 @@
 import React from "react";
 import Link from "next/link";
 
-import { BLOGS } from "./demo-data";
+import { BLOGS } from "./_demo-data";
 
 import { slugify } from "@/lib/slugify";
 import { colors } from "@/lib/colors";
 import { Calendar, Clock } from "lucide-react";
+import TitleText, { HeaderText } from "@/components/text/title-text";
+import BodyText from "@/components/text/body-text";
+import HeroText from "@/components/text/hero-text";
 
 type Props = {
   name: string;
@@ -22,13 +25,9 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
   return (
     <section className="container flex gap-10 py-20 mt-8">
       <div className="lg:w-2/3">
-        <h2 className="text-5xl font-medium opacity-90 leading-[60px]">{title}</h2>
+        <HeroText className="mt-2">{title}</HeroText>
         <div className="flx text-sm gap-6 mt-8">
-          <p
-            className={`${colors[1]} py-1.5 px-3 rounded-full`}
-          >
-            {topic}
-          </p>
+          <p className={`${colors[1]} py-1.5 px-3 rounded-full`}>{topic}</p>
           <p className="opacity-60 flx gap-2">
             <Clock size={14} />4 mins read
           </p>
@@ -37,7 +36,7 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
             {published}
           </p>
         </div>
-        <p className="opacity-75 mt-5">{body}</p>
+        <BodyText className="mt-8 text-lg">{body}</BodyText>
       </div>
       <div className="lg:w-1/3 flex flex-col gap-10 sticky top-20 mt-3">
         {BLOGS.filter((b) => slugify(b.title) !== name)?.map((data, index) => (
@@ -51,7 +50,7 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
                 {data.topic}
               </p>
             </div>
-            <h2 className="text-xl font-medium">{data.title}</h2>
+            <HeaderText className="mt-2">{data?.title}</HeaderText>
           </Link>
         ))}
       </div>

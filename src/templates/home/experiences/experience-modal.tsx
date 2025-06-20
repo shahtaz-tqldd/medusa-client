@@ -7,16 +7,10 @@ import HadronModal from "@/components/ui/hadron-modal";
 import LabelText from "@/components/text/label-text";
 
 // data
-import { ExperienceProps } from "./constants";
 
 // icons
 import { Award, Code } from "lucide-react";
-
-interface ExperienceModalProps {
-  data: ExperienceProps | null;
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-}
+import type { ExperienceModalProps } from "./_types";
 
 const ExperienceModal: React.FC<ExperienceModalProps> = ({
   data,
@@ -46,7 +40,7 @@ const ExperienceModal: React.FC<ExperienceModalProps> = ({
           </div>
 
           <div>
-             <LabelText icon={Code}>Technologies:</LabelText>
+            <LabelText icon={Code}>Technologies:</LabelText>
             <div className="mt-4 flex flex-wrap gap-2">
               {data.technologies.map((tech, index) => (
                 <span
