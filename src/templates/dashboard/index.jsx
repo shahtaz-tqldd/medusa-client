@@ -12,15 +12,12 @@ const Dashboard = () => {
       <PageTitle>Overview</PageTitle>
       <div className="space-y-8 mt-8">
         <MetricsCards />
-        <button className="" onClick={() => setShow(!show)}>
-          {show ? "Hide" : "Show"}
-        </button>
-        {show && (
-          <>
-            <VisitorGraph />
+       
+          <div className="grid grid-cols-2 gap-5">
             <VisitorList />
-          </>
-        )}
+            <VisitorGraph />
+          </div>
+       
       </div>
     </div>
   );

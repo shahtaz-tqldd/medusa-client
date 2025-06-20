@@ -9,12 +9,13 @@ interface ButtonProps {
   variant?: "primary" | "secondary" | "accent" | "rubix" | "nemo";
   size?: "xs" | "sm" | "md";
   role?: "button" | "presentation" | "a";
+  type?: string;
   onClick?: () => void;
 }
 
 const variantClasses = {
   primary:
-    "bg-violet-600/5 text-violet-900 dark:bg-white/10 dark:text-white border-violet-600/15 dark:border-violet-600/30",
+    "bg-blue-500 text-white border-none",
   secondary:
     "bg-blue-600/5 text-blue-900 dark:bg-white/10 dark:text-white border-blue-600/15 dark:border-blue-600/30",
   accent:
@@ -35,6 +36,7 @@ const Button: React.FC<ButtonProps> = ({
   className = "",
   variant = "primary",
   size = "sm",
+  type = "button",
   ...props
 }) => {
   const commonClasses = cn(

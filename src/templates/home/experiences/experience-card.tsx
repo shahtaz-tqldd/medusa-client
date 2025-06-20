@@ -13,6 +13,7 @@ import {
   Dot,
 } from "lucide-react";
 import { ExperienceProps } from "./constants";
+import PrimaryCard from "@/components/cards/primary-card";
 
 interface ExperienceCardProps {
   item: ExperienceProps;
@@ -20,14 +21,18 @@ interface ExperienceCardProps {
   setExpData: (data: ExperienceProps) => void;
 }
 
-const ExperienceCard: React.FC<ExperienceCardProps> = ({ item, setIsOpen, setExpData }) => {
+const ExperienceCard: React.FC<ExperienceCardProps> = ({
+  item,
+  setIsOpen,
+  setExpData,
+}) => {
   const handleReadMore = (data: ExperienceProps) => {
     setIsOpen(true);
     setExpData(data);
   };
 
   return (
-    <div className={`relative group dark:bg-white/[0.03] bg-blue-600/5 dark:border-white/5 border-blue-600/15 border border-dashed rounded-3xl p-8`}>
+    <PrimaryCard className="p-8 rounded-3xl">
       <div className="grid lg:grid-cols-3 gap-6 items-start">
         {/* Left Column - Main Info */}
         <div className="lg:col-span-2 space-y-4">
@@ -39,9 +44,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ item, setIsOpen, setExp
               <h2 className="text-xl text-gray-900 dark:text-white/90 group-hover:dark:text-white dark:group-hover:text-gray-200 transition-colors">
                 {item.position}
               </h2>
-              <p className={`${item.companyColor}`}>
-                {item.company}
-              </p>
+              <p className={`${item.companyColor}`}>{item.company}</p>
             </div>
           </div>
           <div className="flex flex-wrap gap-6 mt-3 text-sm text-gray-600 dark:text-gray-400">
@@ -79,9 +82,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ item, setIsOpen, setExp
           <div className="space-y-6">
             <div className="flex items-center gap-2 mb-3">
               <Code className={`w-5 h-5 ${item.companyColor}`} />
-              <h4 className="font-medium opacity-80">
-                Technologies
-              </h4>
+              <h4 className="font-medium opacity-80">Technologies</h4>
             </div>
             <div className="flex flex-wrap gap-2">
               {item.technologies.slice(0, 4).map((tech, idx) => (
@@ -100,7 +101,9 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ item, setIsOpen, setExp
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
               <Award size={16} />
-              <span className="block pt-0.5">{item.achievements.length} Key Achievements</span>
+              <span className="block pt-0.5">
+                {item.achievements.length} Key Achievements
+              </span>
             </div>
           </div>
 
@@ -114,11 +117,12 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ item, setIsOpen, setExp
         </div>
       </div>
 
-      {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 z-0 opacity-3">
-        <Zap size={200} className="text-gray-400" strokeWidth={0.3} />
-      </div>
-    </div>
+      <Zap
+        size={200}
+        className="text-gray-400 absolute top-0 right-0 z-0 opacity-3"
+        strokeWidth={0.3}
+      />
+    </PrimaryCard>
   );
 };
 
