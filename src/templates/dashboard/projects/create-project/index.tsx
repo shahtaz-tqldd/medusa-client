@@ -340,7 +340,7 @@ export default function CreateProjectForm() {
                 {Array.from({ length: 4 }).map((_, index) => (
                   <PrimaryCard
                     key={index}
-                    className="px-0 py-0 h-32 overflow-hidden"
+                    className="md:px-0 md:py-0 h-32 overflow-hidden"
                   >
                     {imagePreviews[index] ? (
                       <div className="relative h-32">

@@ -1,22 +1,24 @@
 import React from "react";
+import BodyText from "../text/body-text";
 import { Mail, Phone } from "lucide-react";
 import { SOCIAL_LINK } from "./data";
 
 const Footer = () => {
   return (
     <footer>
-      <div className="container pb-6 pt-10 border-t dark:border-t-white/20 border-t-purple-500/20 border-dashed flex">
+      <div className="container pb-6 pt-10 border-t dark:border-t-white/20 border-t-blue-500/20 border-dashed flex md:flex-row flex-col-reverse gap-6">
         <div>
-          <p className="opacity-60 text-sm max-w-md">
+          <BodyText className="text-sm max-w-md">
             This portfolio site has been designed with Figma, developed with
             Next JS, tailwind CSS, Framer motion & three js. The 3d robot at the
             top has been taken from Sketchfab.
-          </p>
+          </BodyText>
+
           <p className="text-xs mt-10 opacity-50">
             All rights reserved to Shahtaz &copy;{new Date().getFullYear()}
           </p>
         </div>
-        <div className="mx-auto space-y-3">
+        <div className="md:mx-auto space-y-3">
           <div>
             <h2 className="flx gap-2.5 ">
               <Mail size={14} className="text-gray-900 dark:text-white" />

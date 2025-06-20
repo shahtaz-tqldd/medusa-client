@@ -1,47 +1,87 @@
-import React from "react";
+"use client";
 
-export default function DataTable({ columns = [], data = [] }) {
+import {
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  ColumnDef,
+} from "@tanstack/react-table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+interface DataTableProps<TData> {
+  columns: ColumnDef<TData, any>[];
+  data: TData[];
+  className?: string;
+  emptyMessage?: string;
+}
+
+export function DataTable<TData>({
+  columns,
+  data,
+  className = "",
+  emptyMessage = "No data found.",
+}: DataTableProps<TData>) {
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
   return (
-    <div className="w-full overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/5">
-      <table className="min-w-full text-sm text-left">
-        <thead className="bg-zinc-100 dark:bg-zinc-800 text-sm text-zinc-700 dark:text-white">
-          <tr>
-            {columns.map((col, index) => (
-              <th
-                key={index}
-                className="px-6 py-4 font-medium whitespace-nowrap"
+    <div
+      className={`rounded-xl border border-zinc-200 dark:border-white/5 overflow-x-auto ${className}`}
+    >
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow
+              key={headerGroup.id}
+              className="bg-blue-200/10 text-muted-foreground"
+            >
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id} className="text-blue-600 dark:text-blue-400">
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                className="dark:hover:bg-blue-300/10 hover:bg-blue-500/[0.01] bg-gray-50 dark:bg-blue-200/5 dark:text-slate-300 text-slate-700 tr"
               >
-                {col.header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.length === 0 ? (
-            <tr>
-              <td
-                colSpan={columns.length}
-                className="px-6 py-4 text-center text-zinc-600 dark:text-white/75"
-              >
-                No data available.
-              </td>
-            </tr>
-          ) : (
-            data.map((row, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className="border-t border-zinc-200 dark:border-white/5 hover:bg-zinc-50 dark:hover:bg-zinc-800/40 text-zinc-700 dark:text-white/60"
-              >
-                {columns.map((col, colIndex) => (
-                  <td key={colIndex} className="px-6 py-4 whitespace-nowrap">
-                    {col.render ? col.render(row) : row[col.field]}
-                  </td>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id} className="py-4">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
                 ))}
-              </tr>
+              </TableRow>
             ))
+          ) : (
+            <TableRow>
+              <TableCell
+                colSpan={columns.length}
+                className="text-center py-6 text-muted-foreground"
+              >
+                {emptyMessage}
+              </TableCell>
+            </TableRow>
           )}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 }

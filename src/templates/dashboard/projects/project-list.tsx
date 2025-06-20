@@ -1,27 +1,65 @@
-import React from "react";
-import DataTable from "@/components/table/table";
-import { PROJECT_TABLE_HEADER } from "./data";
-import { project_demo_data } from "./demo-data";
-import { Ellipsis } from "lucide-react";
+"use client"
 
-const ProjectList = () => {
-  const project_data = project_demo_data?.map((item) => ({
-    id: item.id,
-    project: <div>{item?.name}</div>,
-    type: item?.type,
-    status: <span className="bg-green-400/10 py-1.5 px-3 rounded-full capitalize text-green-500 border border-green-500/20 text-xs">{item?.status}</span>,
-    createdAt: item?.created_at,
-    action: (
+import React from "react";
+import { ColumnDef } from "@tanstack/react-table";
+import { Project } from "./_types";
+import { Ellipsis } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Capsule from "@/components/status/capsule";
+import { DataTable } from "@/components/table/table";
+
+const projectColumns: ColumnDef<Project>[] = [
+  {
+    accessorKey: "name",
+    header: "Project",
+    cell: ({ row }) => <div className="font-medium">{row.original.name}</div>,
+  },
+  {
+    accessorKey: "type",
+    header: "Type",
+  },
+  {
+    accessorKey: "created_at",
+    header: "Created",
+    cell: ({ row }) => (
+      <span className="text-xs text-muted-foreground">
+        {new Date(row.original.created_at).toLocaleDateString()}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <Capsule
+        variant="success"
+        className={`text-xs capitalize ${
+          row.original.status === "completed"
+            ? "border-green-400 text-green-500"
+            : "border-yellow-400 text-yellow-500"
+        }`}
+      >
+        {row.original.status}
+      </Capsule>
+    ),
+  },
+  {
+    id: "actions",
+    header: "",
+    cell: () => (
       <div className="flex justify-end">
-        <button className="h-7 w-7 rounded-full center hover:bg-white/5 tr group">
-          <Ellipsis size={16} className="group-hover:dark:text-white tr" />
-        </button>
+        <Button variant="ghost" size="icon" className="h-7 w-7">
+          <Ellipsis size={16} />
+        </Button>
       </div>
     ),
-  }));
+  },
+];
+
+const ProjectList = ({ projects }: { projects: Project[] }) => {
   return (
-    <div className="mt-6">
-      <DataTable columns={PROJECT_TABLE_HEADER} data={project_data} />
+    <div className="p-4">
+      <DataTable columns={projectColumns} data={projects} />
     </div>
   );
 };

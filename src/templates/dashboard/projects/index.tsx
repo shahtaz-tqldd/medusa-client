@@ -1,10 +1,16 @@
 import React from "react";
-import PageTitle from "@/components/reusable/page-title";
-import ProjectList from "./project-list";
-import { Plus } from "lucide-react";
 import Link from "next/link";
 
+import PageTitle from "@/components/reusable/page-title";
+import ProjectList from "./project-list";
+
+import { Plus } from "lucide-react";
+
+import { project_demo_data } from "./_demo-data";
+import type { Project } from "./_types";
+
 const ProjectPage = () => {
+  const data: Project[] = project_demo_data;
   return (
     <div>
       <div className="flbx">
@@ -14,7 +20,7 @@ const ProjectPage = () => {
           New Project
         </Link>
       </div>
-      <ProjectList />
+      <ProjectList projects={data} />
     </div>
   );
 };
