@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import HadronModal from "@/components/ui/hadron-modal";
 import Image from "next/image";
+
+import HadronModal from "@/components/ui/hadron-modal";
+
 import { ArrowLeft, ArrowRight, CircleCheck, Dot } from "lucide-react";
+
 import type { Project } from "./types";
-import { projects } from "./data";
 import type { MetaProps } from "./types";
+import { projects } from "./data";
 import { colors } from "@/lib/colors";
 
 interface ProjectModalProps {

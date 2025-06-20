@@ -18,7 +18,7 @@ export default function SwithDarkMode() {
         checked={theme === "dark"}
         onCheckedChange={() => setTheme(theme === "dark" ? "light" : "dark")}
       />
-      <label htmlFor="dark-mode">{theme === "dark" ? "Light" : "Dark"}</label>
+      <label htmlFor="dark-mode">{theme === "dark" ? "Let there be Light" : "Just get Dark"}</label>
     </div>
   );
 }

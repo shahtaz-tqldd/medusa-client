@@ -1,6 +1,6 @@
 import React from "react";
 
-const FadingGrid: React.FC = () => {
+export default function FadingGrid(){
   return (
     <div className="absolute inset-0 -z-10 pointer-events-none">
       <svg
@@ -47,5 +47,3 @@ const FadingGrid: React.FC = () => {
     </div>
   );
 };
-
-export default FadingGrid;

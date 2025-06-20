@@ -1,9 +1,11 @@
+"use client"
+
 import React, { useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
 // icons
 import LordIcon from "@/assets/icons/lord-icon";
 import { X } from "lucide-react";
-import { useTheme } from "next-themes";
 
 export const InitialUI: React.FC = () => {
   const { theme } = useTheme();

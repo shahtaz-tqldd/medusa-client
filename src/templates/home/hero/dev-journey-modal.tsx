@@ -1,5 +1,16 @@
 import React from "react";
+
+// components
+import BodyText from "@/components/text/body-text";
+import HeroText from "@/components/text/hero-text";
 import HadronModal from "@/components/ui/hadron-modal";
+import TitleText from "@/components/text/title-text";
+
+// icons
+import { Code, Zap } from "lucide-react";
+
+// data
+import { JOURNEY_STEPS } from "./constants";
 
 interface DevJourneyModalProps {
   isOpen: boolean;
@@ -10,25 +21,29 @@ const DevJourneyModal: React.FC<DevJourneyModalProps> = ({
   isOpen,
   setIsOpen,
 }) => {
+  
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className="max-w-3xl mx-auto pt-12 space-y-6">
-        <h2 className="text-3xl">My Development Journey</h2>
-        <p className="opacity-75 leading-relaxed">
-          It all started with a blinking cursor. A blank terminal, a simple
-          `hello world`, and a desire to create something meaningful. Days
-          turned into nights as bugs became puzzles, and every solved issue lit
-          a spark of confidence.
-        </p>
-        <p className="opacity-75 leading-relaxed">
-          From struggling with layout shifts to mastering component lifecycles,
-          the path was filled with both frustration and joy. Each line of code
-          wasn’t just logic—it was a milestone.
-        </p>
-        <p className="opacity-75 leading-relaxed">
-          And though the journey never truly ends, we look back and realize:
-          we’re no longer just writing code. We’re crafting experiences.
-        </p>
+      <div className="max-w-3xl mx-auto pt-6 pb-12 px-4 relative">
+        <HeroText>My Development Journey</HeroText>
+
+        <div className="space-y-10 mt-12">
+          {JOURNEY_STEPS.map((item, index) => (
+            
+            <div key={index} className="space-y-6">
+              <TitleText icon={item.icon}>{item.title}</TitleText>
+              <BodyText>{item.content}</BodyText>
+            </div>
+            
+          ))}
+        </div>
+        <div className="absolute top-20 left-8 opacity-5">
+            <Zap size={200} strokeWidth={0.5} className="text-yellow-400 animate-pulse" />
+          </div>
+          <div className="absolute bottom-20 right-8 opacity-5">
+            <Code size={200} strokeWidth={0.5} className="text-blue-400 animate-pulse" />
+          </div>
+
       </div>
     </HadronModal>
   );

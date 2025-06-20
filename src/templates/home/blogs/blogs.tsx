@@ -16,7 +16,7 @@ const Blogs = () => {
           <TextButton onClick={handleNavigate}>Explore Them</TextButton>
         </div>
       </div>
-      <div className="mt-12 grid grid-cols-3 gap-8">
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
         {BLOGS.slice(0, 3)?.map((data, index) => (
           <BlogCard key={index} data={data} index={index} />
         ))}
