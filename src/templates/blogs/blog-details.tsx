@@ -73,77 +73,79 @@ export default BlogDetailsPage;
 interface RenderBlogsProps {
   content: BlogContentBlock[];
 }
-
 const RenderBlogs: React.FC<RenderBlogsProps> = ({ content }) => {
   return (
     <div className="mt-8 space-y-6">
       {content.map((block, index) => {
         switch (block.type) {
           case "text_content":
-            return (
-              <BodyText key={index} className="text-lg">
-                {block.value}
-              </BodyText>
-            );
-
           case "heading_content":
-            return (
-              <h2
-                key={index}
-                className="text-2xl font-semibold text-slate-800 dark:text-gray-200 mt-10 mb-4"
-              >
-                {block.value}
-              </h2>
-            );
+          case "quote_content":
+            if (typeof block.value === "string") {
+              const className =
+                block.type === "heading_content"
+                  ? "text-2xl font-semibold text-slate-800 dark:text-gray-200 mt-10 mb-4"
+                  : block.type === "quote_content"
+                  ? "border-l-4 border-blue-500 pl-4 italic text-slate-600 dark:text-gray-400"
+                  : "text-lg";
+
+              const Wrapper = block.type === "heading_content" ? "h2" : block.type === "quote_content" ? "blockquote" : BodyText;
+
+              return (
+                <Wrapper key={index} className={className}>
+                  {block.value}
+                </Wrapper>
+              );
+            }
+            return null;
 
           case "code_content":
-            return (
-              <div className="my-10">
-                <pre key={index} className="language-javascript rounded-xl">
-                  <code
-                    dangerouslySetInnerHTML={{
-                      __html: Prism.highlight(
-                        block.value,
-                        Prism.languages.javascript,
-                        "javascript"
-                      ),
-                    }}
-                  />
-                </pre>
-              </div>
-            );
+            if (typeof block.value === "string") {
+              return (
+                <div className="my-10" key={index}>
+                  <pre className="language-javascript rounded-xl">
+                    <code
+                      dangerouslySetInnerHTML={{
+                        __html: Prism.highlight(
+                          block.value,
+                          Prism.languages.javascript,
+                          "javascript"
+                        ),
+                      }}
+                    />
+                  </pre>
+                </div>
+              );
+            }
+            return null;
 
           case "image_content":
-            return (
-              <img
-                key={index}
-                src={block.value}
-                alt={`blog-image-${index}`}
-                className="w-full rounded-lg shadow-sm"
-              />
-            );
-
-          case "quote_content":
-            return (
-              <blockquote
-                key={index}
-                className="border-l-4 border-blue-500 pl-4 italic text-slate-600 dark:text-gray-400"
-              >
-                {block.value}
-              </blockquote>
-            );
+            if (typeof block.value === "string") {
+              return (
+                <img
+                  key={index}
+                  src={block.value}
+                  alt={`blog-image-${index}`}
+                  className="w-full rounded-lg shadow-sm"
+                />
+              );
+            }
+            return null;
 
           case "list_content":
-            return (
-              <ul
-                key={index}
-                className="list-disc space-y-2 pl-6 text-slate-600 dark:text-gray-400"
-              >
-                {block?.value?.map((item: string, i: number) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
-            );
+            if (Array.isArray(block.value)) {
+              return (
+                <ul
+                  key={index}
+                  className="list-disc space-y-2 pl-6 text-slate-600 dark:text-gray-400"
+                >
+                  {block.value.map((item: string, i: number) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              );
+            }
+            return null;
 
           default:
             return null;
