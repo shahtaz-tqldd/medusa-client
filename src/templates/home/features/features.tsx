@@ -37,7 +37,7 @@ const Features: React.FC = () => {
             developed enormous amount of software to get the perfection. I have
             worked with React, Node Js.
           </BodyText>
-          <AnimateDiv delay={0.5}>
+          <AnimateDiv delay={0.4}>
             <div className="flex flex-wrap mt-8 md:mt-12 gap-2.5">
               {skills.slice(0, 9)?.map(({ name, icon: Icon }, index) => (
                 <div
@@ -56,7 +56,7 @@ const Features: React.FC = () => {
               </button>
             </div>
           </AnimateDiv>
-          <AnimateDiv delay={0.7}>
+          <AnimateDiv delay={0.5}>
             <SkillSearch />
           </AnimateDiv>
         </div>

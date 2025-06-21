@@ -19,7 +19,7 @@ const BlogPage = () => {
           <Search className="absolute top-1/2 -translate-y-1/2 left-3 h-4 w-4 opacity-50" />
         </div>
       </div>
-      <div className="mt-6 grid grid-cols-3 gap-8">
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {BLOGS.map((data, index) => (
           <BlogCard key={index} data={data} index={index} />
         ))}

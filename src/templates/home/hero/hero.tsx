@@ -25,7 +25,7 @@ const Hero: React.FC = () => {
         <div className="mt-20">
           <AnimatedShinyText>✨ Software Developer</AnimatedShinyText>
           <HeroText className="max-w-2xl">{HERO_STRING}</HeroText>
-          <AnimateDiv delay={0.8}>
+          <AnimateDiv delay={0.5}>
             <p className="text-base md:text-lg mt-12 relative">
               <span className="dark:text-gray-400 text-slate-600">
                 Interested to know my development journey?
@@ -38,13 +38,15 @@ const Hero: React.FC = () => {
               </button>
             </p>
           </AnimateDiv>
-          <div className="mt-12 md:mt-32 flex items-center gap-2 font-medium dark:text-gray-300 text-slate-600 text-sm">
-            <h2 className="">React</h2>
-            <Dot />
-            <h2 className="">Node JS</h2>
-            <Dot />
-            <h2 className="">Python & Django</h2>
-          </div>
+          <AnimateDiv delay={0.6}>
+            <div className="mt-12 md:mt-32 flex items-center gap-2 font-medium dark:text-gray-300 text-slate-600 text-sm">
+              <h2 className="">React</h2>
+              <Dot />
+              <h2 className="">Node JS</h2>
+              <Dot />
+              <h2 className="">Python & Django</h2>
+            </div>
+          </AnimateDiv>
         </div>
         <HeroEve />
       </div>

@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       "miro.medium.com",
       "cdn.prod.website-files.com",
       "media.licdn.com",
+      "xyflow.com",
     ],
   },
 };
