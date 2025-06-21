@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import type {Tab} from "@/assets/types/tabs"
+import { Tab } from "@/templates/home/projects/_types";
 
 export const Tabs = ({
   tabs: propTabs,
@@ -11,8 +11,8 @@ export const Tabs = ({
   activeTabClassName,
   tabClassName,
   contentClassName,
-  active, 
-  setActive
+  active,
+  setActive,
 }: {
   tabs: Tab[];
   containerClassName?: string;
@@ -20,9 +20,8 @@ export const Tabs = ({
   tabClassName?: string;
   contentClassName?: string;
   active: Tab;
-  setActive : (active:Tab)=> void;
+  setActive: (active: Tab) => void;
 }) => {
-  
   const [tabs, setTabs] = useState<Tab[]>(propTabs);
 
   const moveSelectedTabToTop = (idx: number) => {
@@ -51,7 +50,10 @@ export const Tabs = ({
             }}
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
-            className={cn("relative px-3 md:px-4 py-2 md:py-2.5 text-sm rounded-full", tabClassName)}
+            className={cn(
+              "relative px-3 md:px-4 py-2 md:py-2.5 text-sm rounded-full",
+              tabClassName
+            )}
             style={{
               transformStyle: "preserve-3d",
             }}
@@ -67,10 +69,15 @@ export const Tabs = ({
               />
             )}
 
-            <span className={`relative ${active.value === tab.value? "dark:text-black text-white":"text-black dark:text-white"}`}>
+            <span
+              className={`relative ${
+                active.value === tab.value
+                  ? "dark:text-black text-white"
+                  : "text-black dark:text-white"
+              }`}
+            >
               {tab.title}
             </span>
-
           </button>
         ))}
       </div>

@@ -1,13 +1,8 @@
-import amc from "@/assets/images/amc.jpg";
 import boer from "@/assets/images/boer.jpg";
-import dzul from "@/assets/images/dzul.png";
-import dzul2 from "@/assets/images/dzul-2.jpg";
 import ecom1 from "@/assets/images/ecom.webp";
 import ecom2 from "@/assets/images/ecom2.jpg";
 import ecom3 from "@/assets/images/ecom3.jpg";
 import ecom4 from "@/assets/images/ecom4.png";
-import genomart from "@/assets/images/genomart.png";
-import algostar from "@/assets/images/algostar.png";
 
 export const projectTabs = [
   {
