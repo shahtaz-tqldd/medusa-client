@@ -84,9 +84,9 @@ const Experiences: React.FC = () => {
   };
 
   return (
-    <section className="container py-20 relative">
+    <section className="container py-12 md:py-20 relative">
       <HeroText className="md:text-left text-center">Work Experiences</HeroText>
-      <div className="mt-8 md:mt-20">
+      <div className="mt-8 md:mt-12">
         <div className="relative" ref={timelineRef}>
           <div className="hidden md:block absolute left-6 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-white/10"></div>
           <motion.div
@@ -120,6 +120,7 @@ const Experiences: React.FC = () => {
                 <div className="md:ml-32">
                   <ExperienceCard
                     item={item}
+                    index={index}
                     setExpData={setExpData}
                     setIsOpen={setIsOpen}
                   />

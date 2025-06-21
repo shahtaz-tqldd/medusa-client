@@ -5,9 +5,9 @@ import HadronModal from "@/components/ui/hadron-modal";
 
 import { ArrowLeft, ArrowRight, CircleCheck, Dot } from "lucide-react";
 
-import type { Project } from "./types";
-import type { MetaProps } from "./types";
-import { projects } from "./data";
+import type { Project } from "./_types";
+import type { MetaProps } from "./_types";
+import { projects } from "./_demo_data";
 import { colors } from "@/lib/colors";
 
 interface ProjectModalProps {

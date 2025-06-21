@@ -4,7 +4,7 @@ import { DynamicModelViewer, ErrorBoundary } from "./_model";
 const HeroEve: React.FC = () => {
   const isBrowser = typeof window !== "undefined";
   return (
-    <div className="w-full md:w-2/5 h-full relative mt-52 md:mt-12">
+    <div className="w-full md:w-2/5 h-full relative mt-20 md:mt-12">
       <div className="relative z-[1] h-[300px] md:h-[500px] w-full pointer-events-none">
         {isBrowser && (
           <ErrorBoundary>

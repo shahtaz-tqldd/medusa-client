@@ -7,8 +7,8 @@ import { Search } from "lucide-react";
 const BlogPage = () => {
   return (
     <section className="container py-20">
-      <div className="flbx mt-12">
-        <HeroText>Blogs</HeroText>
+      <div className="flbx mt-6">
+        <HeroText className="-translate-y-4">Blogs</HeroText>
         <div className="relative w-[300px]">
           <input
             type="text"
@@ -19,7 +19,7 @@ const BlogPage = () => {
           <Search className="absolute top-1/2 -translate-y-1/2 left-3 h-4 w-4 opacity-50" />
         </div>
       </div>
-      <div className="mt-12 grid grid-cols-3 gap-8">
+      <div className="mt-6 grid grid-cols-3 gap-8">
         {BLOGS.map((data, index) => (
           <BlogCard key={index} data={data} index={index} />
         ))}

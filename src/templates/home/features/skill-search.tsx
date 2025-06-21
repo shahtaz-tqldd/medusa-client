@@ -1,15 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import Button from "@/components/buttons/primary-button";
-import { Search, X } from "lucide-react";
+import BodyText from "@/components/text/body-text";
+
+// icons
+import { Search, ShieldX, X } from "lucide-react";
+
+// data
 import { skills } from "./_demo-data";
 
 const SkillSearch: React.FC = () => {
   const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const handleButtonClick = () => {
     setIsInputVisible((prev) => !prev);
@@ -25,6 +31,20 @@ const SkillSearch: React.FC = () => {
       searchTerm.length >= 2 &&
       skill.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Auto-scroll when search results appear
+  useEffect(() => {
+    if (searchTerm.length > 2 && searchContainerRef.current) {
+      // Small delay to ensure the dropdown has rendered
+      setTimeout(() => {
+        searchContainerRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        });
+      }, 100);
+    }
+  }, [searchTerm, filteredSkills.length]);
 
   const inputVariants = {
     hidden: { opacity: 0, width: 0, x: -20 },
@@ -47,10 +67,10 @@ const SkillSearch: React.FC = () => {
   };
 
   return (
-    <div className="mt-20">
-      <h2 className="opacity-75 mb-5">Looking for any particular skillset?</h2>
+    <div className="mt-20 hidden md:block" ref={searchContainerRef}>
+      <BodyText>Looking for any particular skillset?</BodyText>
 
-      <div className="flex w-full relative h-10">
+      <div className="flex w-full relative h-10 mt-6">
         <AnimatePresence mode="sync">
           {isInputVisible ? (
             <motion.div
@@ -84,7 +104,7 @@ const SkillSearch: React.FC = () => {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute z-[999999] top-full mt-2 w-[360px] bg-white dark:bg-[#222] border border-dashed border-black/10 dark:border-white/10 rounded-2xl overflow-hidden shadow-lg"
+                    className="absolute top-full mt-2 w-[360px] bg-white dark:bg-[#222] border border-dashed border-black/10 dark:border-white/10 rounded-2xl overflow-hidden shadow-lg"
                   >
                     {filteredSkills.length > 0 ? (
                       filteredSkills.map((skill) => (
@@ -124,16 +144,15 @@ const SkillSearch: React.FC = () => {
                           </div>
 
                           {/* Description */}
-                          <p className="text-xs opacity-70 mt-3 line-clamp-3">
+                          <BodyText className="text-sm mt-4">
                             {skill.description}
-                          </p>
+                          </BodyText>
                         </li>
                       ))
                     ) : (
-                      <li className="px-4 py-2 center text-sm opacity-60 h-40">
-                        Sorry! No skill has found what are you typing, maybe I
-                        have not learned the skill you are trying to find, but I
-                        am a fast learner! Feel free to remind me
+                      <li className="px-4 py-2 text-sm opacity-60 h-40 center flex-col gap-3">
+                        <ShieldX />
+                        Sorry, No results found!
                       </li>
                     )}
                   </motion.ul>

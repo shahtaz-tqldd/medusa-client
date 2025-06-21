@@ -18,3 +18,9 @@ export interface MetaProps {
   nextId: string;
   prevId: string;
 }
+
+export type Tab = {
+  title: string;
+  value: string;
+  content?: string | React.ReactNode | any;
+};

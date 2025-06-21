@@ -1,12 +1,15 @@
 "use client";
 import React from "react";
 
-import Button from "@/components/buttons/primary-button";
-import { Input, TextArea } from "../ui/input";
-import { Save, Send } from "lucide-react";
-import HeroText from "../text/hero-text";
-import HadronModal from "../ui/hadron-modal";
+// components
 import BodyText from "../text/body-text";
+import Button from "@/components/buttons/primary-button";
+import HadronModal from "../ui/hadron-modal";
+import HeroText from "../text/hero-text";
+import { Input, TextArea } from "../ui/input";
+
+// icons
+import { Send } from "lucide-react";
 
 export interface EmailModalProps {
   isOpen: boolean;
@@ -16,7 +19,7 @@ export interface EmailModalProps {
 const EmailModal: React.FC<EmailModalProps> = ({ isOpen, setIsOpen }) => {
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className="max-w-3xl mx-auto pt-6 pb-12 px-4 relative">
+      <div className="max-w-xl mx-auto pt-6 pb-12 px-4 relative">
         <HeroText>Send Email</HeroText>
         <BodyText className="mt-2">
           Write me your queries and ideas you want to discuss
@@ -34,12 +37,11 @@ const EmailModal: React.FC<EmailModalProps> = ({ isOpen, setIsOpen }) => {
         </div>
         <div className="grid grid-cols-2 gap-3 mt-8">
           <Button
-            icon={Save}
-            variant="primary"
+            variant="secondary"
             size="md"
-            className="justify-center"
+            className="justify-center border-none"
           >
-            Save Draft
+            Cancel
           </Button>
           <Button
             icon={Send}

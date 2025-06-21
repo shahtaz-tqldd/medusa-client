@@ -9,11 +9,10 @@ import ProjectModal from "./project-modal";
 import { Tabs } from "@/components/ui/tabs";
 
 // types
-import type { MetaProps } from "./types";
-import type { Tab } from "@/assets/types/tabs";
+import type { MetaProps, Tab } from "./_types";
 
 // data
-import { projects, projectTabs } from "./data";
+import { projects, projectTabs } from "./_demo_data";
 
 const ProjectList = () => {
   const [active, setActive] = useState<Tab>(projectTabs[0]);
@@ -36,17 +35,18 @@ const ProjectList = () => {
   };
 
   return (
-    <section className="container py-24">
+    <section className="container py-12 md:py-20">
       <div className="flbx flex-col md:flex-row gap-5">
         <HeroText>Project List</HeroText>
         <div className="relative">
           <Tabs tabs={projectTabs} active={active} setActive={setActive} />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mt-8 md:mt-12">
         {projects?.map((data, index) => (
           <ProjectCard
             key={index}
+            index={index}
             data={data}
             handleSetProject={handleSetProject}
           />
