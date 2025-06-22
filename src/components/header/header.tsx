@@ -59,13 +59,13 @@ const Header: React.FC = () => {
         <div className="container flbx h-16 md:h-20 px-6 lg:px-8">
           <Link href={"/"}>_shahtaz</Link>
           <div className="hidden md:flex items-center gap-10">
-            <div className="flx gap-10 text-sm">
+            <div className="flx gap-5 text-sm">
               {HEADER_LINKS?.map(({ title, link, icon: Icon, id }, index) => (
                 <Link
                   key={index}
                   href={link}
                   target={id === 1 ? "_blank" : "_self"}
-                  className="flx gap-2.5"
+                  className="flx gap-2.5 hover:dark:bg-white/10 hover:bg-blue-500/10 py-2 pr-4 pl-3 rounded-full tr"
                 >
                   <Icon size={16} />
                   <span className="block">{title}</span>

@@ -1,14 +1,13 @@
-"use client"
+"use client";
 
 import React, { useEffect, useRef } from "react";
-import { useTheme } from "next-themes";
 
 // icons
 import LordIcon from "@/assets/icons/lord-icon";
 import { X } from "lucide-react";
+import BodyText from "../text/body-text";
 
 export const InitialUI: React.FC = () => {
-  const { theme } = useTheme();
   return (
     <div className="h-full center flex-col">
       <LordIcon
@@ -16,14 +15,14 @@ export const InitialUI: React.FC = () => {
         height={140}
         width={140}
         trigger="loop"
-        primary={theme === "dark" ? "#9cf4a7" : "#F75A5A"}
-        secondary={theme === "dark" ? "#30c9e8" : "#03A791"}
+        primary="#2b7fff"
+        secondary="#03A791"
       />
-      <p className="text-sm mt-10 opacity-80 text-center">
+      <BodyText className="text-sm mt-10 text-center">
         Hey, I might not be online at the moment, but don’t worry — my AI
         assistant, ERA, is here to help. Feel free to ask ERA anything you'd
         like to know about me!
-      </p>
+      </BodyText>
     </div>
   );
 };

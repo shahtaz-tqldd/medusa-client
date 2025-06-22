@@ -26,6 +26,23 @@ const ChatUi: React.FC = () => {
   const { theme } = useTheme();
   const [messages, setMessages] = useState<MessageItem[]>([]);
 
+  // Handle viewport height changes for mobile keyboard
+  useEffect(() => {
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    setVH();
+    window.addEventListener('resize', setVH);
+    window.addEventListener('orientationchange', setVH);
+
+    return () => {
+      window.removeEventListener('resize', setVH);
+      window.removeEventListener('orientationchange', setVH);
+    };
+  }, []);
+
   useEffect(() => {
     if (messages?.length > 0 && messages?.length % 2 === 0) {
       setMessages((prev) => [
@@ -66,10 +83,27 @@ const ChatUi: React.FC = () => {
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="dark:bg-[#121212]/80 bg-gray-50 backdrop-blur-2xl max-h-screen md:max-h-[620px] h-screen md:h-[620px] w-screen md:w-[400px] mr-0 md:mr-10 -mb-[84px] md:-mb-14 border-0 md:border dark:border-white/20 border-blue-600/10 rounded-none md:rounded-2xl px-5 py-4 flex flex-col">
-          <ChatHeader setIsOpen={setIsOpen} />
+        <DropdownMenuContent 
+          className={`
+            dark:bg-[#121212]/80 bg-gray-50 backdrop-blur-2xl 
+            max-h-screen md:max-h-[620px] h-screen md:h-[620px] w-screen md:w-[400px] 
+            mr-0 md:mr-10 -mb-[84px] md:-mb-14 
+            border-0 md:border dark:border-white/20 border-blue-600/10 
+            rounded-none md:rounded-2xl px-5 py-4 flex flex-col
+          `}
+        >
+          {/* Mobile-specific sticky header */}
+          <div className="md:hidden sticky top-0 bg-gray-50 dark:bg-[#121212]/80 backdrop-blur-2xl z-10 -mx-5 px-5 py-4 border-b border-black/10 dark:border-white/10">
+            <ChatHeader setIsOpen={setIsOpen} />
+          </div>
+          
+          {/* Desktop header */}
+          <div className="hidden md:block">
+            <ChatHeader setIsOpen={setIsOpen} />
+          </div>
+          
           <div
-            className="h-full flex-1 overflow-y-auto pr-1 my-3 flex flex-col"
+            className={`flex-1 overflow-y-auto pr-1 flex flex-col my-3 md:my-3`}
             style={{
               scrollbarWidth: "none", // Firefox
               msOverflowStyle: "none", // IE/Edge
@@ -110,11 +144,23 @@ const ChatUi: React.FC = () => {
             )}
           </div>
 
-          <ChatInputBox
-            message={message}
-            setMessage={setMessage}
-            setMessages={setMessages}
-          />
+          {/* Mobile-specific sticky input */}
+          <div className="md:hidden sticky bottom-0 bg-gray-50 dark:bg-[#121212]/80 backdrop-blur-2xl -mx-5 px-5 py-4 border-t border-black/10 dark:border-white/10">
+            <ChatInputBox
+              message={message}
+              setMessage={setMessage}
+              setMessages={setMessages}
+            />
+          </div>
+          
+          {/* Desktop input */}
+          <div className="hidden md:block">
+            <ChatInputBox
+              message={message}
+              setMessage={setMessage}
+              setMessages={setMessages}
+            />
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

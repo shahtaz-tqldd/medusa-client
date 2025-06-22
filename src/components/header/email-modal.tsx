@@ -40,6 +40,7 @@ const EmailModal: React.FC<EmailModalProps> = ({ isOpen, setIsOpen }) => {
             variant="secondary"
             size="md"
             className="justify-center border-none"
+            onClick={() => setIsOpen(false)}
           >
             Cancel
           </Button>

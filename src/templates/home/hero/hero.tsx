@@ -11,8 +11,8 @@ import { AnimatedShinyText } from "@/components/text/shiny-text";
 
 // icons
 import { Dot } from "lucide-react";
-import BodyText from "@/components/text/body-text";
 import AnimateDiv from "@/components/animation/animate-div";
+import Image from "next/image";
 
 const Hero: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +49,12 @@ const Hero: React.FC = () => {
           </AnimateDiv>
         </div>
         <HeroEve />
+        {/* <div className="relative -translate-x-20">
+          <Image src="/shahtaz.png" alt="" height={500} width={500} className="" />
+          <div className="w-full h-20 absolute bottom-0 left-0 right-0  bg-gradient-to-t dark:from-[#121212] from-white dark:to-black/0 to-white/0">
+
+          </div>
+        </div> */}
       </div>
       <FadingGrid />
       {isOpen && <DevJourneyModal isOpen={isOpen} setIsOpen={setIsOpen} />}

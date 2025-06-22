@@ -64,9 +64,9 @@ const HadronModal: React.FC<HadronModalProps> = ({
             >
               <button
                 onClick={handleCloseModal}
-                className="absolute top-5 md:top-10 right-5 md:right-10 text-white/90 hover:text-red-500 tr z-[999]"
+                className="absolute top-5 md:top-10 right-5 md:right-10  text-red-500 hover:text-white tr z-[999] h-10 w-10 dark:bg-white/10 hover:dark:bg-red-500 bg-red-500/10 hover:bg-red-500 tr center rounded-full"
               >
-                <X size={40} strokeWidth={1} />
+                <X size={24} />
               </button>
 
               <motion.div

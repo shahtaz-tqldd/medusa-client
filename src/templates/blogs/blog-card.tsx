@@ -15,10 +15,8 @@ import { HeaderText } from "@/components/text/title-text";
 import { BlogCardProps } from "./_types";
 import EllipsisDropdown from "@/components/dropdowns/ellipsis-dropdown";
 
-import {
-  motion,
-  useInView,
-} from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { toast } from "sonner";
 
 const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
   const { img, title, body, published, topic } = data;
@@ -32,9 +30,12 @@ const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(`${window.location.origin}${blogLink}`);
+      await navigator.clipboard.writeText(
+        `${window.location.origin}${blogLink}`
+      );
+      toast("Blog Link Copied to Clipboard");
     } catch (err) {
-      console.error("Failed to copy link.");
+      toast("Failed to copy link.");
     }
   };
 
@@ -43,8 +44,9 @@ const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
     if (!existing.includes(blogLink)) {
       existing.push(blogLink);
       localStorage.setItem("savedBlogs", JSON.stringify(existing));
+      toast("Article Link saved for Later");
     } else {
-      console.warn("Already saved.");
+      toast("This article was already saved for you!");
     }
   };
 

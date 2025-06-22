@@ -13,7 +13,7 @@ export const BLOGS = [
         value:
           "React.js is a JavaScript library developed by Facebook for building user interfaces, especially single-page applications where performance and user experience matter. It enables developers to build interactive UIs using components — reusable and independent building blocks of code.",
       },
-      { type: "heading_content", value: "⚙️ Why React?" },
+      { type: "heading_content", value: "Why React?" },
       {
         type: "list_content",
         value: [
@@ -65,7 +65,7 @@ export const BLOGS = [
         value:
           "React.js is a JavaScript library developed by Facebook for building user interfaces, especially single-page applications where performance and user experience matter. It enables developers to build interactive UIs using components — reusable and independent building blocks of code.",
       },
-      { type: "heading_content", value: "⚙️ Why React?" },
+      { type: "heading_content", value: "Why React?" },
       {
         type: "list_content",
         value: [
@@ -117,7 +117,7 @@ export const BLOGS = [
         value:
           "React.js is a JavaScript library developed by Facebook for building user interfaces, especially single-page applications where performance and user experience matter. It enables developers to build interactive UIs using components — reusable and independent building blocks of code.",
       },
-      { type: "heading_content", value: "⚙️ Why React?" },
+      { type: "heading_content", value: "Why React?" },
       {
         type: "list_content",
         value: [
@@ -170,7 +170,7 @@ export const BLOGS = [
         value:
           "React.js is a JavaScript library developed by Facebook for building user interfaces, especially single-page applications where performance and user experience matter. It enables developers to build interactive UIs using components — reusable and independent building blocks of code.",
       },
-      { type: "heading_content", value: "⚙️ Why React?" },
+      { type: "heading_content", value: "Why React?" },
       {
         type: "list_content",
         value: [

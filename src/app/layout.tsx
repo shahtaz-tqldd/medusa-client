@@ -6,6 +6,7 @@ import "@/assets/styles/global.css";
 import "@/assets/styles/layout.css";
 
 import { Figtree } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 
 const feetgree = Figtree({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <Script
           src="https://cdn.lordicon.com/lordicon.js"
           strategy="beforeInteractive"
@@ -34,6 +36,7 @@ export default function RootLayout({
       <body className={feetgree.className} cz-shortcut-listen="false">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
