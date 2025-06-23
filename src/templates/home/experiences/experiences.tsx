@@ -84,7 +84,7 @@ const Experiences: React.FC = () => {
   };
 
   return (
-    <section className="container py-12 md:py-20 relative">
+    <section id="experiences" className="container py-12 md:py-20 relative">
       <HeroText className="md:text-left text-center">Work Experiences</HeroText>
       <div className="mt-8 md:mt-12">
         <div className="relative" ref={timelineRef}>

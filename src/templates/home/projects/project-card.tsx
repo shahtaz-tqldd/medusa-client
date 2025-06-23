@@ -20,7 +20,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   handleSetProject,
   index,
 }) => {
-  const { id, name, img, projectType } = data;
+  const { id, name, img, projectType, tags } = data;
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0px 0px -100px 0px" });
 
@@ -73,7 +73,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           animate={isInView ? { opacity: 0.6, y: 0 } : {}}
           transition={{ delay: index * 0.1 + 0.4, duration: 0.3 }}
         >
-          Frontend <Dot /> React JS <Dot /> Node JS
+          {
+            tags?.map((item, index)=>(
+              <>
+              <span className="text-nowrap">{item}</span>
+              {index<tags.length-1 && <Dot />}
+              </>
+            ))
+          }
         </motion.div>
       </motion.div>
     </motion.section>

@@ -5,7 +5,7 @@ import React, { useState } from "react";
 // components
 import DevJourneyModal from "./dev-journey-modal";
 import FadingGrid from "./fade-grid";
-import HeroEve from "@/components/3d-models/hero-eve";
+import HeroEve from "./hero-eve";
 import HeroText from "@/components/text/hero-text";
 import { AnimatedShinyText } from "@/components/text/shiny-text";
 

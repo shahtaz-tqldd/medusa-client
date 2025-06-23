@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { DynamicModelViewer, ErrorBoundary } from "./_model";
+import { DynamicModelViewer, ErrorBoundary } from "@/components/3d-models/model-render";
 
 const HeroEve: React.FC = () => {
   const isBrowser = typeof window !== "undefined";
@@ -21,6 +21,15 @@ const HeroEve: React.FC = () => {
           className=""
         />
       </div>
+      <span className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
+        <img
+          src="./loader.gif"
+          height={80}
+          width={80}
+          alt="loader"
+          className="opacity-60"
+        />
+      </span>
     </div>
   );
 };

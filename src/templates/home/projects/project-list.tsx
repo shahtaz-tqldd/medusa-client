@@ -35,7 +35,7 @@ const ProjectList = () => {
   };
 
   return (
-    <section className="container py-12 md:py-20">
+    <section id="projects" className="container py-12 md:py-20">
       <div className="flbx flex-col md:flex-row gap-5">
         <HeroText>Project List</HeroText>
         <div className="relative">

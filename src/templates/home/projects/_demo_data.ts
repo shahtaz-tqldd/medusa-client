@@ -25,7 +25,7 @@ export const projects = [
     name: "Custom Supplement Manufacturing Landing Page",
     description:
       "Dzul Nutra is a pharmaceutical manufacturer company, it manufactures quality customizable vitamins, supplements, and nutraceuticals for other brands.",
-    tags: ["Landing Page", "Ecommerce", "Service Selling"],
+    tags: ["Landing Page", "Frontend", "Service Selling"],
     img: ecom1,
     projectType: "Web App",
     techs: [
@@ -36,6 +36,7 @@ export const projects = [
       "React Slick",
     ],
     liveLink: "https://dzulnutra.com/",
+    githubLink: "https://dzulnutra.com/",
     featureList: [
       "Responsive Design",
       "Email Integration",
@@ -60,7 +61,7 @@ export const projects = [
     name: "A single vendor Ecommerce Platform for Selling Earphones",
     description:
       "GenoMart is a comprehensive e-commerce platform that integrates customer relationship management (CRM) to streamline both product sales and customer interactions.",
-    tags: ["Ecommerce", "CRM", "Single Vendor"],
+    tags: ["Ecommerce", "CRM", "React JS"],
     img: ecom2,
     projectType: "Software",
     techs: [
@@ -76,6 +77,7 @@ export const projects = [
       "Mongo DB",
     ],
     liveLink: "https://genomart.vercel.app/",
+    githubLink: "https://genomart.vercel.app/",
     featureList: [
       "Responsive Design",
       "Email Integration",
@@ -101,7 +103,7 @@ export const projects = [
     name: "CRM & Financial Analytics Platform for Prop Trading Firms",
     description:
       "Boer Funding is a trading management platform that combines CRM capabilities with tools for financial tracking, analytics, and payment integration. ",
-    tags: ["CRM Platform", "Financial Trading", "Analytics & Visualization"],
+    tags: ["CRM", "Financial Trading", "Analytics & Visualization"],
     img: boer,
     liveLink: "https://app.boerfunded.com/",
     credentials: {
@@ -147,7 +149,6 @@ export const projects = [
       "AMC Courier is a SaaS platform designed specifically for courier companies to streamline service management and payroll operations.",
     tags: [
       "SaaS",
-      "Courier Management",
       "Payroll Tracking",
       "Data Visualization",
     ],
@@ -187,7 +188,7 @@ export const projects = [
     name: "Web Agency Portfolio Website for CRM, ERP & SaaS Solutions",
     description:
       "Algostar is a web development agancey specialized in building CRM, ERP and SaaS. They provide you web design and development solutions.",
-    tags: ["Landing Page", "Portfolio", "Company Website"],
+    tags: ["Landing Page", "Portfolio", "Next JS"],
     img: ecom3,
     projectType: "Web App",
     techs: [
