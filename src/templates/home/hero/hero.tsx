@@ -5,19 +5,18 @@ import React, { useState } from "react";
 // components
 import DevJourneyModal from "./dev-journey-modal";
 import FadingGrid from "./fade-grid";
-import HeroText from "@/components/text/hero-text";
 import HeroEve from "@/components/3d-models/hero-eve";
+import HeroText from "@/components/text/hero-text";
 import { AnimatedShinyText } from "@/components/text/shiny-text";
 
 // icons
 import { Dot } from "lucide-react";
 import AnimateDiv from "@/components/animation/animate-div";
-import Image from "next/image";
 
 const Hero: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const HERO_STRING =
-    "Hey, this is Shahtaz. I am a software\n developer by passion, and\n a full-metal alchemist by choice!";
+    "Hey, this is Shahtaz. I am a software\n developer by passion, and\n a full-stack alchemist by choice!";
 
   return (
     <section className="h-screen w-screen center relative">
@@ -28,7 +27,7 @@ const Hero: React.FC = () => {
           <AnimateDiv delay={0.5}>
             <p className="text-base md:text-lg mt-12 relative">
               <span className="dark:text-gray-400 text-slate-600">
-                Interested to know my development journey?
+                Wanna know how I turned passion into profession?
               </span>{" "}
               <button
                 onClick={() => setIsOpen(true)}
@@ -49,12 +48,6 @@ const Hero: React.FC = () => {
           </AnimateDiv>
         </div>
         <HeroEve />
-        {/* <div className="relative -translate-x-20">
-          <Image src="/shahtaz.png" alt="" height={500} width={500} className="" />
-          <div className="w-full h-20 absolute bottom-0 left-0 right-0  bg-gradient-to-t dark:from-[#121212] from-white dark:to-black/0 to-white/0">
-
-          </div>
-        </div> */}
       </div>
       <FadingGrid />
       {isOpen && <DevJourneyModal isOpen={isOpen} setIsOpen={setIsOpen} />}

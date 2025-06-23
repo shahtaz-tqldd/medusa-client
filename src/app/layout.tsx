@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import Script from "next/script";
+import { Figtree } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+
+import { Toaster } from "@/components/ui/sonner";
+
+import type { Metadata } from "next";
 
 import "@/assets/styles/global.css";
 import "@/assets/styles/layout.css";
-
-import { Figtree } from "next/font/google";
-import { Toaster } from "@/components/ui/sonner";
 
 const feetgree = Figtree({
   subsets: ["latin"],
@@ -14,9 +15,9 @@ const feetgree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title: "Shahtaz Rahman",
+  title: "Shahtaz Rahman | Full-Stack Web Developer Portfolio",
   description:
-    "This is a portfolio website of Shahtaz Rahman. Who is a software developer.",
+    "Shahtaz Rahman is a Full-Stack Software Developer specializing in modern web development. Proficient in React, Next.js, Node.js, and Django, he builds responsive, high-performance applications with clean, scalable code.",
 };
 
 export default function RootLayout({

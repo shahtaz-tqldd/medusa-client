@@ -11,11 +11,14 @@ import { Search, ShieldX, X } from "lucide-react";
 
 // data
 import { skills } from "./_demo-data";
+import LordIcon from "@/assets/icons/lord-icon";
+import { useTheme } from "next-themes";
 
 const SkillSearch: React.FC = () => {
   const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
   const handleButtonClick = () => {
     setIsInputVisible((prev) => !prev);
@@ -168,7 +171,14 @@ const SkillSearch: React.FC = () => {
               exit="exit"
               onClick={handleButtonClick}
             >
-              <Button variant="rubix" role="presentation" className="px-4">
+              <Button variant="rubix" role="presentation" className="pr-4 pl-3 gap-1.5">
+                <LordIcon
+                  icon="zhtsepgu"
+                  height={17}
+                  width={17}
+                  primary={theme === "dark" ? "#222" : "#fff"}
+                  target="button"
+                />
                 Search Skills
               </Button>
             </motion.button>

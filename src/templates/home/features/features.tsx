@@ -33,9 +33,11 @@ const Features: React.FC = () => {
             Let me Introduce myself
           </HeroText>
           <BodyText className="mt-4" animated delay={0.3}>
-            Hey, I have been in web development for almost 3 years, I have
-            developed enormous amount of software to get the perfection. I have
-            worked with React, Node Js.
+            I’m a full-stack developer with nearly <span className="font-semibold dark:text-white/90 text-black/90">3 years</span> of hands-on
+            experience crafting web applications that balance performance with
+            polish. From intuitive interfaces to backend logic, I’ve built and
+            shipped products that solve real problems — not just for the sake of
+            code, but for the joy of making things work beautifully.
           </BodyText>
           <AnimateDiv delay={0.4}>
             <div className="flex flex-wrap mt-8 md:mt-12 gap-2.5">
@@ -50,7 +52,7 @@ const Features: React.FC = () => {
               ))}
               <button
                 onClick={() => setIsSkillModalOpen(true)}
-                className="mt-2.5 dark:text-blue-500 text-blue-600"
+                className="mt-2.5 dark:text-blue-500 text-blue-600 font-semibold"
               >
                 ... {skills.length - 9} more
               </button>
