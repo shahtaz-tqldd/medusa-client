@@ -26,7 +26,7 @@ const Features: React.FC = () => {
   };
 
   return (
-    <div className="container py-12 md:py-20 relative">
+    <div id="about" className="container py-12 md:py-20 relative">
       <div className="grid grid-cols-5 md:gap-20 gap-12">
         <div className="col-span-5 md:col-span-2 relative z-10">
           <HeroText className="-translate-y-4">
@@ -58,7 +58,7 @@ const Features: React.FC = () => {
               </button>
             </div>
           </AnimateDiv>
-          <AnimateDiv delay={0.5}>
+          <AnimateDiv delay={0.4}>
             <SkillSearch />
           </AnimateDiv>
         </div>

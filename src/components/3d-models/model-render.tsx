@@ -1,4 +1,5 @@
 import { useEffect, useRef, Suspense, Component, ReactNode } from "react";
+import dynamic from "next/dynamic";
 import { Canvas } from "@react-three/fiber";
 import {
   useGLTF,
@@ -8,8 +9,6 @@ import {
   Center,
   Html,
 } from "@react-three/drei";
-import dynamic from "next/dynamic";
-import LordIcon from "@/assets/icons/lord-icon";
 
 
 // Error Boundary
@@ -112,7 +111,7 @@ function ModelViewer({ modelPath }: ModelViewerProps) {
         <Suspense
           fallback={
             <Html center>
-              <LordIcon icon="pxwxddbb" height={60} width={60} trigger="loop" primary="#fff" />
+              {/* <span className="model-loader"></span> */}
             </Html>
           }
         >
@@ -138,11 +137,4 @@ function ModelViewer({ modelPath }: ModelViewerProps) {
 }
 
 // Dynamic Import
-export const DynamicModelViewer = dynamic(() => Promise.resolve(ModelViewer), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full flex items-center justify-center">
-      <LordIcon icon="pxwxddbb" height={60} width={60} trigger="loop" primary="#fff" />
-    </div>
-  ),
-});
+export const DynamicModelViewer = dynamic(() => Promise.resolve(ModelViewer), { ssr: false });

@@ -7,6 +7,7 @@ export interface Project {
   projectType: string;
   description: string;
   liveLink?: string;
+  githubLink?: string;
   techs: string[];
   tags: string[];
   featureList: string[];

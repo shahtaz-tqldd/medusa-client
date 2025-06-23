@@ -8,7 +8,7 @@ import EmailModal from "./email-modal";
 import NavDrawer from "./nav-drawer";
 import ThemeToggle from "@/components/theme";
 
-import { HEADER_LINKS } from "./data";
+import { HEADER_LINKS } from "./_data";
 import { Mail, Text } from "lucide-react";
 
 const Header: React.FC = () => {
@@ -91,7 +91,7 @@ const Header: React.FC = () => {
             <Text size={16} className="scale-x-[-1]" />
           </button>
         </div>
-        <NavDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
+        <NavDrawer isOpen={isOpen} setIsOpen={setIsOpen} setIsEmailModalOpen={setIsOpenModal} />
       </nav>
       {isOpenModal && (
         <EmailModal isOpen={isOpenModal} setIsOpen={setIsOpenModal} />

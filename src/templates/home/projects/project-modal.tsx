@@ -3,12 +3,15 @@ import Image from "next/image";
 
 import HadronModal from "@/components/ui/hadron-modal";
 
-import { ArrowLeft, ArrowRight, CircleCheck, Dot } from "lucide-react";
+import { ChevronLeft, ChevronRight, CircleCheck, Code2, Dot, Layers, Link } from "lucide-react";
 
 import type { Project } from "./_types";
 import type { MetaProps } from "./_types";
 import { projects } from "./_demo_data";
 import { colors } from "@/lib/colors";
+import LabelText from "@/components/text/label-text";
+import BodyText from "@/components/text/body-text";
+import { GithubIcon } from "@/assets/icons/icons";
 
 interface ProjectModalProps {
   meta: MetaProps;
@@ -36,7 +39,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   // Avoid rendering modal content if project is not loaded
   if (!project) return null;
 
-  const { name, description, img, screens, featureList, techs, projectType } = project;
+  const { name, description, img, screens, featureList, techs, projectType, liveLink, githubLink } = project;
 
   const handleNext = () => {
     const nextId =
@@ -76,15 +79,18 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className="space-y-5 max-w-4xl mx-auto py-12">
-        <p
-          className={`pt-2 pb-1.5 px-4 rounded-full text-sm w-fit ${getColors(projectType)}`}
-        >
-          {projectType}
-        </p>
-        <h2 className="text-4xl leading-[48px]">{name}</h2>
-        <p className="opacity-75 leading-relaxed">{description}</p>
-        <div className="grid grid-cols-2 gap-6">
+      <div className="space-y-10 max-w-4xl mx-auto md:py-12 py-6 px-3">
+        <div className="space-y-4">
+          <p
+            className={`pt-2 pb-1.5 px-4 rounded-full text-sm w-fit ${getColors(projectType)}`}
+          >
+            {projectType}
+          </p>
+          <h2 className="text-2xl md:text-4xl leading-[32px] md:leading-[48px]">{name}</h2>
+          <BodyText className="text-lg">{description}</BodyText>
+
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Image
             src={img}
             className="h-80 w-full object-cover rounded-2xl"
@@ -101,8 +107,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
           )}
         </div>
         <div>
-          <h2 className="text-2xl mt-12">Features</h2>
-          <div className="grid grid-cols-2 gap-y-2 gap-x-5 opacity-75 mt-4">
+          <LabelText icon={Layers} className="text-lg">Features</LabelText>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-5 opacity-75 mt-4">
             {featureList.map((item, index) => (
               <div key={index} className="flx gap-2">
                 <CircleCheck className="h-4 w-4" />
@@ -112,25 +118,43 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
           </div>
         </div>
         <div>
-          <h2 className="text-2xl mt-12 mb-4">Tech Stacks</h2>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 -ml-2">
+          <LabelText icon={Code2} className="text-lg">Tech Stacks</LabelText>
+          <div className="flex flex-wrap gap-x-4 gap-y-2 -ml-2 mt-4">
             {techs.map((item, index) => (
-              <div key={index} className="flx text-sm text-orange-300">
+              <div key={index} className="flx text-sm text-blue-600 dark:text-blue-400">
                 <Dot />
                 {item}
               </div>
             ))}
           </div>
         </div>
-        <hr className="border-b-none border-t border-t-white/20 border-dashed" />
+        <div className="flx gap-8">
+
+        {
+          liveLink && (
+            <a href={liveLink} target="__blank" className="py-2 pl-3 pr-4 rounded-full hover:dark:bg-white/10 hover:bg-blue-500/10 tr">
+              <LabelText icon={Link}>Live Link</LabelText>
+            </a>
+          )
+        }
+        {
+          githubLink && (
+            <a href={githubLink} target="__blank" className="py-2 pl-3 pr-4 rounded-full hover:dark:bg-white/10 hover:bg-blue-500/10 tr">
+              <LabelText icon={GithubIcon}>Github Link</LabelText>
+            </a>
+          )
+        }
+        </div>
+
+        <hr className="border-b-none border-t dark:border-t-white/20 border-blue-500/20 border-dashed mb-3" />
         <div className="flbx">
-          <button onClick={handlePrev} className="flx gap-2">
-            <ArrowLeft className="h-4 w-4" />
+          <button onClick={handlePrev} className="flx gap-2 py-2 pl-3 pr-4 rounded-full hover:dark:bg-white/10 hover:bg-blue-500/10 tr">
+            <ChevronLeft className="h-4 w-4" />
             <h2>Previous</h2>
           </button>
-          <button onClick={handleNext} className="flx gap-2">
+          <button onClick={handleNext} className="flx gap-2 py-2 pl-4 pr-3 rounded-full hover:dark:bg-white/10 hover:bg-blue-500/10 tr">
             <h2>Next</h2>
-            <ArrowRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" />
           </button>
         </div>
       </div>
