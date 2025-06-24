@@ -47,3 +47,24 @@
 .medusa-scroll::-webkit-scrollbar-button {
   display: none;
 }
+
+.hover-btn {
+  display: flex;
+  gap: 0.625rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-right: 1rem;
+  padding-left: 0.75rem;
+  border-radius: 9999px; 
+  transition: all 0.3s ease; 
+}
+
+.hover-btn:hover {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hover-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+}

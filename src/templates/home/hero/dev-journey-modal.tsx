@@ -12,6 +12,7 @@ import { Code, Zap } from "lucide-react";
 // data
 import { JOURNEY_STEPS } from "./_demo_data";
 import type { DevJourneyModalProps } from "./_types";
+import Image from "next/image";
 
 const DevJourneyModal: React.FC<DevJourneyModalProps> = ({
   isOpen,
@@ -20,6 +21,7 @@ const DevJourneyModal: React.FC<DevJourneyModalProps> = ({
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
       <div className="max-w-3xl mx-auto pt-6 pb-12 px-4 relative">
+        <img src="./shanto.jpg" alt="shanto" height={400} width={400} className="h-40 w-40 object-cover rounded-3xl" />
         <HeroText>My Development Journey</HeroText>
 
         <div className="space-y-10 mt-12">

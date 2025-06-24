@@ -2,6 +2,7 @@ import React from "react";
 import BodyText from "../text/body-text";
 import { Mail, Phone } from "lucide-react";
 import { SOCIAL_LINK } from "./data";
+import { hover_button_sm } from "@/lib/styles";
 
 const Footer = () => {
   return (
@@ -37,7 +38,7 @@ const Footer = () => {
                 key={index}
                 href={item.url}
                 target="_blank"
-                className="flx gap-2 dark:hover:bg-white/10 hover:bg-orange-500/10 py-1.5 px-2.5 rounded-full tr"
+                className={hover_button_sm}
               >
                 <item.icon
                   size={16}

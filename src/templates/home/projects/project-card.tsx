@@ -75,10 +75,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         >
           {
             tags?.map((item, index)=>(
-              <>
+              <React.Fragment key={index}>
               <span className="text-nowrap">{item}</span>
               {index<tags.length-1 && <Dot />}
-              </>
+              </React.Fragment>
             ))
           }
         </motion.div>

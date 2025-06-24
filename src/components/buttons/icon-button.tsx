@@ -16,7 +16,7 @@ export default function IconButton({
   return (
     <button
       {...props}
-      className={`h-8 w-8 center rounded-full bg-blue-500/5 dark:bg-white/5 dark:hover:bg-white/10 hover:bg-blue-600/10 tr ${className}`}
+      className={`h-8 w-8 center rounded-full bg-blue-500/5 dark:bg-white/5 dark:hover:bg-white/10 hover:bg-blue-500/10 tr ${className}`}
     >
       <Icon size={size} />
     </button>

@@ -10,21 +10,19 @@ import { DRAWER_NAV_LINKS } from "./_data";
 
 import { X, Mail } from "lucide-react";
 import type { NavDrawerProps } from "./_types";
-
+import { hover_button_sm } from "@/lib/styles";
 
 const NavDrawer: React.FC<NavDrawerProps> = ({
   isOpen,
   setIsOpen,
   setIsEmailModalOpen,
 }) => {
-  
   const navLinks = [...DRAWER_NAV_LINKS];
   navLinks.push({
-    label: 'Contact',
+    label: "Contact",
     icon: Mail,
     handleClick: () => setIsEmailModalOpen(true),
   });
-  
 
   const handleLinkClick = () => {
     setIsOpen(false);
@@ -41,7 +39,6 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
                 Navigation
               </h2>
               <BodyText>Explore my digital space</BodyText>
-              
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -58,45 +55,43 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
               <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">
                 Main Pages
               </h3>
-           {navLinks.map((link, index) => (
-            link.href ? (
-              <Link
-                key={index}
-                href={link.href}
-                onClick={handleLinkClick}
-                className="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
-              >
-                <BodyText className="flx gap-3">
-                  <link.icon size={18}/>
-                  {link.label}
-                </BodyText>
-              </Link>
-              ) : (
-                <button
-                  key={index}
-                  onClick={() => {
-                    if (link.handleClick) link.handleClick(true);
-                    handleLinkClick();
-                  }}
-                  className="w-full text-left flex items-center gap-4 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
-                >
-                  <BodyText className="flx gap-3">
-                    <link.icon size={18}/>
-                    {link.label}
-                  </BodyText>
-                </button>
-              )
-            ))}
-
+              {navLinks.map((link, index) =>
+                link.href ? (
+                  <Link
+                    key={index}
+                    href={link.href}
+                    onClick={handleLinkClick}
+                    className="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
+                  >
+                    <BodyText className="flx gap-3">
+                      <link.icon size={18} />
+                      {link.label}
+                    </BodyText>
+                  </Link>
+                ) : (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      if (link.handleClick) link.handleClick(true);
+                      handleLinkClick();
+                    }}
+                    className="w-full text-left flex items-center gap-4 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
+                  >
+                    <BodyText className="flx gap-3">
+                      <link.icon size={18} />
+                      {link.label}
+                    </BodyText>
+                  </button>
+                )
+              )}
             </nav>
 
-              {/* Dark Mode */}
+            {/* Dark Mode */}
             <div className="mt-10">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">
-                    Dark Mode
-                </h3>
-                <SwithDarkMode />
-
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">
+                Dark Mode
+              </h3>
+              <SwithDarkMode />
             </div>
 
             {/* Quick Links Section */}
@@ -106,27 +101,27 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
               </h3>
               <div className="flex flex-wrap gap-3">
                 {SOCIAL_LINK.map((item, index) => (
-                     <Link
-                        key={index}
-                        href={item.url}
-                        onClick={handleLinkClick}
-                        {...(item.external && { target: "_blank", rel: "noopener noreferrer" })}
-                        className="flx gap-2 dark:bg-white/10 bg-blue-500/10 py-1.5 px-2.5 rounded-full tr"
-                    >
-                        <item.icon
-                        size={16}
-                        className="text-gray-900 dark:text-white"
-                        />
-                        <span className="text-sm opacity-60">{item.title}</span>
-                    </Link>
+                  <Link
+                    key={index}
+                    href={item.url}
+                    onClick={handleLinkClick}
+                    {...(item.external && {
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                    })}
+                    className={hover_button_sm}
+                  >
+                    <item.icon
+                      size={16}
+                      className="text-gray-900 dark:text-white"
+                    />
+                    <span className="text-sm opacity-60">{item.title}</span>
+                  </Link>
                 ))}
               </div>
             </div>
-
-          
           </div>
 
-          
           {/* Footer */}
           <div className="p-6 border-t border-gray-200 dark:border-gray-700">
             <div className="text-center">
