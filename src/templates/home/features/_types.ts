@@ -6,7 +6,7 @@ export interface FeatureProps {
 export interface SkillProps {
   name: string;
   description: string;
-  experience: string;
+  startDate: string;
   progress: string;
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
 }

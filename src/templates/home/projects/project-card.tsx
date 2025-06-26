@@ -34,15 +34,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         delay: index * 0.1,
         ease: [0.25, 0.1, 0.25, 1],
       }}
+      className="group cursor-pointer"
+      onClick={() => handleSetProject(id)}
     >
       <motion.div
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : {}}
         transition={{ delay: index * 0.1 + 0.1 }}
+        className="h-72 w-full overflow-hidden rounded-3xl"
       >
         <Image
           src={img}
-          className="h-72 w-full object-cover rounded-3xl"
+          className="h-full w-full object-cover rounded-3xl group-hover:scale-105 tr"
           alt={name}
         />
       </motion.div>
@@ -59,8 +62,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       </motion.h2>
 
       <motion.div
-        className="px-1 cursor-pointer"
-        onClick={() => handleSetProject(id)}
+        className="px-1"
         initial={{ opacity: 0, y: 10 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: index * 0.1 + 0.3, duration: 0.3 }}
@@ -73,14 +75,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           animate={isInView ? { opacity: 0.6, y: 0 } : {}}
           transition={{ delay: index * 0.1 + 0.4, duration: 0.3 }}
         >
-          {
-            tags?.map((item, index)=>(
-              <React.Fragment key={index}>
+          {tags?.map((item, index) => (
+            <React.Fragment key={index}>
               <span className="text-nowrap">{item}</span>
-              {index<tags.length-1 && <Dot />}
-              </React.Fragment>
-            ))
-          }
+              {index < tags.length - 1 && <Dot />}
+            </React.Fragment>
+          ))}
         </motion.div>
       </motion.div>
     </motion.section>
