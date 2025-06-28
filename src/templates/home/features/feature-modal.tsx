@@ -19,9 +19,9 @@ const FeatureModal: React.FC<FeatureModalProps> = ({
 
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className="max-w-3xl mx-auto pt-6 pb-12 px-4 relative">
-        <HeroText>{data.title}</HeroText>
-        <BodyText className="mt-5 text-lg">
+      <div className="relative">
+        <HeroText className="-translate-y-5">{data.title}</HeroText>
+        <BodyText className="mt-2 text-lg">
           <div className="space-y-6" dangerouslySetInnerHTML={{ __html: data.text }} />
         </BodyText>
       </div>

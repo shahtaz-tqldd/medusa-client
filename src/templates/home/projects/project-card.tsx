@@ -45,7 +45,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       >
         <Image
           src={img}
-          className="h-full w-full object-cover rounded-3xl group-hover:scale-105 tr"
+          className="h-full w-full object-cover rounded-3xl"
           alt={name}
         />
       </motion.div>

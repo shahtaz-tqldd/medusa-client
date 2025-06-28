@@ -1,9 +1,8 @@
-import boer from "@/assets/images/boer.jpg";
-
-import ecom1 from "@/assets/images/ecom.webp";
-import ecom2 from "@/assets/images/ecom2.jpg";
-import ecom3 from "@/assets/images/ecom3.jpg";
-import ecom4 from "@/assets/images/ecom4.png";
+import restro from "@/assets/images/restro.jpg";
+import dzul from "@/assets/images/dzul.jpg";
+import genomart from "@/assets/images/genomart.jpg";
+import algostar from "@/assets/images/algostar.jpg";
+import amc from "@/assets/images/amc.png";
 
 export const projectTabs = [
   {
@@ -26,7 +25,7 @@ export const project_demo_data = [
     description:
       "Dzul Nutra is a pharmaceutical manufacturer company, it manufactures quality customizable vitamins, supplements, and nutraceuticals for other brands.",
     tags: ["Landing Page", "Ecommerce", "Service Selling"],
-    img: ecom1,
+    img: dzul,
     type: "Web App",
     created_at: "2025-09-10",
     status:"completed",
@@ -55,7 +54,7 @@ export const project_demo_data = [
     description:
       "GenoMart is a comprehensive e-commerce platform that integrates customer relationship management (CRM) to streamline both product sales and customer interactions.",
     tags: ["Ecommerce", "CRM", "Single Vendor"],
-    img: ecom2,
+    img: genomart,
     type: "Software",
     created_at: "2025-09-10",
     status:"completed",
@@ -89,7 +88,7 @@ export const project_demo_data = [
     description:
       "Boer Funding is a trading management platform that combines CRM capabilities with tools for financial tracking, analytics, and payment integration. ",
     tags: ["CRM Platform", "Financial Trading", "Analytics & Visualization"],
-    img: boer,
+    img: restro,
     liveLink: "https://app.boerfunded.com/",
     credentials: {
       email: "shahtaz67@gmail.com",
@@ -131,7 +130,7 @@ export const project_demo_data = [
       "Payroll Tracking",
       "Data Visualization",
     ],
-    img: ecom4,
+    img: amc,
     type: "Software",
     created_at: "2025-09-10",
     status:"completed",
@@ -161,7 +160,7 @@ export const project_demo_data = [
     description:
       "Algostar is a web development agancey specialized in building CRM, ERP and SaaS. They provide you web design and development solutions.",
     tags: ["Landing Page", "Portfolio", "Company Website"],
-    img: ecom3,
+    img: algostar,
     type: "Web App",
     created_at: "2025-09-10",
     status:"completed",

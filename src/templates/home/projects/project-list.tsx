@@ -19,6 +19,11 @@ const ProjectList = () => {
   const [meta, setMeta] = useState<MetaProps | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  const filteredProjects =
+    active.value === "all-projects"
+      ? projects
+      : projects.filter((project) => project.projectType === active.value);
+
   const handleSetProject = (id: string) => {
     if (id) {
       setMeta({
@@ -43,7 +48,7 @@ const ProjectList = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mt-8 md:mt-12">
-        {projects?.map((data, index) => (
+        {filteredProjects?.map((data, index) => (
           <ProjectCard
             key={index}
             index={index}

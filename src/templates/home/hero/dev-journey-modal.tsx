@@ -20,7 +20,7 @@ const DevJourneyModal: React.FC<DevJourneyModalProps> = ({
 }) => {
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className="max-w-3xl mx-auto pt-6 pb-12 px-4 relative">
+      <div className="relative">
         <img src="./shanto.jpg" alt="shanto" height={400} width={400} className="h-40 w-40 object-cover rounded-3xl" />
         <HeroText>My Development Journey</HeroText>
 

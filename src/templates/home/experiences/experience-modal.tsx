@@ -23,9 +23,9 @@ const ExperienceModal: React.FC<ExperienceModalProps> = ({
 
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className="max-w-3xl mx-auto pt-6 pb-12 px-4 relative">
-        <HeroText>{data.position}</HeroText>
-        <p className={`text-lg mt-3 ${data.companyColor}`}>{data.company}</p>
+      <div className="relative">
+        <HeroText className="-translate-y-5">{data.position}</HeroText>
+        <p className={`text-lg -mt-4 ${data.companyColor}`}>{data.company}</p>
 
         <div className="space-y-8 mt-6">
           <BodyText>{data.description}</BodyText>

@@ -1,8 +1,11 @@
-import boer from "@/assets/images/boer.jpg";
-import ecom1 from "@/assets/images/ecom.webp";
-import ecom2 from "@/assets/images/ecom2.jpg";
-import ecom3 from "@/assets/images/ecom3.jpg";
-import ecom4 from "@/assets/images/ecom4.png";
+import restro from "@/assets/images/restro.jpg";
+import dzul from "@/assets/images/dzul.jpg";
+import genomart from "@/assets/images/genomart.jpg";
+import algostar from "@/assets/images/algostar.jpg";
+import amc from "@/assets/images/amc.jpg";
+import tuplespot from "@/assets/images/tuplespot.jpg";
+
+
 
 export const projectTabs = [
   {
@@ -11,11 +14,11 @@ export const projectTabs = [
   },
   {
     title: "Web App",
-    value: "web-app",
+    value: "Web App",
   },
   {
     title: "Software",
-    value: "software",
+    value: "Software",
   },
 ];
 
@@ -26,7 +29,7 @@ export const projects = [
     description:
       "Dzul Nutra is a pharmaceutical manufacturer company, it manufactures quality customizable vitamins, supplements, and nutraceuticals for other brands.",
     tags: ["Landing Page", "Frontend", "Service Selling"],
-    img: ecom1,
+    img: dzul,
     projectType: "Web App",
     techs: [
       "React JS",
@@ -62,7 +65,7 @@ export const projects = [
     description:
       "GenoMart is a comprehensive e-commerce platform that integrates customer relationship management (CRM) to streamline both product sales and customer interactions.",
     tags: ["Ecommerce", "CRM", "React JS"],
-    img: ecom2,
+    img: genomart,
     projectType: "Software",
     techs: [
       "React JS",
@@ -104,7 +107,7 @@ export const projects = [
     description:
       "Boer Funding is a trading management platform that combines CRM capabilities with tools for financial tracking, analytics, and payment integration. ",
     tags: ["CRM", "Financial Trading", "Analytics & Visualization"],
-    img: boer,
+    img: restro,
     liveLink: "https://app.boerfunded.com/",
     credentials: {
       email: "shahtaz67@gmail.com",
@@ -152,7 +155,7 @@ export const projects = [
       "Payroll Tracking",
       "Data Visualization",
     ],
-    img: ecom4,
+    img: amc,
     projectType: "Software",
     techs: [
       "React JS",
@@ -189,7 +192,44 @@ export const projects = [
     description:
       "Algostar is a web development agancey specialized in building CRM, ERP and SaaS. They provide you web design and development solutions.",
     tags: ["Landing Page", "Portfolio", "Next JS"],
-    img: ecom3,
+    img: algostar,
+    projectType: "Web App",
+    techs: [
+      "Next JS",
+      "TypeScript",
+      "Shadcn",
+      "Framer Motion",
+      "Tailwind CSS",
+      "Magic UI",
+    ],
+    liveLink: "https://algostar.tech/",
+    featureList: [
+      "Responsive Design",
+      "Email Integration",
+      "Product Cataloge Showing and Filtering",
+      "Figma to Code Conversion",
+      "Unit testing and Faster Response",
+      "Real time data visualization",
+      "Chart and Graph Integration",
+      "Authentication and Role based Authorization",
+    ],
+
+    screens: [
+      "https://res.cloudinary.com/dqyv780cz/image/upload/v1730840954/projects-screen/equasqicslgfa0chxhxs.png",
+      "https://res.cloudinary.com/dqyv780cz/image/upload/v1730840953/projects-screen/um1fpzibv29njbey5uvw.png",
+      "https://res.cloudinary.com/dqyv780cz/image/upload/v1730840953/projects-screen/aq4ditgiwm1lhlavl8px.png",
+      "https://res.cloudinary.com/dqyv780cz/image/upload/v1730840953/projects-screen/oy4omg3nwxkuc2ldesfo.png",
+      "https://res.cloudinary.com/dqyv780cz/image/upload/v1730840953/projects-screen/czzpftigmcans3dl6rj7.png",
+      "https://res.cloudinary.com/dqyv780cz/image/upload/v1730840953/projects-screen/vuhczlwyvaf4adm6rk9w.png",
+    ],
+  },
+  {
+    id: "6",
+    name: "Real Estate Landing Page",
+    description:
+      "Algostar is a web development agancey specialized in building CRM, ERP and SaaS. They provide you web design and development solutions.",
+    tags: ["Landing Page", "Portfolio", "Next JS"],
+    img: tuplespot,
     projectType: "Web App",
     techs: [
       "Next JS",

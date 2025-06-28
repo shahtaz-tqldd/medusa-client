@@ -1,9 +1,7 @@
-"use client";
-
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollLock } from "@/lib/scroll-lock";
-import { X } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 interface HadronModalProps {
   children: ReactNode;
@@ -16,21 +14,61 @@ const HadronModal: React.FC<HadronModalProps> = ({
   isOpen,
   setIsOpen,
 }) => {
+  useScrollLock(isOpen);
+  const historyPushed = useRef(false);
 
-  useScrollLock(isOpen)
-   
+  // Handle modal open/close with browser history
+  useEffect(() => {
+    const handlePopState = () => {
+      // Check if we're coming back from a modal state
+      if (isOpen && historyPushed.current) {
+        setIsOpen(false);
+        historyPushed.current = false;
+      }
+    };
+
+    if (isOpen && !historyPushed.current) {
+      // Push a new state when modal opens
+      window.history.pushState({ modal: true }, "");
+      historyPushed.current = true;
+    }
+
+    // Always add the event listener when modal is open
+    if (isOpen) {
+      window.addEventListener("popstate", handlePopState);
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [isOpen, setIsOpen]);
+
   const handleCloseModal = () => {
-    setIsOpen(false);
+    // If we pushed a history state, go back to remove it
+    if (historyPushed.current) {
+      window.history.back();
+      // The popstate event will handle closing the modal
+    } else {
+      // Fallback if somehow no history was pushed
+      setIsOpen(false);
+    }
   };
 
-  const opacities = ["text-white/5", "text-white/10", "text-white/15", "text-white/20", "text-white/15", "text-white/10", "text-white/5"];
+  const opacities = [
+    "text-white/5",
+    "text-white/10",
+    "text-white/15",
+    "text-white/20",
+    "text-white/15",
+    "text-white/10",
+    "text-white/5",
+  ];
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden pointer-events-none">
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -40,7 +78,6 @@ const HadronModal: React.FC<HadronModalProps> = ({
               onClick={handleCloseModal}
             />
 
-            {/* Yellow Slide */}
             <motion.div
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: "-100%", opacity: 1 }}
@@ -54,7 +91,6 @@ const HadronModal: React.FC<HadronModalProps> = ({
               ))}
             </motion.div>
 
-            {/* Final Content Slide */}
             <motion.div
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -64,15 +100,16 @@ const HadronModal: React.FC<HadronModalProps> = ({
             >
               <button
                 onClick={handleCloseModal}
-                className="absolute top-5 md:top-10 right-5 md:right-10  text-red-500 hover:text-white tr z-[999] h-10 w-10 dark:bg-white/10 hover:dark:bg-red-500 bg-red-500/10 hover:bg-red-500 tr center rounded-full"
+                className="sticky top-5 md:top-8 left-5 md:left-10 tr z-[999] h-10 w-10 dark:bg-white/90 hover:dark:bg-white hover:dark:text-black bg-black/80 text-slate-200 dark:text-black hover:text-white hover:bg-black tr center rounded-full"
               >
-                <X size={24} />
+                <ArrowLeft size={24} />
               </button>
 
               <motion.div
                 initial={{ scale: 0.99, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.75, ease: "easeInOut" }}
+                className="max-w-4xl mx-auto pb-6 md:pb-12 px-3"
               >
                 {children}
               </motion.div>

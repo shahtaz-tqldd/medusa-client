@@ -98,7 +98,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className="space-y-10 max-w-4xl mx-auto md:py-12 py-6 px-3">
+      <div className="space-y-10">
         <div className="space-y-4">
           <p
             className={`pt-2 pb-1.5 px-4 rounded-full text-sm w-fit ${getColors(
@@ -115,13 +115,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Image
             src={img}
-            className="h-80 w-full object-cover rounded-2xl"
+            className="h-72 w-full object-cover rounded-2xl"
             alt={name}
           />
           {screens?.[0] && (
             <Image
               src={screens[0]}
-              className="h-80 object-cover rounded-2xl"
+              className="h-72 object-cover rounded-2xl"
               alt={`${name} screen`}
               width={600}
               height={400}

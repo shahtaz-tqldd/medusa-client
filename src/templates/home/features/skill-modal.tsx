@@ -31,8 +31,8 @@ const SkillModal: React.FC<SkillModalProps> = ({ data, isOpen, setIsOpen }) => {
 
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className="max-w-3xl mx-auto pt-6 pb-12 px-4 relative">
-        <div className="flbx md:flex-row flex-col">
+      <div className="relative">
+        <div className="flbx md:flex-row flex-col -translate-y-5">
           <HeroText>Skills</HeroText>
 
           {/* Search bar */}
@@ -57,7 +57,7 @@ const SkillModal: React.FC<SkillModalProps> = ({ data, isOpen, setIsOpen }) => {
         </div>
 
         {/* Skill list */}
-        <div className="mt-12 space-y-4">
+        <div className="mt-6 space-y-4">
           {filteredData?.length === 0 ? (
             <p className="text-center opacity-70">No skills found.</p>
           ) : (

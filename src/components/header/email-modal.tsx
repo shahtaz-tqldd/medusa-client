@@ -19,8 +19,8 @@ export interface EmailModalProps {
 const EmailModal: React.FC<EmailModalProps> = ({ isOpen, setIsOpen }) => {
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className="max-w-xl mx-auto pt-6 pb-12 px-4 relative">
-        <HeroText>Send Email</HeroText>
+      <div className="max-w-xl mx-auto">
+        <HeroText className="-translate-y-4">Send Email</HeroText>
         <BodyText className="mt-2">
           Write me your queries and ideas you want to discuss
         </BodyText>
