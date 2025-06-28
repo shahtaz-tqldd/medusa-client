@@ -2,7 +2,7 @@ import restro from "@/assets/images/restro.jpg";
 import dzul from "@/assets/images/dzul.jpg";
 import genomart from "@/assets/images/genomart.jpg";
 import algostar from "@/assets/images/algostar.jpg";
-import amc from "@/assets/images/amc.png";
+import amc from "@/assets/images/amc.jpg";
 
 export const projectTabs = [
   {
