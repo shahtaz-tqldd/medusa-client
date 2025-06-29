@@ -20,7 +20,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   handleSetProject,
   index,
 }) => {
-  const { id, name, img, projectType, tags } = data;
+  const { id, name, images, type, tags } = data;
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0px 0px -100px 0px" });
 
@@ -44,21 +44,23 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         className="h-72 w-full overflow-hidden rounded-3xl"
       >
         <Image
-          src={img}
+          src={images?.main}
           className="h-full w-full object-cover rounded-3xl"
           alt={name}
+          height={400}
+          width={600}
         />
       </motion.div>
 
       <motion.h2
         className={`text-sm mt-4 pl-1 uppercase ${
-          projectType === "Web App" ? "text-orange-400" : "text-emerald-400"
+          type === "Web App" ? "text-orange-400" : "text-emerald-400"
         }`}
         initial={{ opacity: 0, y: 10 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: index * 0.1 + 0.2, duration: 0.3 }}
       >
-        {projectType}
+        {type}
       </motion.h2>
 
       <motion.div

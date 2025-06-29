@@ -19,6 +19,7 @@ import LabelText from "@/components/text/label-text";
 import BodyText from "@/components/text/body-text";
 
 import type { ExperienceCardProps, ExperienceProps } from "./_types";
+import { getDuration } from "@/lib/date";
 
 interface ExperienceCardWithIndexProps extends ExperienceCardProps {
   index: number;
@@ -87,7 +88,7 @@ const ExperienceCard: React.FC<ExperienceCardWithIndexProps> = ({
               </div>
               <div className="flex items-center gap-1.5">
                 <Clock size={14} />
-                <span>{item.duration}</span>
+                <span>{getDuration(item?.start_date, item?.end_date)}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <MapPin size={14} />
@@ -100,11 +101,14 @@ const ExperienceCard: React.FC<ExperienceCardWithIndexProps> = ({
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ delay: index * 0.1 + 0.4 }}
             >
-              <BodyText>{item.description}</BodyText>
+              <div
+                className="line-clamp-4 text-slate-600 dark:text-gray-400 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: item.description }}
+              />
             </motion.div>
 
             <motion.div
-              className="flex flex-wrap mt-8 -ml-3 gap-x-5 md:gap-x-8 gap-y-2"
+              className="flex flex-wrap mt-8 -ml-3 gap-x-5 md:gap-x-6 gap-y-2"
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
               transition={{ delay: index * 0.1 + 0.5 }}

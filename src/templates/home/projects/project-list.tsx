@@ -22,7 +22,7 @@ const ProjectList = () => {
   const filteredProjects =
     active.value === "all-projects"
       ? projects
-      : projects.filter((project) => project.projectType === active.value);
+      : projects.filter((project) => project.type === active.value);
 
   const handleSetProject = (id: string) => {
     if (id) {

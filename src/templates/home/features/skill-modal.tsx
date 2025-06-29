@@ -8,7 +8,7 @@ import TitleText from "@/components/text/title-text";
 
 // data
 import type { SkillModalProps } from "./_types";
-import { geDuration } from "@/lib/date";
+import { getDuration } from "@/lib/date";
 import { Clock, Search, X } from "lucide-react";
 
 const SkillModal: React.FC<SkillModalProps> = ({ data, isOpen, setIsOpen }) => {
@@ -70,7 +70,7 @@ const SkillModal: React.FC<SkillModalProps> = ({ data, isOpen, setIsOpen }) => {
                 <div className="flbx">
                   <p className="flx gap-2 text-sm opacity-70">
                     <Clock size={14} />
-                    {geDuration(item.startDate)} of experience
+                    {getDuration(item.startDate)} of experience
                   </p>
                   <div className="w-40 flx gap-2">
                     <div className="w-full flex-1 h-2 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">

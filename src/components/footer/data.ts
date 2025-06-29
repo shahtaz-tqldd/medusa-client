@@ -1,4 +1,10 @@
-import { LinkedInIcon, XIcon, InstagramIcon, GithubIcon, ResumeIcon } from "@/assets/icons/icons";
+import {
+  LinkedInIcon,
+  XIcon,
+  GithubIcon,
+  ResumeIcon,
+  WhatsAppIcon,
+} from "@/assets/icons/icons";
 
 export const SOCIAL_LINK = [
   {
@@ -6,27 +12,27 @@ export const SOCIAL_LINK = [
     title: "Github",
     url: "https://github.com/shahtaz-tqldd/",
     icon: GithubIcon,
-    external: true
+    external: true,
   },
   {
     id: 4,
     title: "Resume",
     url: "https://drive.google.com/file/d/1lV9dIwZU1Ede97Fao-GY1s3EjLPyjvO-/view?pli=1",
     icon: ResumeIcon,
-    external: true
+    external: true,
   },
   {
     id: 1,
     url: "https://linkedin.com/in/shahtazrahman/",
     title: "LinkedIn",
     icon: LinkedInIcon,
-    external: true
+    external: true,
   },
   {
     id: 2,
-    url: "https://x.com/shahtaz67/",
-    title: "X",
-    icon: XIcon,
-    external: true
+    url: "https://wa.me/8801521305382/",
+    title: "WhatsApp",
+    icon: WhatsAppIcon,
+    external: true,
   },
 ];

@@ -1,17 +1,21 @@
-export function geDuration(startDate: Date | string): string {
+export function getDuration(
+  startDate: Date | string,
+  endDate: Date | string = new Date()
+): string {
   const start = new Date(startDate);
-  const now = new Date();
+  const end = new Date(endDate);
 
-  let years = now.getFullYear() - start.getFullYear();
-  let months = now.getMonth() - start.getMonth();
+  let years = end.getFullYear() - start.getFullYear();
+  let months = end.getMonth() - start.getMonth();
 
+  // Adjust if months go negative
   if (months < 0) {
     years -= 1;
     months += 12;
   }
 
-  const yearText = years > 0 ? `${years} year${years > 1 ? "s" : ""}` : "";
-  const monthText = months > 0 ? `${months} mo${months > 1 ? "s" : ""}` : "";
+  const yearText = years > 0 ? `${years} year${years !== 1 ? "s" : ""}` : "";
+  const monthText = months > 0 ? `${months} mo${months !== 1 ? "s" : ""}` : "";
 
-  return [yearText, monthText].filter(Boolean).join(" ");
+  return [yearText, monthText].filter(Boolean).join(" ") || "0 month";
 }

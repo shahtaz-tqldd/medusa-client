@@ -28,11 +28,14 @@ const ExperienceModal: React.FC<ExperienceModalProps> = ({
         <p className={`text-lg -mt-4 ${data.companyColor}`}>{data.company}</p>
 
         <div className="space-y-8 mt-6">
-          <BodyText>{data.description}</BodyText>
+          <div
+            className="space-y-6 text-slate-600 dark:text-gray-400 leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: data.description }}
+          />
 
           <div>
-            <LabelText icon={Award}>Key Achievements:</LabelText>
-            <ul className="mt-4 list-disc list-inside space-y-1 text-gray-600 dark:text-gray-300">
+            <LabelText icon={Award}>Key Achievements</LabelText>
+            <ul className="mt-4 list-disc list-inside space-y-1 text-slate-600 dark:text-gray-400 leading-relaxed">
               {data.achievements.map((achievement, index) => (
                 <li key={index}>{achievement}</li>
               ))}
@@ -40,7 +43,7 @@ const ExperienceModal: React.FC<ExperienceModalProps> = ({
           </div>
 
           <div>
-            <LabelText icon={Code}>Technologies:</LabelText>
+            <LabelText icon={Code}>Technologies</LabelText>
             <div className="mt-4 flex flex-wrap gap-2">
               {data.technologies.map((tech, index) => (
                 <span

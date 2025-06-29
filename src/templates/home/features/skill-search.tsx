@@ -13,7 +13,7 @@ import { Search, ShieldX, X } from "lucide-react";
 import { skills } from "./_demo-data";
 import LordIcon from "@/assets/icons/lord-icon";
 import { useTheme } from "next-themes";
-import { geDuration } from "@/lib/date";
+import { getDuration } from "@/lib/date";
 
 const SkillSearch: React.FC = () => {
   const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
@@ -129,7 +129,7 @@ const SkillSearch: React.FC = () => {
                                 {skill.name}
                               </h3>
                               <p className="text-sm opacity-70">
-                                {geDuration(skill.startDate)}{" "}
+                                {getDuration(skill.startDate)}{" "}
                                 experience
                               </p>
                             </div>

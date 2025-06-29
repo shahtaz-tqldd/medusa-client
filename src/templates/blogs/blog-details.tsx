@@ -22,7 +22,7 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
   if (!blog)
     return <div className="container py-80 center">Blog not found</div>;
 
-  const { title, published, topic, content } = blog;
+  const { title, published, topic, content, read_mins } = blog;
 
   return (
    <section className="container flex gap-10 py-20 md:mt-6">
@@ -31,7 +31,7 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
     <div className="flex text-sm gap-6 mt-8">
       <p className={`${colors[1]} py-1.5 px-3 rounded-full`}>{topic}</p>
       <p className="opacity-60 flx gap-2">
-        <Clock size={14} />4 mins read
+        <Clock size={14} />{read_mins} mins read
       </p>
       <p className="opacity-60 flx gap-2">
         <Calendar size={14} />
@@ -136,7 +136,7 @@ const RenderBlogs: React.FC<RenderBlogsProps> = ({ content }) => {
               return (
                 <ul
                   key={index}
-                  className="list-disc space-y-2 pl-6 text-slate-600 dark:text-gray-400"
+                  className="list-disc space-y-2 pl-5 text-slate-600 dark:text-gray-400 text-lg"
                 >
                   {block.value.map((item: string, i: number) => (
                     <li key={i}>{item}</li>

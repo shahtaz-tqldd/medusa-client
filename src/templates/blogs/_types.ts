@@ -10,6 +10,7 @@ export interface BlogData {
   published: string;
   topic: string;
   content: BlogContentBlock[];
+  read_mins: number;
 }
 
 export interface BlogCardProps {

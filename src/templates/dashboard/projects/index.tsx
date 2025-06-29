@@ -6,11 +6,11 @@ import ProjectList from "./project-list";
 
 import { Plus } from "lucide-react";
 
-import { project_demo_data } from "./_demo-data";
-import type { Project } from "./_types";
+import { projects } from "@/templates/home/projects/_demo_data";
+import { Project } from "@/templates/home/projects/_types";
 
 const ProjectPage = () => {
-  const data: Project[] = project_demo_data;
+  const data: Project[] = projects;
   return (
     <div>
       <div className="flbx">

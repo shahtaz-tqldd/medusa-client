@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 
 import HadronModal from "@/components/ui/hadron-modal";
 
@@ -21,6 +20,7 @@ import LabelText from "@/components/text/label-text";
 import BodyText from "@/components/text/body-text";
 import { GithubIcon } from "@/assets/icons/icons";
 import { hover_button } from "@/lib/styles";
+import ImageSlider from "./image-slider";
 
 interface ProjectModalProps {
   meta: MetaProps;
@@ -51,13 +51,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   const {
     name,
     description,
-    img,
-    screens,
-    featureList,
-    techs,
-    projectType,
-    liveLink,
-    githubLink,
+    images,
+    features,
+    tech_stacks,
+    type,
+    live_link,
+    github_link,
   } = project;
 
   const handleNext = () => {
@@ -102,41 +101,27 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
         <div className="space-y-4">
           <p
             className={`pt-2 pb-1.5 px-4 rounded-full text-sm w-fit ${getColors(
-              projectType
+              type
             )}`}
           >
-            {projectType}
+            {type}
           </p>
           <h2 className="text-2xl md:text-4xl leading-[32px] md:leading-[48px]">
             {name}
           </h2>
           <BodyText className="text-lg">{description}</BodyText>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Image
-            src={img}
-            className="h-72 w-full object-cover rounded-2xl"
-            alt={name}
-          />
-          {screens?.[0] && (
-            <Image
-              src={screens[0]}
-              className="h-72 object-cover rounded-2xl"
-              alt={`${name} screen`}
-              width={600}
-              height={400}
-            />
-          )}
-        </div>
+        <ImageSlider images={images} name={name} />
+
         <div>
           <LabelText icon={Layers} className="text-lg">
             Features
           </LabelText>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-5 opacity-75 mt-4">
-            {featureList.map((item, index) => (
-              <div key={index} className="flx gap-2">
-                <CircleCheck className="h-4 w-4" />
-                {item}
+            {features?.map((item, index) => (
+              <div key={index} className="flex gap-2.5">
+                <CircleCheck className="translate-y-1.5 h-4 w-4" />
+                <p className="flex-1">{item}</p>
               </div>
             ))}
           </div>
@@ -146,7 +131,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             Tech Stacks
           </LabelText>
           <div className="flex flex-wrap gap-x-4 gap-y-2 -ml-2 mt-4">
-            {techs.map((item, index) => (
+            {tech_stacks.map((item, index) => (
               <div
                 key={index}
                 className="flx text-sm text-blue-600 dark:text-blue-400"
@@ -158,13 +143,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
           </div>
         </div>
         <div className="flx gap-5">
-          {liveLink && (
-            <a href={liveLink} target="__blank" className={hover_button}>
+          {live_link && (
+            <a href={live_link} target="__blank" className={hover_button}>
               <LabelText icon={Link}>Live Link</LabelText>
             </a>
           )}
-          {githubLink && (
-            <a href={githubLink} target="__blank" className={hover_button}>
+          {github_link && (
+            <a href={github_link} target="__blank" className={hover_button}>
               <LabelText icon={GithubIcon}>Github Link</LabelText>
             </a>
           )}
@@ -172,17 +157,14 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
         <hr className="border-b-none border-t dark:border-t-white/20 border-blue-500/20 border-dashed mb-3" />
         <div className="flbx">
-          <button
-            onClick={handlePrev}
-            className={hover_button}
-          >
+          <button onClick={handlePrev} className={hover_button}>
             <ChevronLeft className="h-4 w-4" />
             <h2>Previous</h2>
           </button>
           <button
             onClick={handleNext}
             className={hover_button}
-            style={{paddingRight:'12px', paddingLeft:"16px"}}
+            style={{ paddingRight: "12px", paddingLeft: "16px" }}
           >
             <h2>Next</h2>
             <ChevronRight className="h-4 w-4" />

@@ -40,7 +40,7 @@
 }
 
 .medusa-scroll::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #2b7fff, #2b7fff);
+  background: #bfc5cb;
   border-radius: 8px;
 }
 
@@ -55,8 +55,8 @@
   padding-bottom: 0.5rem;
   padding-right: 1rem;
   padding-left: 0.75rem;
-  border-radius: 9999px; 
-  transition: all 0.3s ease; 
+  border-radius: 9999px;
+  transition: all 0.3s ease;
 }
 
 .hover-btn:hover {
@@ -67,4 +67,24 @@
   .hover-btn:hover {
     background-color: rgba(255, 255, 255, 0.1) !important;
   }
+}
+
+.swiper-pagination-bullet {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  opacity: 1 !important;
+  width: 8px !important;
+  height: 8px !important;
+  transition: background-color 0.3s;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white !important;
+}
+.swiper-wrapper {
+  padding-bottom: 48px !important;
+}
+.custom-next,
+.custom-prev {
+  user-select: none;
+  transform: translateY(-24px);
 }

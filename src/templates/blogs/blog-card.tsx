@@ -17,6 +17,7 @@ import EllipsisDropdown from "@/components/dropdowns/ellipsis-dropdown";
 
 import { motion, useInView } from "framer-motion";
 import { toast } from "sonner";
+import { colors } from "@/lib/colors";
 
 const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
   const { img, title, body, published, topic } = data;
@@ -88,18 +89,13 @@ const BlogCard: React.FC<BlogCardProps> = ({ data, index }) => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: index * 0.1 + 0.3, duration: 0.3 }}
         >
-          <Capsule
-            size="sm"
-            variant={
-              topic.toLocaleLowerCase() === "docker"
-                ? "success"
-                : topic.toLocaleLowerCase() === "react js"
-                ? "primary"
-                : "warning"
-            }
+          <p
+            className={`${
+              colors[index % colors.length]
+            } py-1.5 px-3 rounded-full text-xs w-fit`}
           >
             {topic}
-          </Capsule>
+          </p>
         </motion.div>
 
         <motion.div

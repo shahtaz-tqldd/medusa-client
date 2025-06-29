@@ -17,7 +17,9 @@ const Blogs = () => {
       <div className="flbx md:flex-row flex-col">
         <HeroText>Blogs & Articles</HeroText>
         <div className="md:pt-6 hidden md:block">
-          <h2 className="text-sm text-gray-400 mb-1">20+ more Articles</h2>
+          <h2 className="text-sm text-gray-400 mb-1">
+            {BLOGS?.length - 3} more Articles
+          </h2>
           <TextButton onClick={() => handleNavigate()}>Explore Them</TextButton>
         </div>
       </div>

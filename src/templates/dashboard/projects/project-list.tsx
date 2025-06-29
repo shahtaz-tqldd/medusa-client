@@ -2,11 +2,14 @@
 
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Project } from "./_types";
+
 import { Ellipsis } from "lucide-react";
-import { Button } from "@/components/ui/button";
+
 import Capsule from "@/components/status/capsule";
+import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/table/table";
+
+import { Project } from "@/templates/home/projects/_types";
 
 const projectColumns: ColumnDef<Project>[] = [
   {

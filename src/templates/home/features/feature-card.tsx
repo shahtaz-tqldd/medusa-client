@@ -59,9 +59,10 @@ const FeatureCard: React.FC<FeatureCardWithIndexProps> = ({
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: index * 0.1 + 0.4, duration: 0.4 }}
             >
-              <BodyText className="line-clamp-4">
-                <div dangerouslySetInnerHTML={{ __html: text }} />
-              </BodyText>
+              <div
+                className="line-clamp-4 text-slate-600 dark:text-gray-400 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: text }}
+              />
             </motion.div>
           </div>
 

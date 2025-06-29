@@ -1,17 +1,21 @@
-import { StaticImageData } from "next/image";
-
 export interface Project {
   id: string;
   name: string;
-  img: StaticImageData;
-  projectType: string;
   description: string;
-  liveLink?: string;
-  githubLink?: string;
-  techs: string[];
+  images: {
+    main: string;
+    primary: string;
+    secondary: string;
+    accent: string | null;
+  };
+  type: string;
+  live_link?: string;
+  github_link?: string;
+  tech_stacks: string[];
   tags: string[];
-  featureList: string[];
-  screens: string[];
+  features: string[];
+  created_at: string;
+  status: string;
 }
 
 export interface MetaProps {

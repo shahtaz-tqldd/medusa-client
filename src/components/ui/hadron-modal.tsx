@@ -100,7 +100,7 @@ const HadronModal: React.FC<HadronModalProps> = ({
             >
               <button
                 onClick={handleCloseModal}
-                className="sticky top-5 md:top-8 left-5 md:left-10 tr z-[999] h-10 w-10 dark:bg-white/90 hover:dark:bg-white hover:dark:text-black bg-black/80 text-slate-200 dark:text-black hover:text-white hover:bg-black tr center rounded-full"
+                className="hidden md:flex items-center justify-center sticky top-8 left-10 tr z-[999] h-10 w-10 dark:bg-white/90 hover:dark:bg-white hover:dark:text-black bg-black/80 text-slate-200 dark:text-black hover:text-white hover:bg-black tr rounded-full"
               >
                 <ArrowLeft size={24} />
               </button>
@@ -109,7 +109,7 @@ const HadronModal: React.FC<HadronModalProps> = ({
                 initial={{ scale: 0.99, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.75, ease: "easeInOut" }}
-                className="max-w-4xl mx-auto pb-6 md:pb-12 px-3"
+                className="max-w-4xl mx-auto pb-6 pt-6 md:pt-0 md:pb-12 px-3"
               >
                 {children}
               </motion.div>
