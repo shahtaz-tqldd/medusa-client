@@ -19,7 +19,7 @@ export const InitialUI: React.FC = () => {
         secondary="#03A791"
       />
       <BodyText className="text-sm mt-10 text-center">
-        Hey, I might not be online at the moment, but don’t worry — my AI
+        Hey, I might not be online at the moment, but don't worry — my AI
         assistant, ERA, is here to help. Feel free to ask ERA anything you'd
         like to know about me!
       </BodyText>
@@ -45,15 +45,15 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ setIsOpen }) => {
 interface MessageInputInterface {
   message: string;
   setMessage: (message: string) => void;
-  setMessages: React.Dispatch<
-    React.SetStateAction<{ sender: string; text: string }[]>
-  >;
+  onSendMessage: (message: string) => void;
+  isLoading?: boolean;
 }
 
 export const ChatInputBox: React.FC<MessageInputInterface> = ({
   message,
   setMessage,
-  setMessages,
+  onSendMessage,
+  isLoading = false,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -83,27 +83,43 @@ export const ChatInputBox: React.FC<MessageInputInterface> = ({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      if (message.trim()) {
-        setMessages((prev: any) => [
-          ...prev,
-          { sender: "user", text: message },
-        ]);
-        setMessage(""); // clear input
-      }
+      handleSendMessage();
+    }
+  };
+
+  const handleSendMessage = () => {
+    if (message.trim() && !isLoading) {
+      onSendMessage(message.trim());
+      setMessage(""); // clear input
     }
   };
 
   return (
-    <div>
+    <div className="relative">
       <textarea
         ref={textareaRef}
-        className="py-2 px-4 rounded-xl border dark:border-white/20 border-black/30 w-full bg-white/75 dark:bg-white/10 outline-none h-[43px] resize-none"
-        placeholder="Write your message"
+        className={`py-2 pl-4 pr-6 rounded-xl border dark:border-white/20 border-black/30 w-full bg-white/75 dark:bg-white/10 outline-none h-[43px] resize-none ${
+          isLoading ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+        placeholder={isLoading ? "Sending..." : "Write your message"}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}
+        disabled={isLoading}
         style={{ overflowY: "hidden" }}
       />
+      
+      {/* Optional: Send button */}
+      {message.trim() && !isLoading && (
+        <button
+          onClick={handleSendMessage}
+          className="absolute right-2 bottom-[17px] text-blue-500 hover:text-blue-600 tr"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      )}
     </div>
   );
 };

@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
+import { sendChatMessage, fetchConversationMessages } from "@/lib/chat-service";
 
 // components
 import {
@@ -25,6 +26,28 @@ const ChatUi: React.FC = () => {
   const [message, setMessage] = useState("");
   const { theme } = useTheme();
   const [messages, setMessages] = useState<MessageItem[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingConversation, setIsLoadingConversation] = useState(false);
+
+  // Load existing conversation messages when component mounts
+  useEffect(() => {
+    const loadConversationMessages = async () => {
+      setIsLoadingConversation(true);
+      try {
+        const existingMessages = await fetchConversationMessages();
+        console.log(existingMessages)
+        if (existingMessages.length > 0) {
+          setMessages(existingMessages);
+        }
+      } catch (error) {
+        console.error("Failed to load conversation:", error);
+      } finally {
+        setIsLoadingConversation(false);
+      }
+    };
+
+    loadConversationMessages();
+  }, []);
 
   // Handle viewport height changes for mobile keyboard
   useEffect(() => {
@@ -43,18 +66,6 @@ const ChatUi: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (messages?.length > 0 && messages?.length % 2 === 0) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          sender: "ai",
-          text: "Hey Nice to meet you! I am Era, Shahtaz's AI assistance. How may I help you?",
-        },
-      ]);
-    }
-  }, [messages]);
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -66,6 +77,31 @@ const ChatUi: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  const handleSendMessage = async (userMessage: string) => {
+    if (!userMessage.trim() || isLoading) return;
+
+    // Add user message immediately
+    setMessages(prev => [...prev, { sender: "user", text: userMessage }]);
+    setIsLoading(true);
+
+    try {
+      const aiResponse = await sendChatMessage(userMessage);
+      
+      // Add AI response
+      setMessages(prev => [...prev, { sender: "ai", text: aiResponse }]);
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      
+      // Add error message
+      setMessages(prev => [...prev, { 
+        sender: "ai", 
+        text: "Sorry, I'm having trouble responding right now. Please try again." 
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="fixed bottom-8 right-5 md:right-0 md:left-[88vw] z-[1000]">
@@ -110,10 +146,19 @@ const ChatUi: React.FC = () => {
             }}
             ref={scrollContainerRef}
           >
-            {messages?.length > 0 ? (
+            {messages?.length > 0 || isLoadingConversation ? (
               <>
                 <div className="flex-1 min-h-0"></div>
                 <div className="flex flex-col gap-2">
+                  {/* Loading conversation indicator */}
+                  {isLoadingConversation && messages.length === 0 && (
+                    <div className="flex justify-center">
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        Loading conversation...
+                      </div>
+                    </div>
+                  )}
+                  
                   {messages.map(
                     (item: { sender: string; text: string }, index: number) => (
                       <div
@@ -136,6 +181,20 @@ const ChatUi: React.FC = () => {
                       </div>
                     )
                   )}
+                  
+                  {/* Loading indicator */}
+                  {isLoading && (
+                    <div className="flex justify-start">
+                      <div className="bg-blue-500/10 dark:bg-white/10 px-4 py-2 rounded-xl text-sm">
+                        <div className="flex items-center gap-1">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                          <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                          <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
                   <div ref={messagesEndRef} />
                 </div>
               </>
@@ -149,7 +208,8 @@ const ChatUi: React.FC = () => {
             <ChatInputBox
               message={message}
               setMessage={setMessage}
-              setMessages={setMessages}
+              onSendMessage={handleSendMessage}
+              isLoading={isLoading || isLoadingConversation}
             />
           </div>
           
@@ -158,7 +218,8 @@ const ChatUi: React.FC = () => {
             <ChatInputBox
               message={message}
               setMessage={setMessage}
-              setMessages={setMessages}
+              onSendMessage={handleSendMessage}
+              isLoading={isLoading || isLoadingConversation}
             />
           </div>
         </DropdownMenuContent>

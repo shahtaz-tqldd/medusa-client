@@ -1,25 +1,10 @@
-export function getDeviceInfo() {
+export const getDeviceType = (): string => {
   const ua = navigator.userAgent;
+  if (/tablet/i.test(ua)) return "Tablet";
+  if (/mobile/i.test(ua)) return "Mobile";
+  return "Desktop";
+};
 
-  return {
-    userAgent: ua,
-    platform: navigator.platform,
-    language: navigator.language,
-    cookieEnabled: navigator.cookieEnabled,
-    onLine: navigator.onLine,
-    screenResolution: `${screen.width}x${screen.height}`,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    // Browser detection
-    browser: detectBrowser(ua),
-    isMobile:
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua),
-  };
-}
-
-function detectBrowser(ua: any) {
-  if (ua.includes("Chrome")) return "Chrome";
-  if (ua.includes("Firefox")) return "Firefox";
-  if (ua.includes("Safari")) return "Safari";
-  if (ua.includes("Edge")) return "Edge";
-  return "Unknown";
-}
+export const getDeviceName = (): string => {
+  return navigator.platform || "Unknown";
+};
