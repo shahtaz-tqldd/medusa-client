@@ -3,56 +3,46 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { DataTable } from "@/components/table/table";
 
-import type { Visitor } from "./_types";
-import { visitor_demo_data } from "./_demo-data";
+import { formatTimeFromNow } from "@/lib/date";
+import { Visitor } from "@/lib/overview-service";
 
 export const visitorColumns: ColumnDef<Visitor>[] = [
   {
     accessorKey: "country",
     header: "Country",
-    cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <img
-          src={row.original.icon}
-          className="h-4 w-auto"
-          alt={row.original.country}
-        />
-        <span>{row.original.country}</span>
-      </div>
-    ),
   },
   {
-    accessorKey: "region",
+    accessorKey: "city",
     header: "Region",
   },
   {
-    accessorKey: "device",
+    accessorKey: "device_type",
     header: "Device",
   },
   {
-    accessorKey: "visited",
+    accessorKey: "last_visit",
     header: "Visited",
     cell: ({ row }) => (
       <span className="text-xs text-muted-foreground">
-        {row.original.visited}
+        {formatTimeFromNow(row.original.last_visit)}
       </span>
     ),
   },
   {
-    accessorKey: "visitCount",
-    header: "Count",
-    cell: ({ row }) => (
-      <span className="font-medium">{row.original.visitCount}</span>
-    ),
+    accessorKey: "visit_count",
+    header: "Visit Count",
   },
 ];
 
-const VisitorList = () => {
-  const data: Visitor[] = visitor_demo_data;
+interface VisitorListProps {
+  visitors: Visitor[];
+}
+
+const VisitorList = ({ visitors }: VisitorListProps) => {
   return (
     <div>
       <h2 className="mb-6 text-lg font-semibold">Visitor List</h2>
-      <DataTable columns={visitorColumns} data={data} />
+      <DataTable columns={visitorColumns} data={visitors} />
     </div>
   );
 };

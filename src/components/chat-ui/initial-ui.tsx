@@ -18,11 +18,11 @@ export const InitialUI: React.FC = () => {
         primary="#2b7fff"
         secondary="#03A791"
       />
-      <BodyText className="text-sm mt-10 text-center">
-        Hey, I might not be online at the moment, but don't worry — my AI
-        assistant, ERA, is here to help. Feel free to ask ERA anything you'd
-        like to know about me!
-      </BodyText>
+      <p className="mt-10 text-center opacity-80">
+        Hey, I might not be online at the moment, but my AI
+        assistant, ERA, is here to help. Feel free to ask anything you'd
+        like to know!
+      </p>
     </div>
   );
 };

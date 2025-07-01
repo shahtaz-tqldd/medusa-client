@@ -12,53 +12,25 @@ import {
 
 export const description = "An interactive bar chart";
 
-const chartData = [
-  { date: "2024-04-01", desktop: 222, mobile: 150 },
-  
-  { date: "2024-04-08", desktop: 409, mobile: 320 },
-  
-  { date: "2024-04-15", desktop: 120, mobile: 170 },
-  
-  { date: "2024-04-22", desktop: 224, mobile: 170 },
-  
-  { date: "2024-04-29", desktop: 315, mobile: 240 },
-  
-  { date: "2024-05-06", desktop: 498, mobile: 520 },
-  
-  { date: "2024-05-13", desktop: 197, mobile: 160 },
-  
-  { date: "2024-05-20", desktop: 177, mobile: 230 },
-  
-  { date: "2024-05-27", desktop: 420, mobile: 460 },
-  
-  { date: "2024-06-03", desktop: 103, mobile: 160 },
-  
-  { date: "2024-06-10", desktop: 155, mobile: 200 },
-  
-  { date: "2024-06-18", desktop: 107, mobile: 170 },
-  
-  { date: "2024-06-25", desktop: 141, mobile: 190 },
-  
-  { date: "2024-07-01", desktop: 446, mobile: 400 },
-];
-
 const chartConfig = {
   views: {
     label: "Page Views",
   },
-  desktop: {
-    label: "Desktop",
+  visitor: {
+    label: "Visitor",
     color: "#687FE5",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "var(--chart-1)",
   },
 } satisfies ChartConfig;
 
-export default function MedusaBarChart() {
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>("desktop");
+interface MedusaBarChartProps {
+  chartData: {
+    date: string;
+    visit: number;
+  }[];
+}
+
+export default function MedusaBarChart({ chartData }: MedusaBarChartProps) {
+  const [activeChart] = React.useState<keyof typeof chartConfig>("visitor");
 
   return (
     <ChartContainer
@@ -103,7 +75,7 @@ export default function MedusaBarChart() {
             />
           }
         />
-        <Bar dataKey={activeChart} fill="#2b7fff" />
+        <Bar dataKey={activeChart} fill="#2b7fff" radius={12} />
       </BarChart>
     </ChartContainer>
   );

@@ -7,7 +7,7 @@ interface ButtonProps {
   icon?: LucideIcon;
   className?: string;
   variant?: "primary" | "secondary" | "accent" | "rubix" | "nemo";
-  size?: "xs" | "sm" | "md";
+  size?: "xs" | "sm" | "md" | "base"; 
   role?: "button" | "presentation" | "a";
   type?: string;
   onClick?: () => void;
@@ -21,13 +21,14 @@ const variantClasses = {
   accent:
     "bg-blue-600/5 text-blue-900 dark:bg-white/10 dark:text-white border-blue-600/15 dark:border-blue-600/30",
   rubix: "elo-nui",
-  nemo: "elo-nui",
+  nemo: "dark:bg-white/80 dark:text-black/90 hover:dark:bg-white/90 bg-black/70 text-white hover:bg-black/90 tr",
 };
 
 const sizeClasses = {
   xs: "py-1.5 pr-3 pl-2.5 text-xs",
   sm: "py-2 pr-4 pl-3.5 text-sm",
   md: "py-3 pr-5 pl-4",
+  base: "py-2 font-medium justify-center w-full text-base"
 };
 
 const Button: React.FC<ButtonProps> = ({

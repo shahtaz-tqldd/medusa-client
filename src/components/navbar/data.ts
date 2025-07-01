@@ -11,37 +11,37 @@ import {
 export const NAV_ITEMS = [
   {
     title: "Overview",
-    link: "/dashboard",
+    link: "/admin",
     icon: Shapes,
   },
   {
     title: "Messages",
-    link: "/dashboard/messages",
+    link: "/admin/messages",
     icon: BotMessageSquare,
   },
   {
     title: "Projects",
-    link: "/dashboard/projects",
+    link: "/admin/projects",
     icon: ChartNoAxesGantt,
   },
   {
     title: "Skills & Expertise",
-    link: "/dashboard/skills",
+    link: "/admin/skills",
     icon: Sparkles,
   },
   {
     title: "Experiences",
-    link: "/dashboard/experiences",
+    link: "/admin/experiences",
     icon: Coffee,
   },
   {
     title: "Blogs",
-    link: "/dashboard/blogs",
+    link: "/admin/blogs",
     icon: Text,
   },
   {
     title: "Clients",
-    link: "/dashboard/clients",
+    link: "/admin/clients",
     icon: User2,
   },
 ];
