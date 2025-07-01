@@ -5,7 +5,6 @@ import React, { useEffect, useRef } from "react";
 // icons
 import LordIcon from "@/assets/icons/lord-icon";
 import { X } from "lucide-react";
-import BodyText from "../text/body-text";
 
 export const InitialUI: React.FC = () => {
   return (

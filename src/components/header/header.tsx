@@ -96,7 +96,7 @@ const Header: React.FC = () => {
           </div>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="block md:hidden"
+            className="flex md:hidden h-10 w-10 items-center justify-center dark:bg-white/5 bg-blue-500/10 rounded-full"
           >
             <Text size={16} className="scale-x-[-1]" />
           </button>

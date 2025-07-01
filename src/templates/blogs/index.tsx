@@ -20,8 +20,8 @@ const BlogPage = () => {
 
   return (
     <section className="container py-20">
-      <div className="flbx mt-6">
-        <HeroText className="-translate-y-4">Blogs</HeroText>
+      <div className="flbx md:flex-row flex-col mt-6">
+        <HeroText className="-translate-y-4">Blogs and Articles</HeroText>
         <div className="relative w-[300px]">
           <input
             type="text"
