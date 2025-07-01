@@ -32,7 +32,7 @@ const Footer = () => {
               <span className="text-sm opacity-60">+880 1521 305 382</span>
             </h2>
           </div>
-          <div className="flx gap-4 mt-10 -ml-2.5">
+          <div className="flx flex-wrap gap-x-4 gap-y-2 mt-10 -ml-2.5">
             {SOCIAL_LINK?.map((item, index) => (
               <a
                 key={index}
