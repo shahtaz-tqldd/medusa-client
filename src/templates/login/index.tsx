@@ -32,7 +32,7 @@ const LoginPage = () => {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login/`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}auth/login/`,
         {
           method: "POST",
           headers: {
