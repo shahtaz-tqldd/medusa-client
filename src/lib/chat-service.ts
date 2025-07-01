@@ -1,5 +1,3 @@
-// lib/chat-service.ts
-
 interface ChatMessage {
   query: string;
   visitor_id: string;
@@ -11,7 +9,6 @@ interface ChatResponse {
   data: {
     conversation_id: string;
     response: string;
-    // Add other response fields as needed
   };
 }
 

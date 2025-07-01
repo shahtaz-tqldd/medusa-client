@@ -15,6 +15,7 @@ import Button from "../buttons/primary-button";
 
 // icons
 import LordIcon from "@/assets/icons/lord-icon";
+import { Calendar } from "lucide-react";
 
 interface MessageItem {
   sender: string;
@@ -28,6 +29,7 @@ const ChatUi: React.FC = () => {
   const [messages, setMessages] = useState<MessageItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingConversation, setIsLoadingConversation] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   // Load existing conversation messages when component mounts
   useEffect(() => {
@@ -35,7 +37,7 @@ const ChatUi: React.FC = () => {
       setIsLoadingConversation(true);
       try {
         const existingMessages = await fetchConversationMessages();
-        console.log(existingMessages)
+        console.log(existingMessages);
         if (existingMessages.length > 0) {
           setMessages(existingMessages);
         }
@@ -49,22 +51,76 @@ const ChatUi: React.FC = () => {
     loadConversationMessages();
   }, []);
 
-  // Handle viewport height changes for mobile keyboard
+  // Enhanced viewport height and keyboard handling for mobile
   useEffect(() => {
+    // Only run on client side
+    if (typeof window === "undefined") return;
+
+    let initialViewportHeight = window.innerHeight;
+
     const setVH = () => {
       const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+
+      // Detect keyboard on mobile
+      const currentHeight = window.innerHeight;
+      const heightDifference = initialViewportHeight - currentHeight;
+
+      // If height difference is significant (> 150px), assume keyboard is open
+      if (heightDifference > 150) {
+        setKeyboardHeight(heightDifference);
+      } else {
+        setKeyboardHeight(0);
+      }
     };
 
+    // Set initial values
     setVH();
-    window.addEventListener('resize', setVH);
-    window.addEventListener('orientationchange', setVH);
+
+    // Add event listeners
+    window.addEventListener("resize", setVH);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(() => {
+        initialViewportHeight = window.innerHeight;
+        setVH();
+      }, 500);
+    });
+
+    // Visual viewport API for better keyboard detection (if supported)
+    if (window.visualViewport) {
+      const handleViewportChange = () => {
+        const heightDiff = window.visualViewport
+          ? window.innerHeight - window.visualViewport.height
+          : 0;
+
+        setKeyboardHeight(heightDiff);
+      };
+
+      window.visualViewport.addEventListener("resize", handleViewportChange);
+
+      return () => {
+        window.removeEventListener("resize", setVH);
+        window.removeEventListener("orientationchange", setVH);
+        window.visualViewport?.removeEventListener(
+          "resize",
+          handleViewportChange
+        );
+      };
+    }
 
     return () => {
-      window.removeEventListener('resize', setVH);
-      window.removeEventListener('orientationchange', setVH);
+      window.removeEventListener("resize", setVH);
+      window.removeEventListener("orientationchange", setVH);
     };
   }, []);
+
+  useEffect(() => {
+    if (isOpen && messages.length > 0 && !isLoadingConversation) {
+      setTimeout(() => {
+        scrollToBottom();
+      }, 100);
+    }
+  }, [isOpen, messages.length, isLoadingConversation]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -78,36 +134,58 @@ const ChatUi: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
+  // Function to detect and extract Calendly links
+  const extractCalendlyLink = (text: string): string | null => {
+    const calendlyRegex = /https?:\/\/calendly\.com\/[^\s)]+/i;
+    const match = text.match(calendlyRegex);
+    return match ? match[0] : null;
+  };
+
   const handleSendMessage = async (userMessage: string) => {
     if (!userMessage.trim() || isLoading) return;
 
     // Add user message immediately
-    setMessages(prev => [...prev, { sender: "user", text: userMessage }]);
+    setMessages((prev) => [...prev, { sender: "user", text: userMessage }]);
     setIsLoading(true);
 
     try {
       const aiResponse = await sendChatMessage(userMessage);
-      
+
       // Add AI response
-      setMessages(prev => [...prev, { sender: "ai", text: aiResponse }]);
+      setMessages((prev) => [...prev, { sender: "ai", text: aiResponse }]);
     } catch (error) {
       console.error("Failed to send message:", error);
-      
+
       // Add error message
-      setMessages(prev => [...prev, { 
-        sender: "ai", 
-        text: "Sorry, I'm having trouble responding right now. Please try again." 
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "ai",
+          text: "Sorry, I'm having trouble responding right now. Please try again.",
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Close handler that ensures proper cleanup
+  const handleClose = () => {
+    setIsOpen(false);
+    // Reset keyboard height when closing
+    setKeyboardHeight(0);
   };
 
   return (
     <div className="fixed bottom-8 right-5 md:right-0 md:left-[88vw] z-[1000]">
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger>
-          <Button variant="rubix" role="presentation" size="md" className={`px-3 md:px-5 ${isOpen ? "opacity-0" : "opacity-100"}`}>
+          <Button
+            variant="rubix"
+            role="presentation"
+            size="md"
+            className={`px-3 md:px-5 ${isOpen ? "opacity-0" : "opacity-100"}`}
+          >
             <LordIcon
               icon="bpptgtfr"
               height={22}
@@ -119,27 +197,34 @@ const ChatUi: React.FC = () => {
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent 
+        <DropdownMenuContent
           className={`
             dark:bg-[#121212]/80 bg-gray-50 backdrop-blur-2xl 
-            max-h-screen md:max-h-[620px] h-screen md:h-[620px] w-screen md:w-[400px] 
+            max-h-screen md:max-h-[620px] w-screen md:w-[400px] 
             mr-0 md:mr-10 -mb-[84px] md:-mb-14 
             border-0 md:border dark:border-white/20 border-blue-600/10 
-            rounded-none md:rounded-2xl px-5 py-4 flex flex-col
+            rounded-none md:rounded-2xl px-0 md:px-5 py-0 md:py-4 flex flex-col
           `}
+          style={{
+            // Dynamic height adjustment for mobile keyboard
+            height:
+              typeof window !== "undefined" && window.innerWidth < 768
+                ? `calc(100vh - ${keyboardHeight}px)`
+                : "620px",
+          }}
         >
           {/* Mobile-specific sticky header */}
-          <div className="md:hidden sticky top-0 bg-gray-50 dark:bg-[#121212]/80 backdrop-blur-2xl z-10 -mx-5 px-5 py-4 border-b border-black/10 dark:border-white/10">
-            <ChatHeader setIsOpen={setIsOpen} />
+          <div className="md:hidden sticky top-0 bg-gray-50/95 dark:bg-[#121212]/95 backdrop-blur-xl z-20 px-5 py-4 border-b border-black/10 dark:border-white/10">
+            <ChatHeader setIsOpen={handleClose} />
           </div>
-          
+
           {/* Desktop header */}
           <div className="hidden md:block">
-            <ChatHeader setIsOpen={setIsOpen} />
+            <ChatHeader setIsOpen={handleClose} />
           </div>
-          
+
           <div
-            className={`flex-1 overflow-y-auto pr-1 flex flex-col my-3 md:my-3`}
+            className={`flex-1 overflow-y-auto px-5 md:px-0 pr-1 flex flex-col my-3 md:my-3 min-h-0`}
             style={{
               scrollbarWidth: "none", // Firefox
               msOverflowStyle: "none", // IE/Edge
@@ -158,30 +243,52 @@ const ChatUi: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  
+
                   {messages.map(
-                    (item: { sender: string; text: string }, index: number) => (
-                      <div
-                        key={index}
-                        className={`flex ${
-                          item.sender === "user"
-                            ? "justify-end"
-                            : "justify-start"
-                        }`}
-                      >
+                    (item: { sender: string; text: string }, index: number) => {
+                      const calendlyLink =
+                        item.sender === "ai"
+                          ? extractCalendlyLink(item.text)
+                          : null;
+
+                      return (
                         <div
-                          className={`max-w-[75%] px-4 py-2 rounded-xl text-sm whitespace-pre-line ${
+                          key={index}
+                          className={`flex ${
                             item.sender === "user"
-                              ? "bg-[#2b7fff] text-white rounded-br-none"
-                              : "bg-blue-500/10 dark:bg-white/10 text-black dark:text-white"
+                              ? "justify-end"
+                              : "justify-start"
                           }`}
                         >
-                          {item.text}
+                          <div className="max-w-[75%] flex flex-col gap-2">
+                            <div
+                              className={`px-4 py-2 rounded-xl text-sm whitespace-pre-line ${
+                                item.sender === "user"
+                                  ? "bg-[#2b7fff] text-white rounded-br-none"
+                                  : "bg-blue-500/10 dark:bg-white/10 text-black dark:text-white"
+                              }`}
+                            >
+                              {item.text}
+                            </div>
+
+                            {/* Calendly button for AI messages */}
+                            {calendlyLink && (
+                              <button
+                                onClick={() =>
+                                  window.open(calendlyLink, "_blank")
+                                }
+                                className="self-start border border-black/20 dark:border-white/30 text-black/80 dark:text-white/80 bg-transparent hover:dark:bg-white/90 hover:dark:text-black/80 hover:bg-black/80 hover:text-white pl-3 pr-4 py-2 rounded-full text-sm font-medium tr flx gap-2"
+                              >
+                                <Calendar size={14} />
+                                Schedule Meeting
+                              </button>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    )
+                      );
+                    }
                   )}
-                  
+
                   {/* Loading indicator */}
                   {isLoading && (
                     <div className="flex justify-start">
@@ -194,7 +301,7 @@ const ChatUi: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  
+
                   <div ref={messagesEndRef} />
                 </div>
               </>
@@ -204,7 +311,7 @@ const ChatUi: React.FC = () => {
           </div>
 
           {/* Mobile-specific sticky input */}
-          <div className="md:hidden sticky bottom-0 bg-gray-50 dark:bg-[#121212]/80 backdrop-blur-2xl -mx-5 px-5 py-4 border-t border-black/10 dark:border-white/10">
+          <div className="md:hidden sticky bottom-0 bg-gray-50/95 dark:bg-[#121212]/95 backdrop-blur-xl px-5 py-4 border-t border-black/10 dark:border-white/10">
             <ChatInputBox
               message={message}
               setMessage={setMessage}
@@ -212,7 +319,7 @@ const ChatUi: React.FC = () => {
               isLoading={isLoading || isLoadingConversation}
             />
           </div>
-          
+
           {/* Desktop input */}
           <div className="hidden md:block">
             <ChatInputBox

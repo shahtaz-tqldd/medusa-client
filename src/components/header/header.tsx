@@ -63,7 +63,7 @@ const Header: React.FC = () => {
       >
         <div className="container flbx h-16 md:h-20 px-6 lg:px-8">
           <Link href={"/"}>_shahtaz</Link>
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden md:flex items-center gap-8">
             <div className="flx gap-5 text-sm">
               {HEADER_LINKS?.map(({ title, link, icon: Icon, id }, index) => (
                 <Link
@@ -77,20 +77,19 @@ const Header: React.FC = () => {
                 </Link>
               ))}
             </div>
-            <div className="flx gap-1.5">
-              <Button
-                variant="rubix"
-                onClick={() => setIsOpenModal(!isOpenModal)}
-              >
-                <LordIcon
-                  icon="wpsdctqb"
-                  height={18}
-                  width={18}
-                  primary={theme === "dark" ? "#222" : "#fff"}
-                  target="button"
-                />
-                Send Email
-              </Button>
+            <div className="flx gap-1.5 -ml-4">
+              <Link href="https://calendly.com/shahtaz67" target="__blank">
+                <Button variant="rubix">
+                  <LordIcon
+                    icon="uoljexdg"
+                    height={18}
+                    width={18}
+                    primary={theme === "dark" ? "#222" : "#fff"}
+                    target="button"
+                  />
+                  Schedule a Call
+                </Button>
+              </Link>
 
               <ThemeToggle />
             </div>
