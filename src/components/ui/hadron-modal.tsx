@@ -109,7 +109,7 @@ const HadronModal: React.FC<HadronModalProps> = ({
                 initial={{ scale: 0.99, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.75, ease: "easeInOut" }}
-                className="max-w-4xl mx-auto pb-6 pt-6 md:pt-0 md:pb-12 px-3"
+                className="max-w-4xl mx-auto pb-12 md:pb-6 pt-6 md:pt-0 md:pb-12 px-3"
               >
                 {children}
               </motion.div>
