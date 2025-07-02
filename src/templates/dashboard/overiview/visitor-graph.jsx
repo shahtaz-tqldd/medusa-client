@@ -9,8 +9,8 @@ const VisitorGraph = ({ visitors }) => {
   }));
 
   return (
-    <PrimaryCard>
-      <div className="flex flex-col justify-between h-full gap-8">
+    <PrimaryCard className="h-fit">
+      <div className="flex flex-col justify-between h-full gap-12">
         <h2>Portfolio Visitor</h2>
         <MedusaBarChart chartData={chartData} />
       </div>

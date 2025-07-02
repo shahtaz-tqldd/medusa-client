@@ -36,8 +36,11 @@ const ChatUi: React.FC = () => {
     const loadConversationMessages = async () => {
       setIsLoadingConversation(true);
       try {
-        const existingMessages = await fetchConversationMessages();
-        console.log(existingMessages);
+        const conversationId = localStorage.getItem("conversation_id");
+        const existingMessages = await fetchConversationMessages(
+          conversationId
+        );
+
         if (existingMessages.length > 0) {
           setMessages(existingMessages);
         }

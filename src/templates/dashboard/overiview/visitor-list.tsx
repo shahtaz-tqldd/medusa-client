@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { DataTable } from "@/components/table/table";
 
 import { formatTimeFromNow } from "@/lib/date";
 import { Visitor } from "@/lib/overview-service";
+import Pagination from "@/components/reusable/pagination";
 
 export const visitorColumns: ColumnDef<Visitor>[] = [
   {
@@ -36,13 +37,31 @@ export const visitorColumns: ColumnDef<Visitor>[] = [
 
 interface VisitorListProps {
   visitors: Visitor[];
+  total: number;
+  page: number;
+  limit: number;
+  setPage: () => void;
 }
 
-const VisitorList = ({ visitors }: VisitorListProps) => {
+const VisitorList = ({
+  visitors,
+  total,
+  page,
+  setPage,
+  limit,
+}: VisitorListProps) => {
   return (
     <div>
       <h2 className="mb-6 text-lg font-semibold">Visitor List</h2>
-      <DataTable columns={visitorColumns} data={visitors} />
+      <div className="h-[372px]">
+        <DataTable columns={visitorColumns} data={visitors} />
+      </div>
+      <Pagination
+        page={page}
+        setPage={setPage}
+        totalCount={total}
+        limit={limit}
+      />
     </div>
   );
 };

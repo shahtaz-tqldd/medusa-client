@@ -69,14 +69,14 @@ export const fetchOverviewStats = async (): Promise<OverviewStats | null> => {
 
 export const fetchVisitorList = async (
   page: number = 1,
-  limit: number = 6,
+  limit: number = 10,
   search: string = "",
   ordering: string = "-last_visit"
 ): Promise<PaginatedResponse<Visitor> | null> => {
   try {
     const authToken = localStorage.getItem("access_token");
     const params = new URLSearchParams({
-      page: page.toString(),
+      offset: ((page - 1) * limit).toString(),
       limit: limit.toString(),
       ordering,
     });

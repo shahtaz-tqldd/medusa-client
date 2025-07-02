@@ -9,17 +9,22 @@ import PageTitle from "@/components/reusable/page-title";
 import { fetchOverviewStats, fetchVisitorList } from "@/lib/overview-service";
 
 const Dashboard = () => {
+  const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [stats, setStats] = useState(null);
   const [visitors, setVisitors] = useState([]);
 
+  const limit = 6;
   useEffect(() => {
     fetchOverviewStats().then(setStats);
   }, []);
 
   useEffect(() => {
-    fetchVisitorList(page).then((res) => {
-      if (res) setVisitors(res.results);
+    fetchVisitorList(page, limit).then((res) => {
+      if (res) {
+        setVisitors(res.results);
+        setTotal(res?.count);
+      }
     });
   }, [page]);
 
@@ -30,7 +35,13 @@ const Dashboard = () => {
         <MetricsCards stats={stats} />
 
         <div className="grid grid-cols-2 gap-5">
-          <VisitorList visitors={visitors} />
+          <VisitorList
+            visitors={visitors}
+            total={total}
+            page={page}
+            setPage={setPage}
+            limit={limit}
+          />
           <VisitorGraph visitors={stats?.visitors?.cycles || []} />
         </div>
       </div>
