@@ -308,7 +308,7 @@ const ChatUi: React.FC = () => {
                             {calendlyLink && (
                               <button
                                 onClick={() =>
-                                  window.open(calendlyLink, "_blank")
+                                  window.open('https://calendly.com/shahtaz67', "_blank")
                                 }
                                 className="self-start border border-black/20 dark:border-white/30 text-black/80 dark:text-white/80 bg-transparent hover:dark:bg-white/90 hover:dark:text-black/80 hover:bg-black/80 hover:text-white pl-3 pr-4 py-2 rounded-full text-sm font-medium tr flx gap-2"
                               >
