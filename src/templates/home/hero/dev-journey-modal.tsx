@@ -10,9 +10,8 @@ import TitleText from "@/components/text/title-text";
 import { Code, Zap } from "lucide-react";
 
 // data
-import { JOURNEY_STEPS } from "./_demo_data";
+import { MY_STORY } from "./_demo_data";
 import type { DevJourneyModalProps } from "./_types";
-import Image from "next/image";
 
 const DevJourneyModal: React.FC<DevJourneyModalProps> = ({
   isOpen,
@@ -21,14 +20,12 @@ const DevJourneyModal: React.FC<DevJourneyModalProps> = ({
   return (
     <HadronModal isOpen={isOpen} setIsOpen={setIsOpen}>
       <div className="relative">
-        <img src="./shanto.jpg" alt="shanto" height={400} width={400} className="h-40 w-40 object-cover rounded-3xl" />
-        <HeroText>My Development Journey</HeroText>
+        <HeroText>My Somewhat Straightforward Story of Becoming a Software Developer</HeroText>
 
         <div className="space-y-10 mt-12">
-          {JOURNEY_STEPS.map((item, index) => (
+          {MY_STORY.map((item, index) => (
             <div key={index} className="space-y-6">
-              <TitleText icon={item.icon}>{item.title}</TitleText>
-              <BodyText>{item.content}</BodyText>
+              <BodyText className="text-xl">{item.content}</BodyText>
             </div>
           ))}
         </div>

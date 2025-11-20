@@ -1,17 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 
 // components
 import DevJourneyModal from "./dev-journey-modal";
 import FadingGrid from "./fade-grid";
-import HeroEve from "./hero-eve";
 import HeroText from "@/components/text/hero-text";
+import AnimateDiv from "@/components/animation/animate-div";
 import { AnimatedShinyText } from "@/components/text/shiny-text";
 
 // icons
-import { Dot } from "lucide-react";
-import AnimateDiv from "@/components/animation/animate-div";
+import { ArrowRight, Dot } from "lucide-react";
 
 const Hero: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,18 +22,23 @@ const Hero: React.FC = () => {
     <section className="h-screen w-screen center relative">
       <div className="container flbx md:flex-row flex-col-reverse relative">
         <div className="mt-20">
-          <AnimatedShinyText>✨ Software Developer</AnimatedShinyText>
+          <AnimatedShinyText>
+            ✨ Full-stack Software Developer
+          </AnimatedShinyText>
           <HeroText className="max-w-2xl">{HERO_STRING}</HeroText>
           <AnimateDiv delay={0.5}>
             <p className="text-base md:text-lg mt-12 relative">
               <span className="dark:text-gray-400 text-slate-600">
-                Wanna know how I turned passion into profession?
-              </span>{" "}
+                Interested to know the backstory behind how I became a
+                developer?
+              </span>
+              <br />
               <button
                 onClick={() => setIsOpen(true)}
-                className="dark:text-blue-500 text-blue-700 font-medium"
+                className="dark:text-blue-500 text-blue-700 font-medium flx gap-2 group"
               >
-                Read my story
+                <ArrowRight className="h-4 group-hover:translate-x-1 tr"/>
+                <span className="">Here’s a short version.</span>
               </button>
             </p>
           </AnimateDiv>
@@ -44,10 +49,23 @@ const Hero: React.FC = () => {
               <h2 className="">Node JS</h2>
               <Dot />
               <h2 className="">Python & Django</h2>
+              <Dot />
+              <h2 className="">FastAPI</h2>
             </div>
           </AnimateDiv>
         </div>
-        <HeroEve />
+        <div className="relative h-[220px] md:h-[480px] w-[220px] md:w-[480px] overflow-hidden center">
+          <Image
+            src="/hero.png"
+            alt="Hero"
+            width={500}
+            height={500}
+            className="object-cover"
+          />
+
+          {/* Bottom overlay */}
+          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t dark:from-[#121212] from-white to-transparent pointer-events-none"></div>
+        </div>
       </div>
       <FadingGrid />
       {isOpen && <DevJourneyModal isOpen={isOpen} setIsOpen={setIsOpen} />}
