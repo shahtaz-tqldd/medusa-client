@@ -1,28 +1,18 @@
-import { Code, Coffee, Lightbulb, Rocket } from "lucide-react";
-
-export const JOURNEY_STEPS = [
+export const MY_STORY = [
   {
-    icon: Code,
-    title: "The First Hello",
     content:
-      "From the heart of metallurgy to the world of code — I traded alloys for algorithms. My journey began not with a bootcamp, but a dream: to build a travel startup. With no roadmap, I stumbled into Python and JavaScript, broke things, built again, and discovered a strange joy in debugging my own mess. That was my first hello to code — and I never looked back.",
+      "I studied metallurgical engineering, but during university I realized I was more interested in how systems work and how problems are solved through logic. That curiosity pushed me toward programming, and I began teaching myself Python and JavaScript in my free time. Learning to code felt natural, and the more I explored, the more certain I became about moving into software development.",
   },
   {
-    icon: Coffee,
-    title: "Projects Over Perfection",
     content:
-      "I didn’t chase perfection — I chased progress. I tore down tutorials, rewired concepts, and rebuilt the UI from the ground up. React became my canvas, and I kept sketching. My startup dream took a pause, not from doubt — but from the clarity that before I lead, I must learn. And so I dove deeper, choosing messy, meaningful projects over pristine theory.",
+      "Since I didn’t come from a traditional CS path, I learned by building. I followed tutorials, broke projects, fixed them, and slowly developed a solid foundation. React helped me understand the frontend world, and hands-on practice made me a quick learner. Each small project strengthened my confidence and shaped my way of thinking as a developer.",
   },
   {
-    icon: Lightbulb,
-    title: "Finding My Stack",
     content:
-      "Freelance gigs gave way to real teams. I worked remotely, then stepped on-site at Aaykori to feel the pulse of a startup. Six months of full-stack chaos taught me more than any course ever could. At Echologyx, I first danced with A/B testing, then led a solo project in visual testing automation — blending React, OpenCV, and live browser streams into something that felt like magic.",
+      "Freelancing gave me my first real experience working with clients and deadlines. Later, joining Aaykori on-site helped me understand team workflows, code reviews, and how products grow from simple ideas to real features. At Echologyx, I worked on A/B testing and built a visual testing system using React and OpenCV, which expanded my understanding of both frontend and problem-solving at scale.",
   },
   {
-    icon: Rocket,
-    title: "Beyond the Code",
     content:
-      "Curiosity pulled me backend. I joined the engine room of an AI-powered chatbot, crafting logic with Django and orchestrating flow. From pixels to pipelines, my journey has been part builder, part poet. And somewhere between the lines of code, that travel dream still sleeps — waiting to be awakened by a sharper, wiser version of me.",
+      "Over time, I became increasingly drawn to backend development. I worked on an AI-powered chatbot platform, where I used Django to design logical flows and system behavior. Solving complex problems and building reliable backend features felt rewarding, and matched the way I like to think. Today, I’m focused on becoming a stronger full-stack developer — someone who learns fast, adapts quickly, and enjoys the independence of turning challenges into working solutions.",
   },
 ];

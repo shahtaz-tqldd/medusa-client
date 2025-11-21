@@ -11,7 +11,6 @@ import type { FeatureCardProps } from "./_types";
 import TextButton from "@/components/buttons/text-button";
 import PrimaryCard from "@/components/cards/primary-card";
 import TitleText from "@/components/text/title-text";
-import BodyText from "@/components/text/body-text";
 
 interface FeatureCardWithIndexProps extends FeatureCardProps {
   index: number;
@@ -22,7 +21,7 @@ const FeatureCard: React.FC<FeatureCardWithIndexProps> = ({
   handleFeatureOpen,
   index,
 }) => {
-  const { title, text, icon } = data;
+  const { title, text, icon: Icon } = data;
 
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0px 0px -100px 0px" });
@@ -51,7 +50,10 @@ const FeatureCard: React.FC<FeatureCardWithIndexProps> = ({
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: index * 0.1 + 0.3, duration: 0.4 }}
             >
-              <TitleText icon={icon}>{title}</TitleText>
+              <div className="bg-blue-500/10 dark:bg-white/5 rounded-xl h-12 w-12 center mb-4">
+                <Icon className="h-5 w-5 text-blue-500" strokeWidth={1.5} />
+              </div>
+              <TitleText>{title}</TitleText>
             </motion.div>
 
             <motion.div
@@ -60,7 +62,7 @@ const FeatureCard: React.FC<FeatureCardWithIndexProps> = ({
               transition={{ delay: index * 0.1 + 0.4, duration: 0.4 }}
             >
               <div
-                className="line-clamp-4 text-slate-600 dark:text-gray-400 leading-relaxed"
+                className="line-clamp-3 text-slate-600 dark:text-gray-400 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: text }}
               />
             </motion.div>

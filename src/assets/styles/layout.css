@@ -88,3 +88,10 @@
   user-select: none;
   transform: translateY(-24px);
 }
+
+.mask-fade {
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 60%);
+  mask-image: linear-gradient(to top, transparent 0%, black 60%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}

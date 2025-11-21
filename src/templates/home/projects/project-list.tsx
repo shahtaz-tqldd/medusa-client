@@ -13,6 +13,7 @@ import type { MetaProps, Tab } from "./_types";
 
 // data
 import { projects, projectTabs } from "./_demo_data";
+import { AnimatedShinyText } from "@/components/text/shiny-text";
 
 const ProjectList = () => {
   const [active, setActive] = useState<Tab>(projectTabs[0]);
@@ -42,7 +43,10 @@ const ProjectList = () => {
   return (
     <section id="projects" className="container py-12 md:py-20">
       <div className="flbx flex-col md:flex-row gap-5">
-        <HeroText>Project List</HeroText>
+        <div>
+          <AnimatedShinyText>🚀 Portfolio</AnimatedShinyText>
+          <HeroText>Personal Projects</HeroText>
+        </div>
         <div className="relative">
           <Tabs tabs={projectTabs} active={active} setActive={setActive} />
         </div>

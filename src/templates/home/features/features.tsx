@@ -3,21 +3,20 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 // components
+import AnimateDiv from "@/components/animation/animate-div";
 import BodyText from "@/components/text/body-text";
-import HeroText from "@/components/text/hero-text";
-import SkillSearch from "./skill-search";
 import FeatureCard from "./feature-card";
 import FeatureModal from "./feature-modal";
+import HeroText from "@/components/text/hero-text";
+import { AnimatedShinyText } from "@/components/text/shiny-text";
 
 // data
-import { features, skills } from "./_demo-data";
+import { features, skillGroups } from "./_demo-data";
 import { FeatureProps } from "./_types";
-import SkillModal from "./skill-modal";
-import AnimateDiv from "@/components/animation/animate-div";
+import { Dot } from "lucide-react";
 
 const Features: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSkillModalOpen, setIsSkillModalOpen] = useState(false);
   const [featureData, setFeatureData] = useState<FeatureProps | null>(null);
 
   const handleFeatureOpen = (data: FeatureProps) => {
@@ -27,42 +26,55 @@ const Features: React.FC = () => {
 
   return (
     <div id="about" className="container py-12 md:py-20 relative">
-      <div className="grid grid-cols-5 md:gap-20 gap-12">
-        <div className="col-span-5 md:col-span-2 relative z-10">
-          <HeroText className="-translate-y-4">
-            Let me Introduce myself
-          </HeroText>
-          <BodyText className="mt-4" animated delay={0.3}>
-            I’m a full-stack developer with nearly <span className="font-semibold dark:text-white/90 text-black/90">3 years</span> of hands-on
-            experience crafting web applications that balance performance with
-            polish. From intuitive interfaces to backend logic, I’ve built and
-            shipped products that solve real problems — not just for the sake of
-            code, but for the joy of making things work beautifully.
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-16 gap-8 relative z-10">
+        <div>
+          <AnimatedShinyText>🔥 About Me</AnimatedShinyText>
+          <HeroText className="">Let me Introduce myself</HeroText>
+          <BodyText className="mt-8 text-lg text-justify" animated delay={0.3}>
+            I’m a software developer with around 2.5 years of experience. I
+            started my journey in frontend development, where I enjoyed turning
+            UI designs into working prototypes that worked smoothly across
+            different browsers and devices. Working on interfaces helped me
+            understand user experience, consistency, and how small details in
+            layout or behavior can make a big difference.
           </BodyText>
-          <AnimateDiv delay={0.4}>
-            <div className="flex flex-wrap mt-8 md:mt-12 gap-2.5">
-              {skills.slice(0, 9)?.map(({ name, icon: Icon }, index) => (
-                <div
-                  key={index}
-                  className="dark:text-blue-100 text-slate-800 flx gap-2 py-2 px-4 text-sm rounded-full border border-dashed dark:bg-white/[0.03] bg-blue-500/5 dark:border-white/10 border-blue-500/10"
-                >
-                  <Icon className="h-4 w-4" />
-                  {name}
+          <BodyText className="mt-4 text-lg text-justify" animated delay={0.4}>
+            As I grew, I moved into backend development and found a real
+            interest in solving problems behind the scenes. I focus on writing
+            clean, readable code and building backend systems that are
+            efficient, reliable, and easy to maintain. When I design a feature,
+            I always think about performance, structure, and how the system will
+            behave in real usage. I like working on projects where I can take
+            ownership, understand the full flow, and build things that actually
+            help users and teams.
+          </BodyText>
+        </div>
+
+        <div className="space-y-8 mt-12">
+          <h3 className="text-2xl font-semibold">Tech Stack Proficiency</h3>
+          <AnimateDiv delay={0.4} className="space-y-8">
+            {Object.entries(skillGroups).map(([group, items]) => (
+              <div key={group}>
+                <h3 className="font-medium uppercase mb-2 opacity-80">
+                  {group}
+                </h3>
+
+                <div className="flex flex-wrap gap-x-6 gap-y-2">
+                  {items.map(({ name }, idx) => (
+                    <BodyText key={idx} className="flx gap-1 -ml-2.5">
+                      <Dot />
+                      {name}
+                    </BodyText>
+                  ))}
                 </div>
-              ))}
-              <button
-                onClick={() => setIsSkillModalOpen(true)}
-                className="mt-2.5 dark:text-blue-500 text-blue-600 font-semibold"
-              >
-                ... {skills.length - 9} more
-              </button>
-            </div>
-          </AnimateDiv>
-          <AnimateDiv delay={0.4}>
-            <SkillSearch />
+              </div>
+            ))}
           </AnimateDiv>
         </div>
-        <div className="col-span-5 md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-5">
+      </div>
+      <div className="mt-12 md:mt-20 space-y-8">
+        <h3 className="text-2xl font-semibold">Domains of Expertise</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {features?.map((data, index) => (
             <FeatureCard
               key={index}
@@ -89,13 +101,6 @@ const Features: React.FC = () => {
           data={featureData}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-        />
-      )}
-      {isSkillModalOpen && (
-        <SkillModal
-          data={skills}
-          isOpen={isSkillModalOpen}
-          setIsOpen={setIsSkillModalOpen}
         />
       )}
     </div>
