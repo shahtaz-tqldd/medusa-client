@@ -11,7 +11,6 @@ import type { FeatureCardProps } from "./_types";
 import TextButton from "@/components/buttons/text-button";
 import PrimaryCard from "@/components/cards/primary-card";
 import TitleText from "@/components/text/title-text";
-import BodyText from "@/components/text/body-text";
 
 interface FeatureCardWithIndexProps extends FeatureCardProps {
   index: number;

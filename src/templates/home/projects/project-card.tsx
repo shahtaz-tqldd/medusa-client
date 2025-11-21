@@ -5,9 +5,10 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 
 import { HeaderText } from "@/components/text/title-text";
-import { Dot } from "lucide-react";
+import { ArrowRight, Dot, Eye, Link, ViewIcon } from "lucide-react";
 
 import type { Project } from "./_types";
+import { hover_button } from "@/lib/styles";
 
 interface ProjectCardProps {
   handleSetProject: (id: string) => void;
@@ -20,9 +21,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   handleSetProject,
   index,
 }) => {
-  const { id, name, images, type, tags } = data;
+  const { id, name, images, type, live_link } = data;
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0px 0px -100px 0px" });
+
+  const handleSeeLiveLink = (url: string) => {
+    window.open(url, "_blank");
+  };
 
   return (
     <motion.section
@@ -53,8 +58,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       </motion.div>
 
       <motion.h2
-        className={`text-sm mt-4 pl-1 uppercase ${
-          type === "Web App" ? "text-orange-400" : "text-emerald-400"
+        className={`text-xs mt-4 px-3 py-1.5 w-fit rounded-full ${
+          type === "Web App"
+            ? "text-orange-400 bg-orange-400/10"
+            : "text-emerald-400 bg-emerald-400/10"
         }`}
         initial={{ opacity: 0, y: 10 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -72,17 +79,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         <HeaderText className="mt-2.5">{name}</HeaderText>
 
         <motion.div
-          className="mt-6 text-sm flx"
+          className="mt-6 text-sm flx gap-2"
           initial={{ opacity: 0, y: 5 }}
-          animate={isInView ? { opacity: 0.6, y: 0 } : {}}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: index * 0.1 + 0.4, duration: 0.3 }}
         >
-          {tags?.map((item, index) => (
-            <React.Fragment key={index}>
-              <span className="text-nowrap">{item}</span>
-              {index < tags.length - 1 && <Dot />}
-            </React.Fragment>
-          ))}
+          <button className="bg-blue-500/10 text-blue-500 hover:bg-blue-500/15 hover:text-blue-400 tr font-semibold flx gap-2 pl-3 pr-3.5 py-2 rounded-full tr">
+            <ArrowRight className="h-4 w-4 -rotate-45" />
+            View Details
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSeeLiveLink(live_link || "");
+            }}
+            className={hover_button}
+          >
+            <Link className="h-4 w-4" />
+            Live Link
+          </button>
         </motion.div>
       </motion.div>
     </motion.section>
