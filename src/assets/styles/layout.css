@@ -24,7 +24,6 @@
 }
 
 /* styles/globals.css or your global stylesheet */
-
 .medusa-scroll {
   overflow-y: auto;
   scrollbar-gutter: stable overlay; /* Prevents layout shift */
