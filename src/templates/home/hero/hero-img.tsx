@@ -72,7 +72,7 @@ export default function HeroImage() {
   ];
 
   return (
-    <div className="relative flex items-center justify-center p-8 min-h-[500px]">
+    <div className="relative center p-4 md:min-h-[500px] mt-10 md:mt-0">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
@@ -100,9 +100,8 @@ export default function HeroImage() {
       {/* Main image container */}
       <div className="relative h-auto md:h-[480px] w-full md:w-[480px] z-10">
         {/* Placeholder for hero image */}
-
         <div
-          className="w-full h-full flex items-center justify-center"
+          className="w-full h-full center"
           style={{
             maskImage:
               "linear-gradient(to bottom, black 0%, black calc(100% - 80px), transparent 100%)",

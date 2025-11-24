@@ -15,7 +15,7 @@ import { features, skillGroups } from "./_demo-data";
 import { FeatureProps } from "./_types";
 import { Dot } from "lucide-react";
 
-const Features: React.FC = () => {
+const AboutMe: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [featureData, setFeatureData] = useState<FeatureProps | null>(null);
 
@@ -25,12 +25,12 @@ const Features: React.FC = () => {
   };
 
   return (
-    <div id="about" className="container py-12 md:py-20 relative">
+    <div id="about" className="container py-20 relative">
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-16 gap-8 relative z-10">
         <div>
           <AnimatedShinyText>🔥 About Me</AnimatedShinyText>
           <HeroText className="">Let me Introduce myself</HeroText>
-          <BodyText className="mt-8 text-lg text-justify" animated delay={0.3}>
+          <BodyText className="mt-8 text-lg md:text-justify" animated delay={0.3}>
             I’m a software developer with around 2.5 years of experience. I
             started my journey in frontend development, where I enjoyed turning
             UI designs into working prototypes that worked smoothly across
@@ -38,7 +38,7 @@ const Features: React.FC = () => {
             understand user experience, consistency, and how small details in
             layout or behavior can make a big difference.
           </BodyText>
-          <BodyText className="mt-4 text-lg text-justify" animated delay={0.4}>
+          <BodyText className="mt-4 text-lg md:text-justify" animated delay={0.4}>
             As I grew, I moved into backend development and found a real
             interest in solving problems behind the scenes. I focus on writing
             clean, readable code and building backend systems that are
@@ -107,4 +107,4 @@ const Features: React.FC = () => {
   );
 };
 
-export default Features;
+export default AboutMe;
