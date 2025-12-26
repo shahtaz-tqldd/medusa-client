@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import Image from "next/image";
 import { Text, Title } from "@/components/ui/typography";
@@ -25,6 +25,10 @@ const Expertise = () => {
     setDrawerOpen(true);
   };
 
+  const ref = useRef<HTMLDivElement | null>(null);
+  // Attach ref to the motion div that you want to observe
+  const isInView = useInView(ref, { once: true, margin: "-10% 10px" });
+
   return (
     <section className="container py-12 md:py-20">
       <Title variant="lg">Expertise</Title>
@@ -43,7 +47,7 @@ const Expertise = () => {
                   className={`flex items-center gap-2 pb-2 border-b-2 transition ${
                     selectedId === item.id
                       ? "border-white"
-                      : "border-transparent text-slate-400"
+                      : "border-transparent text-gray-300/80"
                   }`}
                 >
                   <TabIcon size={18} />
@@ -58,8 +62,9 @@ const Expertise = () => {
             <motion.div
               key={selectedId}
               initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
               exit={{ opacity: 0, x: 20 }}
+              ref={ref}
             >
               <Text variant="lg">{currentExpertise.description}</Text>
 
@@ -89,9 +94,14 @@ const Expertise = () => {
             <motion.div
               key={selectedId}
               initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={
+                isInView
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 0.95 }
+              }
               exit={{ opacity: 0, scale: 0.95 }}
               className="h-full"
+              ref={ref}
             >
               <Image
                 src={currentExpertise.img}

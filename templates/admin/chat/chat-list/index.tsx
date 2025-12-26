@@ -39,7 +39,7 @@ const ChatList = ({
           <Text variant="sm">Loading conversations...</Text>
         ) : conversations.length === 0 ? (
           <div className="flex flex-col items-center gap-2">
-            <FolderOpen size={32} strokeWidth="1" className="text-slate-400" />
+            <FolderOpen size={32} strokeWidth="1" className="text-300/80" />
             <Text variant="sm">No conversations found</Text>
           </div>
         ) : (

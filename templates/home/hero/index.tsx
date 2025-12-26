@@ -22,15 +22,15 @@ const Hero: React.FC = () => {
       <div className="container flbx md:flex-row flex-col-reverse relative -mt-8 md:mt-8">
         <div>
           <AnimateIn index={0}>
-            <ShinyText>✨ Full-stack Software Developer</ShinyText>
+            <ShinyText className="inline-flex items-center">
+              <Dot className="text-emerald-500 -ml-3.5 -mr-1.5" size={40} />
+              Full-stack Software Developer
+            </ShinyText>
           </AnimateIn>
-          <AnimateIn
-            index={0.25}
-            className="max-w-2xl mt-4 mb-12"
-          >
+          <AnimateIn index={0.25} className="max-w-2xl mt-2 mb-12">
             <Title variant="lg">
-              Hey, this is Shahtaz. I am a software developer by passion,
-              and a full-stack alchemist by choice!
+              Hey, this is Shahtaz. I am a software developer by passion, and a
+              full-stack alchemist by choice!
             </Title>
           </AnimateIn>
           <AnimateIn index={0.5}>
@@ -60,7 +60,6 @@ const Hero: React.FC = () => {
             </div>
           </AnimateIn>
         </div>
-
         <HeroImage />
       </div>
       <BgGrid />

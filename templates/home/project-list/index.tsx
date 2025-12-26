@@ -14,6 +14,7 @@ import ProjectCard from "@/templates/projects/project-card";
 import { MetaProps } from "./_types";
 import { projects, projectTabs } from "@/templates/projects/_data";
 import ProjectDetailsDrawer from "@/templates/projects/project-details-drawer";
+import AnimateIn from "@/components/animation/animate-in";
 
 const ProjectList = () => {
   const [active, setActive] = useState<Tab>(projectTabs[0]);
@@ -42,7 +43,7 @@ const ProjectList = () => {
 
   return (
     <section id="projects" className="container py-12 md:py-20">
-      <div className="flbx flex-col md:flex-row gap-5">
+      <div className="flex justify-between md:items-end items-start flex-col md:flex-row gap-5">
         <div>
           <ShinyText>🚀 Portfolio</ShinyText>
           <Title variant="lg">Personal Projects</Title>
@@ -53,12 +54,9 @@ const ProjectList = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mt-8 md:mt-12">
         {filteredProjects?.map((data, index) => (
-          <ProjectCard
-            key={index}
-            index={index}
-            data={data}
-            handleSetProject={handleSetProject}
-          />
+          <AnimateIn key={index} index={index * 0.2}>
+            <ProjectCard data={data} handleSetProject={handleSetProject} />
+          </AnimateIn>
         ))}
       </div>
 

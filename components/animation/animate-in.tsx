@@ -33,9 +33,9 @@ const AnimateIn = ({
         y: "0%",
         opacity: 1,
         transition: {
-          delay: i * 0.15, // Reduced from 0.3 for snappier feel
-          duration: index === 0 ? 0.8 : 1.2, // Faster for first item
-          ease: index === 0 ? [0.6, 0.01, 0.05, 0.95] : [0.76, 0, 0.1, 1], // Snappier easing for first item
+          delay: i * 0.15,
+          duration: index === 0 ? 0.8 : 1.2,
+          ease: index === 0 ? [0.6, 0.01, 0.05, 0.95] : [0.76, 0, 0.1, 1],
         },
       }),
     }),

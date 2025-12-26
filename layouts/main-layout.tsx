@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-// import ChatUi from "@/components/chat-ui/chat-ui";
 
 import { initializeVisitor } from "@/lib/visitor-service";
 import ChatAssistant from "@/components/chat";
