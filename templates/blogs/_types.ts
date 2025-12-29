@@ -15,5 +15,4 @@ export interface BlogData {
 
 export interface BlogCardProps {
   data: BlogData;
-  index: number;
 }

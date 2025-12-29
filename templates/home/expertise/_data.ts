@@ -7,14 +7,12 @@ export const expertiseData: ExpertiseArea[] = [
     title: "Frontend",
     icon: Coffee,
     img: "https://res.cloudinary.com/dqyv780cz/image/upload/v1751174770/amc_ije1tp.jpg",
-    description: "Crafting responsive, user-centric web applications with modern frameworks and best practices. Specializing in creating seamless user experiences with clean, maintainable code and pixel-perfect designs.",
+    description: "I build modern web interfaces where aesthetics meet performance and usability. My focus is not just on writing code, but creating interfaces that load fast, uses logical caching and scale gracefully as products grow. By combining modern frontend frameworks with thoughtful design practices, I turn complex visual into clean, interactive, and user-friendly digital products.",
     keyPoints: [
-      "React.js & Next.js ecosystem with TypeScript",
-      "Responsive design with Tailwind CSS & modern CSS",
-      "State management (Redux, Zustand, Context API)",
-      "Performance optimization & Core Web Vitals",
-      "Component-driven architecture & design systems",
-      "RESTful API integration & real-time data handling"
+      "User-Centric desgin that supports responsiveness among cross platforms and devices",
+      "Performance-Focused Development with seamless Data & state management",
+      "Strong Component Architecture & Clean Code",
+
     ],
     projects: [
       {
@@ -38,15 +36,13 @@ export const expertiseData: ExpertiseArea[] = [
     title: "Backend",
     icon: Cpu,
     img: "https://res.cloudinary.com/dqyv780cz/image/upload/v1751174770/genomart_eqbpan.jpg",
-    description: "Building robust, scalable server - side applications with focus on security, performance, and clean architecture.Experienced in designing RESTful APIs, database optimization, and implementing complex business logic.",
+    description: "I architect and build backend systems that are reliable, scalable, and designed to grow with the product. I care about data integrity, performance under load, and clean system design that stays maintainable as complexity increases. I turn business logic into well-structured services, designing APIs that feel intuitive to consume.",
     keyPoints: [
-      "Node.js & Express.js API development",
-      "Database design(MongoDB, PostgreSQL, MySQL)",
-      "RESTful & GraphQL API architecture",
-      "Authentication & authorization(JWT, OAuth)",
-      "Microservices architecture & Docker containerization",
-      "Cloud deployment(AWS, Vercel, Railway)"
-    ], projects: [
+      "Ensure scalable and clean system architecture maintaining performance, security and reliability",
+      "APIs that follow best practices and are easy for frontend teams to integrate with",
+      "I write backend code with the next developer in mind. Clear abstractions, meaningful logging, and thoughtful documentation.",
+    ],
+    projects: [
       {
         name: "Task Management API",
         description: "Developed a RESTful API for a project management system with role - based access control, real - time notifications, and file upload capabilities",
@@ -68,14 +64,11 @@ export const expertiseData: ExpertiseArea[] = [
     title: "AI Agent",
     icon: Brain,
     img: "https://res.cloudinary.com/dqyv780cz/image/upload/v1751174776/restro_ek9ssg.jpg",
-    description: "Developing intelligent automation solutions using modern AI technologies and LLMs. Creating agents that can understand context, make decisions, and interact naturally with users while integrating with various tools and APIs.",
+    description: "I design and build intelligent AI agents that don't just respond but reason, adapt, and act with purpose. From decision-making logic to tool orchestration, I craft systems that bridge human intent with machine intelligence. ",
     keyPoints: [
-      "LLM integration (OpenAI, Anthropic Claude, Google Gemini)",
-      "Prompt engineering & context optimization",
-      "Multi-agent systems & workflow orchestration",
-      "RAG (Retrieval Augmented Generation) implementation",
-      "Tool calling & function execution",
-      "Conversational AI & chatbot development"
+      "Design agents that can break down complex goals into actionable steps, reason over context, and choose the right tools at the right time.",
+      "Build agents that understand and retain relevant context, maintaining continuity across interactions while avoiding unnecessary noise.",
+      "Integrate AI agents into real-world systems: APIs, dashboards, databases, and automation pipelines.",
     ],
     projects: [
       {

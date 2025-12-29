@@ -11,6 +11,7 @@ import { Code, Zap } from "lucide-react";
 // data
 import { MY_STORY } from "./_data";
 import type { MyStoryDialogProps } from "./_types";
+import AnimateDiv from "@/components/animation/animate-div";
 
 const MyStoryDrawer: React.FC<MyStoryDialogProps> = ({ isOpen, setIsOpen }) => {
   return (
@@ -24,11 +25,13 @@ const MyStoryDrawer: React.FC<MyStoryDialogProps> = ({ isOpen, setIsOpen }) => {
         </AnimateIn>
 
         <div className="space-y-6 md:space-y-10 mt-8 md:mt-12">
-          {MY_STORY.map((item, index) => (
-            <AnimateIn key={index} index={0} className="space-y-6">
-              <Text className="md:text-justify" variant="lg">{item.content}</Text>
-            </AnimateIn>
-          ))}
+          <AnimateDiv className="space-y-6">
+            {MY_STORY.map((item, index) => (
+              <Text key={index} className="md:text-justify" variant="lg">
+                {item.content}
+              </Text>
+            ))}
+          </AnimateDiv>
         </div>
 
         <div className="absolute top-20 left-8 opacity-5">

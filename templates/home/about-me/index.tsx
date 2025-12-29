@@ -3,6 +3,7 @@ import Image from "next/image";
 
 // components
 import AnimateIn from "@/components/animation/animate-in";
+import AnimateDiv from "@/components/animation/animate-div";
 import ShinyText from "@/components/animation/shiny-text";
 import { Text, Title } from "@/components/ui/typography";
 
@@ -21,13 +22,13 @@ const AboutMe: React.FC = () => {
     <div id="about" className="container py-20 relative">
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-16 gap-8 relative z-10">
         <div>
-          <AnimateIn index={0}>
-            <ShinyText>🔥 About Me</ShinyText>
-            <Title variant="lg" className="mt-2">
-              Let me Introduce myself
-            </Title>
-          </AnimateIn>
-          <AnimateIn index={0.25}>
+          <AnimateDiv>
+            <div>
+              <ShinyText>🔥 About Me</ShinyText>
+              <Title variant="lg" className="mt-2">
+                Let me Introduce myself
+              </Title>
+            </div>
             <Text className="mt-8 !text-lg md:text-justify">
               I’m a software developer with around 2.5 years of experience. I
               started my journey in frontend development, where I enjoyed
@@ -36,8 +37,6 @@ const AboutMe: React.FC = () => {
               helped me understand user experience, consistency, and how small
               details in layout or behavior can make a big difference.
             </Text>
-          </AnimateIn>
-          <AnimateIn index={0.35}>
             <Text className="mt-6 !text-lg md:text-justify">
               As I grew, I moved into backend development and found a real
               interest in solving problems behind the scenes. I focus on writing
@@ -48,37 +47,36 @@ const AboutMe: React.FC = () => {
               I can take ownership, understand the full flow, and build things
               that actually help users and teams.
             </Text>
-          </AnimateIn>
+          </AnimateDiv>
         </div>
 
         <div className="space-y-8 mt-8">
           <AnimateIn index={0}>
             <Title>Tech Stack Proficiency</Title>
           </AnimateIn>
-          <div className="space-y-12">
+
+          <AnimateDiv className="space-y-12">
             {Object.entries(skillGroups).map(([group, items], i) => (
-              <AnimateIn key={group} index={(i + 1) * 0.15}>
-                <div>
-                  <h3 className="font-medium uppercase mb-4">{group}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {items.map(({ name }, idx) => (
-                      <div
-                        key={idx}
-                        className="py-1 px-3.5 rounded-full bg-emerald-300/5 border-2 border-emerald-400/5"
+              <div key={i}>
+                <h3 className="font-medium uppercase mb-4">{group}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {items.map(({ name }, idx) => (
+                    <div
+                      key={idx}
+                      className="py-1 px-3.5 rounded-full bg-emerald-300/5 border-2 border-emerald-400/5"
+                    >
+                      <Text
+                        variant="xs"
+                        className={`font-semibold ${colors[i]}`}
                       >
-                        <Text
-                          variant="xs"
-                          className={`font-semibold ${colors[i]}`}
-                        >
-                          {name}
-                        </Text>
-                      </div>
-                    ))}
-                  </div>
+                        {name}
+                      </Text>
+                    </div>
+                  ))}
                 </div>
-              </AnimateIn>
+              </div>
             ))}
-          </div>
+          </AnimateDiv>
         </div>
       </div>
 

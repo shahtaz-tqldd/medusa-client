@@ -3,18 +3,15 @@
 import React, { useState } from "react";
 
 // components
-import { Tab, Tabs } from "@/components/ui/tabs";
-
-// types
-
-// data
-import { Title } from "@/components/ui/typography";
 import ShinyText from "@/components/animation/shiny-text";
 import ProjectCard from "@/templates/projects/project-card";
+import ProjectDetailsDrawer from "@/templates/projects/project-details-drawer";
+import { Title } from "@/components/ui/typography";
+import { Tab, Tabs } from "@/components/ui/tabs";
+
+// data
 import { MetaProps } from "./_types";
 import { projects, projectTabs } from "@/templates/projects/_data";
-import ProjectDetailsDrawer from "@/templates/projects/project-details-drawer";
-import AnimateIn from "@/components/animation/animate-in";
 
 const ProjectList = () => {
   const [active, setActive] = useState<Tab>(projectTabs[0]);
@@ -45,7 +42,7 @@ const ProjectList = () => {
     <section id="projects" className="container py-12 md:py-20">
       <div className="flex justify-between md:items-end items-start flex-col md:flex-row gap-5">
         <div>
-          <ShinyText>🚀 Portfolio</ShinyText>
+          <ShinyText>💎 Portfolio</ShinyText>
           <Title variant="lg">Personal Projects</Title>
         </div>
         <div className="relative">
@@ -54,13 +51,13 @@ const ProjectList = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mt-8 md:mt-12">
         {filteredProjects?.map((data, index) => (
-          <AnimateIn key={index} index={index * 0.2}>
-            <ProjectCard data={data} handleSetProject={handleSetProject} />
-          </AnimateIn>
+          <ProjectCard
+            key={index}
+            data={data}
+            handleSetProject={handleSetProject}
+          />
         ))}
       </div>
-
-      {/* Render modal only when data exists */}
 
       <ProjectDetailsDrawer
         meta={meta || { currentId: "", nextId: "", prevId: "" }}

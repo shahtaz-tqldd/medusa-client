@@ -68,11 +68,11 @@ const Expertise = () => {
             >
               <Text variant="lg">{currentExpertise.description}</Text>
 
-              <div className="mt-6 space-y-2">
+              <div className="mt-6 space-y-2 max-w-md">
                 {currentExpertise.keyPoints.map((point) => (
                   <div key={point} className="flex gap-3">
-                    <Check className="mt-1 text-emerald-500" size={14} />
-                    <Text variant="sm">{point}</Text>
+                    <Check className="mt-1.5 text-emerald-500" size={14} />
+                    <Text variant="sm" className="flex-1">{point}</Text>
                   </div>
                 ))}
               </div>

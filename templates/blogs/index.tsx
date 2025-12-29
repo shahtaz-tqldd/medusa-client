@@ -40,7 +40,7 @@ const BlogPage = () => {
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredBlogs.length > 0 ? (
           filteredBlogs.map((data, index) => (
-            <BlogCard key={index} data={data} index={index} />
+            <BlogCard key={index} data={data} />
           ))
         ) : (
           <p className="col-span-full text-center text-muted-foreground">

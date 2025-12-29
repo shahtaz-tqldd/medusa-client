@@ -1,5 +1,4 @@
 import React from "react";
-
 import BlogCard from "@/templates/blogs/blog-card";
 
 import { BLOGS } from "@/templates/blogs/_data";
@@ -34,7 +33,7 @@ const BlogPreview = () => {
       </div>
       <div className="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-6">
         {BLOGS.slice(0, 3)?.map((data, index) => (
-          <BlogCard key={index} data={data} index={index} />
+          <BlogCard key={index} data={data} />
         ))}
       </div>
       <div className="flex md:hidden mt-12 justify-between">
