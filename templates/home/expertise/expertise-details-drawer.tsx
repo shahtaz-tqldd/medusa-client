@@ -1,10 +1,11 @@
 "use client";
 
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { Title, Text } from "@/components/ui/typography";
+import { Title, Text, LabelText } from "@/components/ui/typography";
 import type { FeatureDetailsDrawerProps } from "./_types";
-import { Check } from "lucide-react";
+import { Check, Code2, Folder } from "lucide-react";
 import AnimateDiv from "@/components/animation/animate-div";
+import TechBadge from "@/components/ui/badge";
 
 const ExpertiseDetailsDrawer = ({
   data,
@@ -36,28 +37,23 @@ const ExpertiseDetailsDrawer = ({
           </div>
 
           <div className="space-y-4">
-            <Title variant="sm">Technologies</Title>
+            <LabelText icon={Code2}>Tech-Stack Proficiency</LabelText>
             <div className="flex flex-wrap gap-2 mt-2">
-              {data.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-1 rounded-full text-sm bg-white/5"
-                >
-                  {tech}
-                </span>
+              {data.technologies.map((tech, idx) => (
+                <TechBadge key={idx}>{tech}</TechBadge>
               ))}
             </div>
           </div>
 
           <div className="space-y-4">
-            <Title variant="sm">Projects</Title>
+            <LabelText icon={Folder}>Projects</LabelText>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
               {data.projects.map((project, idx) => (
                 <div key={idx} className="">
-                  <Title variant="sm" className="flex-1">
+                  <Title variant="xs" className="flex-1 font-semibold">
                     {project.name}
                   </Title>
-                  <Text variant="lg" className="flex-1">
+                  <Text variant="sm" className="flex-1">
                     {project.description}
                   </Text>
                 </div>

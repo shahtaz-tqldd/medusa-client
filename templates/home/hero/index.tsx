@@ -15,7 +15,7 @@ import { Dot } from "lucide-react";
 
 const Hero: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const SKILLS = ["React", "Node JS", "Python & Django", "FastAPI"];
+  const SKILLS = ["React", "Node JS", "Django", "FastAPI"];
 
   return (
     <section className="md:py-24 py-10 h-auto w-screen center overflow-hidden relative">

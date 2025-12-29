@@ -37,7 +37,7 @@ const Expertise = () => {
         {/* LEFT */}
         <div>
           {/* Tabs */}
-          <div className="flex gap-6 border-b border-white/5 mb-8">
+          <div className="flex gap-6 border-b dark:border-white/5 border-gray-100 mb-8">
             {expertiseData.map((item) => {
               const TabIcon = item.icon;
               return (
@@ -46,8 +46,8 @@ const Expertise = () => {
                   onClick={() => setSelectedId(item.id)}
                   className={`flex items-center gap-2 pb-2 border-b-2 transition ${
                     selectedId === item.id
-                      ? "border-white"
-                      : "border-transparent text-gray-300/80"
+                      ? "dark:border-blue-500 font-semibold text-blue-600 border-blue-600"
+                      : "border-transparent dark:text-gray-300/80 text-gray-400"
                   }`}
                 >
                   <TabIcon size={18} />
@@ -79,9 +79,9 @@ const Expertise = () => {
 
               <button
                 onClick={openDrawer}
-                className="mt-10 inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition"
+                className="mt-10 inline-flex items-center gap-1 px-5 py-2.5 font-semibold rounded-full bg-blue-500/10 dark:text-blue-500 text-blue-600 hover:bg-blue-500/20 tr"
               >
-                <ArrowRight className="-rotate-45" size={16} />
+                <ArrowRight className="-rotate-45 -translate-x-1" size={16} />
                 View Details
               </button>
             </motion.div>

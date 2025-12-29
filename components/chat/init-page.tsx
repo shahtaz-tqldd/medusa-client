@@ -14,7 +14,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ setIsOpen }) => {
   return (
     <div className="flbx">
       <div className="flx gap-2">
-        <Title variant="xs">Chatbot Agent Era</Title>
+        <Title variant="xs">Chatbot Assistant</Title>
       </div>
       <button onClick={() => setIsOpen(false)}>
         <X className="h-4 w-4" />

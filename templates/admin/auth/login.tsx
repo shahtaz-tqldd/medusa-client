@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import SwithDarkMode from "@/components/themes/switch-theme";
-import { Text, Title } from "@/components/ui/typography";
+import { Title } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -107,7 +107,9 @@ const LoginPage = () => {
 
           {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
 
-          <Button type="submit" className="w-full">{loading ? "Logging in..." : "Login"}</Button>
+          <Button type="submit" className="w-full">
+            {loading ? "Logging in..." : "Login"}
+          </Button>
         </form>
         <div className="mt-10 flbx">
           <SwithDarkMode />

@@ -8,7 +8,7 @@ html.light {
   --secondary: #6b7280;
   --accent: #22c55e;
   --threat: #ef4444;
-  --background: #e1e9ec;
+  --background: #f0f5f7;
   --foreground: #171717;
   --nui: #1a2417;
 }
@@ -18,11 +18,14 @@ html.dark {
   --secondary: #9ca3af;
   --accent: #4ade80;
   --threat: #f87171;
-  --background: #151b1d;
+  --background: #171b1b;
   --foreground: #ededed;
   --nui: #f7fdff;
 }
 
+html{
+  background-color: var(--background);
+}
 body {
   overflow-x: hidden;
   max-width: 100%;

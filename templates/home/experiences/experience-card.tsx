@@ -66,6 +66,7 @@ const ExperienceCard: React.FC<ExperienceCardWithIndexProps> = ({
                   <p className={`${item.companyColor}`}>{item.company}</p>
                 </div>
               </div>
+
               <div className="flex ml-16 flex-wrap gap-x-5 md:gap-x-8 gap-y-3 mt-3 text-sm text-blue-600 dark:text-blue-500">
                 <div className="flex items-center gap-1.5">
                   <Calendar size={14} />
@@ -81,7 +82,7 @@ const ExperienceCard: React.FC<ExperienceCardWithIndexProps> = ({
                 </div>
               </div>
 
-              <div className="ml-8 mt-6 space-y-4">
+              <div className="-ml-2 md:ml-8 mt-6 space-y-4">
                 {item.achievements?.map((a, i) => (
                   <Text key={i} variant="sm" className="flex gap-2">
                     <Dot />

@@ -4,7 +4,7 @@ export const WORK_EXPERIENCES = [
     timeline: "March 2024 - Present",
     position: "Software Engineer L2",
     company: "Echologyx Ltd.",
-    companyColor: "text-orange-500",
+    companyColor: "!text-orange-500",
     bgColor:
       "bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/20 dark:to-amber-950/20",
     borderColor: "border-orange-200 dark:border-orange-800/30",
@@ -49,7 +49,7 @@ export const WORK_EXPERIENCES = [
     timeline: "July 2023 - December 2023",
     position: "MERN Stack Developer",
     company: "Aykori Digital",
-    companyColor: "text-green-500",
+    companyColor: "!text-green-500",
     bgColor:
       "bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20",
     borderColor: "border-green-200 dark:border-green-800/30",

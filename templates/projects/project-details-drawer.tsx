@@ -21,6 +21,7 @@ import { MetaProps } from "../home/project-list/_types";
 import { projects } from "./_data";
 import ImageSlider from "@/components/slider/img-slider";
 import AnimateDiv from "@/components/animation/animate-div";
+import TechBadge from "@/components/ui/badge";
 
 interface ProjectDetailsDrawerProps {
   meta: MetaProps;
@@ -135,16 +136,9 @@ const ProjectDetailsDrawer: React.FC<ProjectDetailsDrawerProps> = ({
             <LabelText icon={Code2} variant="sm">
               Tech Stacks
             </LabelText>
-            <div className="flex flex-wrap gap-x-1 gap-y-2 -ml-2">
+            <div className="flex flex-wrap gap-x-1 gap-y-2">
               {tech_stacks.map((item, index) => (
-                <div
-                  key={index}
-                  className="py-1 px-3.5 rounded-full bg-blue-500/5 border border-blue-500/10"
-                >
-                  <Text variant="xs" className={`font-semibold !text-blue-500`}>
-                    {item}
-                  </Text>
-                </div>
+                <TechBadge key={index}>{item}</TechBadge>
               ))}
             </div>
           </div>

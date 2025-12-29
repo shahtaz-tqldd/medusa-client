@@ -29,7 +29,7 @@ const ChatUi: React.FC = () => {
   const [messages, setMessages] = useState<MessageItem[]>([
     {
       sender: "ai",
-      text: "Hey, I am Era, Shahtaz's AI assistant. Could I answer some of your queries?",
+      text: "Hi 👋 I’m Era, the AI assistant for Shahtaz. Feel free to ask me anything about him.",
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);

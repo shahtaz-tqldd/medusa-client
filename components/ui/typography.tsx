@@ -56,8 +56,8 @@ export const LabelText = ({
 }: LabelTextProps) => {
   return (
     <Title variant={variant} className={`flx gap-2 ${className}`}>
-      <Icon size={16} />
-      {children}
+      <Icon size={18} />
+      <span className="flex-1 font-semibold">{children}</span>
     </Title>
   );
 };

@@ -7,10 +7,11 @@ import "prismjs/themes/prism-tomorrow.css";
 import { BLOGS } from "./_data";
 
 import { slugify } from "@/lib/slugify";
-import { colors } from "@/lib/colors";
+import { text_colors } from "@/lib/colors";
 import { Calendar, Clock } from "lucide-react";
 import { BlogContentBlock } from "./_types";
 import { Text, Title } from "@/components/ui/typography";
+import TechBadge from "@/components/ui/badge";
 
 type Props = {
   name: string;
@@ -31,7 +32,7 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
           {title}
         </h2>
         <div className="flex text-sm gap-6 mt-8">
-          <p className={`${colors[1]} py-1.5 px-3 rounded-full`}>{topic}</p>
+          <TechBadge>{topic}</TechBadge>
           <p className="opacity-60 flx gap-2">
             <Clock size={14} />
             {read_mins} mins read
@@ -45,7 +46,7 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
       </div>
 
       <aside className="hidden md:block md:w-1/3">
-        <div className="fixed top-28 space-y-10 max-h-[60vh] w-1/4">
+        <div className="sticky w-full top-28 space-y-10 max-h-[60vh]">
           {BLOGS.filter((b) => slugify(b.title) !== name)?.map(
             (data, index) => (
               <Link
@@ -53,17 +54,11 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
                 className="block"
                 href={`/blogs/${slugify(data?.title)}`}
               >
-                <div className="flx gap-4 text-sm">
-                  <p className="opacity-60">{data.published}</p>
-                  <p
-                    className={`${colors[index]} text-xs pt-1.5 pb-1 px-3 rounded-full`}
-                  >
-                    {data.topic}
-                  </p>
+                <Text variant="xs">{data.published}</Text>
+                <Title variant="xs" className="mt-1 mb-2">{data?.title}</Title>
+                <div className="w-fit">
+                  <TechBadge color={text_colors[index]}>{data.topic}</TechBadge>
                 </div>
-                <Title variant="sm" className="mt-2">
-                  {data?.title}
-                </Title>
               </Link>
             )
           )}
