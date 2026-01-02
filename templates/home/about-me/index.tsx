@@ -24,12 +24,12 @@ const AboutMe: React.FC = () => {
         <div>
           <AnimateDiv>
             <div>
-              <ShinyText>🔥 About Me</ShinyText>
+              <ShinyText>About Me</ShinyText>
               <Title variant="lg" className="mt-2">
                 Let me Introduce myself
               </Title>
             </div>
-            <Text className="mt-8 !text-lg md:text-justify">
+            <Text variant="lg" className="mt-8 md:text-justify">
               I’m a software developer with around 2.5 years of experience. I
               started my journey in frontend development, where I enjoyed
               turning UI designs into working prototypes that worked smoothly
@@ -37,7 +37,7 @@ const AboutMe: React.FC = () => {
               helped me understand user experience, consistency, and how small
               details in layout or behavior can make a big difference.
             </Text>
-            <Text className="mt-6 !text-lg md:text-justify">
+            <Text variant="lg" className="mt-6 md:text-justify">
               As I grew, I moved into backend development and found a real
               interest in solving problems behind the scenes. I focus on writing
               clean, readable code and building backend systems that are

@@ -42,7 +42,7 @@ const ProjectList = () => {
     <section id="projects" className="container py-12 md:py-20">
       <div className="flex justify-between md:items-end items-start flex-col md:flex-row gap-5">
         <div>
-          <ShinyText>💎 Portfolio</ShinyText>
+          <ShinyText>Portfolio</ShinyText>
           <Title variant="lg">Personal Projects</Title>
         </div>
         <div className="relative">

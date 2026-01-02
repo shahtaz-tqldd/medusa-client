@@ -30,28 +30,27 @@ const BlogCard: React.FC<BlogCardProps> = ({ data }) => {
           className="w-full h-72 object-cover rounded-3xl"
           alt={slugify(title)}
         />
-        <Text variant="xs" className="mt-4">
-          Posted on {published}
-        </Text>
+        <div className="space-y-2 mt-4">
+          <Text variant="xs">Posted on {published}</Text>
+          <Title variant="sm">{title}</Title>
+        </div>
+        <div className="space-y-4 mt-2">
+          <Text variant="sm" className="line-clamp-2">
+            {body}
+          </Text>
 
-        <Title variant="sm" className="mt-1">
-          {title}
-        </Title>
-        <Text variant="sm" className="line-clamp-2 mt-2">
-          {body}
-        </Text>
-
-        <div className="flex flex-wrap gap-1 mt-4">
-          {tags?.map((item, i) => (
-            <p
-              key={i}
-              className={`${
-                colors[i % colors.length]
-              } py-1.5 px-3 rounded-full text-xs w-fit`}
-            >
-              {item}
-            </p>
-          ))}
+          <div className="flex flex-wrap gap-1">
+            {tags?.map((item, i) => (
+              <p
+                key={i}
+                className={`${
+                  colors[i % colors.length]
+                } py-1.5 px-3 rounded-full text-xs w-fit`}
+              >
+                {item}
+              </p>
+            ))}
+          </div>
         </div>
       </AnimateDiv>
     </Link>

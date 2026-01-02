@@ -67,12 +67,12 @@ const ExperienceCard: React.FC<ExperienceCardWithIndexProps> = ({
                 </div>
               </div>
 
-              <div className="flex ml-16 flex-wrap gap-x-5 md:gap-x-8 gap-y-3 mt-3 text-sm text-blue-600 dark:text-blue-500">
+              <div className="flex md:ml-16 flex-wrap gap-x-5 md:gap-x-8 gap-y-3 mt-3 text-xs md:text-sm text-blue-600 dark:text-blue-500">
                 <div className="flex items-center gap-1.5">
                   <Calendar size={14} />
                   <span>{item.timeline}</span>
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="hidden md:flex items-center gap-1.5">
                   <Clock size={14} />
                   <span>{getDuration(item?.start_date, item?.end_date)}</span>
                 </div>
@@ -103,7 +103,7 @@ const ExperienceCard: React.FC<ExperienceCardWithIndexProps> = ({
 
                 <div className="flex flex-wrap gap-x-4 gap-y-2">
                   {item.highlights.map((h, i) => (
-                    <Text key={i} variant="xs" className="flx gap-2">
+                    <Text key={i} variant="sm" className="flx gap-2">
                       <Check size={14} className="text-emerald-500" />
                       {h}
                     </Text>
@@ -111,12 +111,12 @@ const ExperienceCard: React.FC<ExperienceCardWithIndexProps> = ({
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="hidden md:block space-y-4">
                 <LabelText icon={Code} variant="xs">
                   Used Tech-stacks
                 </LabelText>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-y-2 gap-x-1">
                   {item.technologies.map((tech, idx) => (
                     <span
                       key={idx}
