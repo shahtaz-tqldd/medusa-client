@@ -3,17 +3,18 @@ import { Text } from "./typography";
 
 const TechBadge = ({
   children,
-  color = "dark:!text-emerald-500 !text-emerald-600",
+  color = "dark:!text-emerald-500 !text-emerald-600 dark:bg-emerald-100/5 bg-emerald-500/5",
 }: {
   children: ReactNode;
   color?: string;
 }) => {
   return (
-    <div className="py-1 px-3.5 rounded-full dark:bg-emerald-100/5 bg-emerald-500/5">
-      <Text variant="xs" className={`font-semibold ${color}`}>
-        {children}
-      </Text>
-    </div>
+    <Text
+      variant="xs"
+      className={`py-1.5 px-3.5 rounded-full font-semibold ${color}`}
+    >
+      {children}
+    </Text>
   );
 };
 

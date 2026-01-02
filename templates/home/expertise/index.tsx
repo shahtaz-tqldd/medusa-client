@@ -25,9 +25,11 @@ const Expertise = () => {
     setDrawerOpen(true);
   };
 
-  const ref = useRef<HTMLDivElement | null>(null);
-  // Attach ref to the motion div that you want to observe
-  const isInView = useInView(ref, { once: true, margin: "-10% 10px" });
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const imageRef = useRef<HTMLDivElement | null>(null);
+
+  const textInView = useInView(textRef, { once: true });
+  const imageInView = useInView(imageRef, { once: true });
 
   return (
     <section className="container py-12 md:py-20">
@@ -37,7 +39,7 @@ const Expertise = () => {
         {/* LEFT */}
         <div>
           {/* Tabs */}
-          <div className="flex gap-6 border-b dark:border-white/5 border-gray-100 mb-8">
+          <div className="flex gap-6 border-b dark:border-white/5 border-gray-200 mb-8">
             {expertiseData.map((item) => {
               const TabIcon = item.icon;
               return (
@@ -46,7 +48,7 @@ const Expertise = () => {
                   onClick={() => setSelectedId(item.id)}
                   className={`flex items-center gap-2 pb-2 border-b-2 transition ${
                     selectedId === item.id
-                      ? "dark:border-blue-500 font-semibold text-blue-600 border-blue-600"
+                      ? "dark:border-white dark:border-gray-900 dark:text-white text-gray-900"
                       : "border-transparent dark:text-gray-300/80 text-gray-400"
                   }`}
                 >
@@ -62,9 +64,11 @@ const Expertise = () => {
             <motion.div
               key={selectedId}
               initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+              animate={
+                textInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
+              }
               exit={{ opacity: 0, x: 20 }}
-              ref={ref}
+              ref={textRef}
             >
               <Text variant="lg">{currentExpertise.description}</Text>
 
@@ -72,7 +76,9 @@ const Expertise = () => {
                 {currentExpertise.keyPoints.map((point) => (
                   <div key={point} className="flex gap-3">
                     <Check className="mt-1.5 text-emerald-500" size={14} />
-                    <Text variant="sm" className="flex-1">{point}</Text>
+                    <Text variant="sm" className="flex-1">
+                      {point}
+                    </Text>
                   </div>
                 ))}
               </div>
@@ -95,13 +101,13 @@ const Expertise = () => {
               key={selectedId}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={
-                isInView
+                imageInView
                   ? { opacity: 1, scale: 1 }
                   : { opacity: 0, scale: 0.95 }
               }
               exit={{ opacity: 0, scale: 0.95 }}
-              className="h-full"
-              ref={ref}
+              className="max-h-[480px] h-full"
+              ref={imageRef}
             >
               <Image
                 src={currentExpertise.img}

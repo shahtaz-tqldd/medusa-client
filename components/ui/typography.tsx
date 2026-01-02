@@ -24,7 +24,7 @@ export const Text = ({ children, className, variant = "md" }: TextProps) => {
 
   return (
     <p
-      className={`text-gray-700 dark:text-gray-300/80 leading-[165%] ${variants[variant]} ${className}`}
+      className={`text-gray-700 dark:text-gray-300/80 ${variants[variant]} ${className}`}
     >
       {children}
     </p>
