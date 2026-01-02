@@ -8,7 +8,7 @@ import {
 export const ACHIEVEMENTS = [
   {
     type: "Certificate",
-    title: "Python Basic: University of Michigan",
+    title: "Python Basic from University of Michigan",
     subtitle: "Coursera",
     icon: <PythonIcon className="h-12 w-12" />,
     accentColor: "text-blue-600",

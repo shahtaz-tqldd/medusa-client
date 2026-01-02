@@ -11,14 +11,14 @@ const Footer = () => {
       <div className="container pb-6 pt-10 border-t dark:border-t-white/20 border-t-blue-500/20 border-dashed flex md:flex-row flex-col-reverse gap-6">
         <div>
           <AnimateIn index={0}>
-            <Text variant="xs" className="max-w-md">
+            <Text variant="xs" className="max-w-md text-center md:text-left">
               Built with Next.js and TypeScript on the frontend, using the
               shadcn UI library. Powered by a Django + PostgreSQL backend, with
               a chatbot integrated via the Gemini API.
             </Text>
           </AnimateIn>
           <AnimateIn index={0.2}>
-            <Text variant="xs" className="mt-10">
+            <Text variant="xs" className="mt-10 text-center md:text-left">
               All rights reserved to Shahtaz &copy;{new Date().getFullYear()}
             </Text>
           </AnimateIn>
@@ -56,7 +56,7 @@ const Footer = () => {
             </div>
           </AnimateIn>
           <AnimateIn index={0.2}>
-            <div className="flx flex-wrap gap-x-3 gap-y-2 mt-12 -ml-2.5">
+            <div className="justify-center md:justify-start flx flex-wrap gap-x-3 gap-y-2 mt-12 -ml-2.5">
               {SOCIAL_LINK?.map((item, index) => (
                 <a
                   key={index}

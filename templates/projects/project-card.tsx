@@ -29,7 +29,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
   const colors = [
     "!bg-emerald-600 !text-white !text-xs",
-    "!bg-blue-700 !text-white !text-xs",
+    "!bg-rose-900 !text-white !text-xs",
   ];
   return (
     <div className="group cursor-pointer" onClick={() => handleSetProject(id)}>

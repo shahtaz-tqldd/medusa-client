@@ -6,10 +6,11 @@ import { Title, LabelText, Text } from "@/components/ui/typography";
 // data
 
 // icons
-import { Award, Building2, Check, Code, Dot } from "lucide-react";
+import { Award, Building2, Code, Dot } from "lucide-react";
 import type { ExperienceDetailsDrawerProps } from "./_types";
 import AnimateDiv from "@/components/animation/animate-div";
 import TechBadge from "@/components/ui/badge";
+import { getDuration } from "@/lib/date";
 
 const ExperienceDetailsDrawer: React.FC<ExperienceDetailsDrawerProps> = ({
   data,
@@ -23,7 +24,7 @@ const ExperienceDetailsDrawer: React.FC<ExperienceDetailsDrawerProps> = ({
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerContent>
-        <AnimateDiv className="space-y-12">
+        <AnimateDiv className="space-y-8 md:space-y-12">
           <div className="space-y-4">
             <div className="flx gap-4">
               <div className={`${data.iconBg} p-4 rounded-2xl`}>
@@ -36,20 +37,30 @@ const ExperienceDetailsDrawer: React.FC<ExperienceDetailsDrawerProps> = ({
                   <Text variant="sm" className={`${data.companyColor}`}>
                     {data.company}
                   </Text>
-                  <Dot />
-                  <Text variant="sm">{data.timeline}</Text>
-                  <Dot />
-                  <Text variant="sm">{data.location}</Text>
+                  <div className="hidden md:flex items-center">
+                    <Dot />
+                    <Text variant="sm">{data.timeline}</Text>
+                    <Dot />
+                    <Text variant="sm">{data.location}</Text>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div className="flex gap-1 md:hidden items-center">
+              <Text variant="sm">{data.timeline}</Text>
+              <Dot />
+              <Text variant="sm">
+                {getDuration(data?.start_date, data?.end_date)}
+              </Text>
+              <Dot />
+              <Text variant="sm">{data.location}</Text>
             </div>
           </div>
           <div className="space-y-4">
             <div className="flex flex-wrap gap-x-4 gap-y-2">
               {data.highlights.map((h, i) => (
-                <Text key={i} variant="sm" className="flx gap-2">
-                  <Check size={14} className="text-emerald-500" />
-                  {h}
+                <Text key={i} variant="sm" className="!text-blue-500 flx gap-2">
+                  # {h}
                 </Text>
               ))}
             </div>

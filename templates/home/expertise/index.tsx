@@ -76,7 +76,7 @@ const Expertise = () => {
                 {currentExpertise.keyPoints.map((point) => (
                   <div key={point} className="flex gap-3">
                     <Check className="mt-1.5 text-emerald-500" size={14} />
-                    <Text variant="sm" className="flex-1">
+                    <Text variant="lg" className="flex-1">
                       {point}
                     </Text>
                   </div>

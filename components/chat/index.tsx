@@ -215,12 +215,12 @@ const ChatUi: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-8 right-5 md:right-0 md:left-[88vw] z-[1000]">
+    <div className="fixed bottom-8 translate-x-5 md:translate-x-[88vw] z-[1000]">
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger>
           <Button
             role="presentation"
-            className={`pl-2 md:pl-4 pr-2 md:pr-5 ${
+            className={`pl-2 md:pl-4 pr-2 md:pr-5 scale-125 md:scale-100 ${
               isOpen ? "opacity-0" : "opacity-100"
             }`}
           >
