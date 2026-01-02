@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import SwithDarkMode from "@/components/themes/switch-theme";
 
-import { X, Mail } from "lucide-react";
-import { Text } from "../ui/typography";
+import { Mail } from "lucide-react";
+import { Text, Title } from "../ui/typography";
 
 // data and types
 import { DRAWER_NAV_LINKS } from "./_data";
@@ -33,27 +33,18 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerContent className="min-w-[100%] h-full border-l-transparent backdrop-blur-3xl bg-[#ededed] dark:bg-[#171717]">
-        <div className="flex flex-col h-full overflow-y-auto">
+      <DrawerContent>
+        <div className="flex flex-col h-full overflow-y-auto -mt-4">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-            <div>
-              <h2 className="text-xl text-gray-900 dark:text-white">
-                Navigation
-              </h2>
-              <Text>Explore my digital space</Text>
+          <div className="flex items-center justify-between pb-6 px-2 border-b border-gray-200 dark:border-gray-700">
+            <div className="space-y-2">
+              <Title variant="sm">Navigation</Title>
+              <Text variant="sm">Explore my digital space</Text>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label="Close navigation"
-            >
-              <X size={24} className="text-gray-600 dark:text-gray-300" />
-            </button>
           </div>
 
           {/* Main Navigation */}
-          <div className="flex-1 px-6 py-8">
+          <div className="flex-1 px-2 py-6">
             <nav className="space-y-2">
               <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">
                 Main Pages
@@ -122,18 +113,6 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
                   </Link>
                 ))}
               </div>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="p-6 border-t border-gray-200 dark:border-gray-700">
-            <div className="text-center">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                © 2025 Shahtaz Rahman
-              </p>
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                Built with Next.js & Tailwind CSS
-              </p>
             </div>
           </div>
         </div>

@@ -9,13 +9,13 @@ import { Text, Title } from "@/components/ui/typography";
 
 // data
 import { skillGroups } from "./_data";
+import TechBadge from "@/components/ui/badge";
 
 const AboutMe: React.FC = () => {
   const colors = [
-    "!text-emerald-500",
-    "!text-orange-400",
-    "!text-blue-500",
-    "!text-rose-500",
+    "dark:!text-emerald-500 !text-emerald-600 dark:bg-emerald-100/5 bg-emerald-500/5",
+    "dark:!text-orange-500 !text-orange-600 dark:bg-orange-100/5 bg-orange-500/5",
+    "dark:!text-blue-500 !text-blue-600 dark:bg-blue-100/5 bg-blue-500/5",
   ];
 
   return (
@@ -61,17 +61,9 @@ const AboutMe: React.FC = () => {
                 <h3 className="font-medium uppercase mb-4">{group}</h3>
                 <div className="flex flex-wrap gap-2">
                   {items.map(({ name }, idx) => (
-                    <div
-                      key={idx}
-                      className="py-1 px-3.5 rounded-full bg-emerald-300/5 border-2 border-emerald-400/5"
-                    >
-                      <Text
-                        variant="xs"
-                        className={`font-semibold ${colors[i]}`}
-                      >
-                        {name}
-                      </Text>
-                    </div>
+                    <TechBadge key={idx} color={colors[i]}>
+                      {name}
+                    </TechBadge>
                   ))}
                 </div>
               </div>
