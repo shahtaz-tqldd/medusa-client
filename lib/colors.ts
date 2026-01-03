@@ -1,12 +1,6 @@
 export const colors = [
-  "bg-blue-500/15 dar:bg-blue-500/30 text-blue-500",
-  "bg-green-500/15 dar:bg-green-500/30 text-green-500",
-  "bg-yellow-500/15 dar:bg-yellow-500/30 text-yellow-500",
-];
-
-export const text_colors = [
-  "!text-blue-500",
-  "!text-emerald-500",
-  "!text-orange-500",
+  "dark:!text-emerald-500 !text-emerald-600 dark:bg-emerald-100/5 bg-emerald-500/5",
+  "dark:!text-orange-500 !text-orange-600 dark:bg-orange-100/5 bg-orange-500/5",
+  "dark:!text-blue-500 !text-blue-600 dark:bg-blue-100/5 bg-blue-500/5",
 ];
 

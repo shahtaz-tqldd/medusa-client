@@ -77,8 +77,15 @@ const BlogPerformance = ({
 
       {/* This container will be scrollable if content overflows */}
       <div className="flex-1 mt-6">
-        {topBlogPosts.map((post) => (
-          <div key={post.id} className="border-b border-b-white/10 py-3.5">
+        {topBlogPosts.map((post, index) => (
+          <div
+            key={post.id}
+            className={`py-3.5 ${
+              index == topBlogPosts.length - 1
+                ? ""
+                : "border-b border-b-white/10"
+            }`}
+          >
             <Title variant="xs">{post.title}</Title>
             <div className="flex items-center justify-between text-xs mt-2 text-muted-foreground">
               <div className="flex items-center space-x-1">

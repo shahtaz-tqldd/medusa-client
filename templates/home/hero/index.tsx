@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
   const SKILLS = ["React", "Node JS", "Django", "FastAPI"];
 
   return (
-    <section className="md:py-24 py-10 h-auto w-screen center overflow-hidden relative">
+    <section className="py-8 md:py-20 h-auto w-screen center overflow-hidden relative">
       <div className="container flbx md:flex-row flex-col-reverse relative -mt-8 md:mt-8">
         <div>
           <AnimateDiv>
@@ -30,7 +30,7 @@ const Hero: React.FC = () => {
               Hey, this is Shahtaz. I am a software developer by passion, and a
               full-stack alchemist by choice!
             </Title>
-            <Text className="max-w-lg mt-14">
+            <Text className="max-w-lg mt-10 md:mt-14">
               Interested to know my story of becoming a software developer —{" "}
               <button
                 onClick={() => setIsOpen(true)}
@@ -39,7 +39,7 @@ const Hero: React.FC = () => {
                 <span>Here’s a short version</span>
               </button>
             </Text>
-            <div className="mt-12 md:mt-32 -ml-2.5 flex items-center flex-wrap gap-x-4 gap-y-2 font-medium dark:text-gray-300 text-slate-600 text-sm">
+            <div className="mt-10 md:mt-32 -ml-2.5 flex items-center flex-wrap gap-x-4 gap-y-2 font-medium dark:text-gray-300 text-slate-600 text-sm">
               {SKILLS.map((skill, idx) => (
                 <Text
                   key={idx}

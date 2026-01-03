@@ -15,7 +15,7 @@ const ProjectOverview = ({ projects }: ProjectOverviewProps) => {
       </Title>
 
       {/* This container will be scrollable if there are many projects */}
-      <div className="flex-1 space-y-4 overflow-y-auto pr-2">
+      <div className="flex-1 space-y-2.5 overflow-y-auto pr-2">
         {projects.map((project) => (
           <div
             key={project.id}

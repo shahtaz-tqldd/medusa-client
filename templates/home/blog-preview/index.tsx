@@ -5,6 +5,7 @@ import { BLOGS } from "@/templates/blogs/_data";
 import { useRouter } from "next/navigation";
 import { Title } from "@/components/ui/typography";
 import { ChevronRight } from "lucide-react";
+import ShinyText from "@/components/animation/shiny-text";
 
 const BlogPreview = () => {
   const router = useRouter();
@@ -14,8 +15,12 @@ const BlogPreview = () => {
   const more_articles = BLOGS?.length - 3;
   return (
     <section className="container py-12 md:py-20">
-      <div className="flbx md:flex-row flex-col">
-        <Title variant="lg">Blogs & Articles</Title>
+      <div className="flex justify-between items-start md:items-center md:flex-row flex-col">
+        <div className="space-y-2">
+          <ShinyText>Write-up</ShinyText>
+          <Title variant="lg">Blogs & Articles</Title>
+        </div>
+
         <div className="md:pt-6 hidden md:block">
           {more_articles > 0 && (
             <h2 className="text-sm text-gray-400 mb-1">

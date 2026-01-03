@@ -9,7 +9,7 @@ import { NavLinkProps } from "./_types";
 export const HEADER_LINKS = [
   {
     id: 0,
-    title: "Blogs",
+    title: "Blogs & Articles",
     link: "/blogs",
     icon: BlogIcon,
   },
@@ -21,7 +21,7 @@ export const HEADER_LINKS = [
   },
   {
     id: 1,
-    title: "Get Resume",
+    title: "Resume Link",
     link: "https://drive.google.com/file/d/1lV9dIwZU1Ede97Fao-GY1s3EjLPyjvO-/view?pli=1",
     icon: ResumeIcon,
   },

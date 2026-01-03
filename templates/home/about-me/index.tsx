@@ -19,7 +19,7 @@ const AboutMe: React.FC = () => {
   ];
 
   return (
-    <div id="about" className="container py-20 relative">
+    <div id="about" className="container py-8 md:py-20 relative">
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-16 gap-8 relative z-10">
         <div>
           <AnimateDiv>

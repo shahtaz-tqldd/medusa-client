@@ -23,8 +23,6 @@ const Header: React.FC = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const { theme } = useTheme();
-  const hover_button =
-    "flx gap-2 dark:hover:bg-white/10 hover:bg-blue-500/10 py-2.5 px-4 rounded-full font-medium tr";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,10 +71,11 @@ const Header: React.FC = () => {
                   key={index}
                   href={link}
                   target={id === 1 ? "_blank" : "_self"}
-                  className={hover_button}
                 >
-                  <Icon size={16} />
-                  <span className="block">{title}</span>
+                  <Button variant="ghost">
+                    <Icon size={14} />
+                    {title}
+                  </Button>
                 </Link>
               ))}
             </div>
@@ -85,8 +84,8 @@ const Header: React.FC = () => {
                 <Button>
                   <LordIcon
                     icon="uoljexdg"
-                    height={18}
-                    width={18}
+                    height={16}
+                    width={16}
                     primary={theme === "dark" ? "#222" : "#fff"}
                     target="button"
                   />

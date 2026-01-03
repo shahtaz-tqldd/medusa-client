@@ -20,6 +20,7 @@ import { getDuration } from "@/lib/date";
 import { Card } from "@/components/ui/card";
 import { LabelText, Text } from "@/components/ui/typography";
 import AnimateDiv from "@/components/animation/animate-div";
+import { Button } from "@/components/ui/button";
 
 interface ExperienceCardWithIndexProps extends ExperienceCardProps {
   index: number;
@@ -127,14 +128,15 @@ const ExperienceCard: React.FC<ExperienceCardWithIndexProps> = ({
                   ))}
                 </div>
               </div>
-
-              <button
+              <Button
+                variant="secondary"
+                size="xl"
                 onClick={() => handleReadMore(item)}
-                className="w-full center bg-blue-500/10 text-blue-500 hover:bg-blue-500/15 hover:text-blue-400 font-semibold py-3 rounded-full tr"
+                className="w-full"
               >
                 <ArrowRight className="h-4 w-4 -rotate-45" />
-                <span className="ml-4">View Details</span>
-              </button>
+                View Details
+              </Button>
             </AnimateDiv>
           </div>
         </div>

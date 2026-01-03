@@ -22,14 +22,14 @@ interface MessageItem {
   text: string;
 }
 
-const ChatUi: React.FC = () => {
+const ChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const { theme } = useTheme();
   const [messages, setMessages] = useState<MessageItem[]>([
     {
       sender: "ai",
-      text: "Hi 👋 I’m Era, the AI assistant for Shahtaz. Feel free to ask me anything about him.",
+      text: "Hey I’m Era, an AI Chatbot Assistant for Shahtaz's personal portfolio. How could I help you?",
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);
@@ -291,7 +291,7 @@ const ChatUi: React.FC = () => {
                     <div
                       key={index}
                       className={`flex ${
-                        item.sender === "user" ? "justify-end" : "justify-start"
+                        item.sender === "user" ? "justify-end mr-3 md:mr-0" : "justify-start"
                       }`}
                     >
                       <div className="max-w-[75%] flex flex-col gap-2">
@@ -344,7 +344,7 @@ const ChatUi: React.FC = () => {
           </div>
 
           {/* Mobile-specific sticky input */}
-          <div className="md:hidden sticky bottom-0 bg-gray-50/95 dark:bg-[#121212]/95 backdrop-blur-xl px-5 py-4 border-t border-black/10 dark:border-white/10">
+          <div className="md:hidden sticky bottom-0 bg-gray-50/95 dark:bg-[#121212]/95 backdrop-blur-xl px-2 py-4 border-t border-black/10 dark:border-white/10">
             <ChatInputBox
               message={message}
               setMessage={setMessage}
@@ -368,4 +368,4 @@ const ChatUi: React.FC = () => {
   );
 };
 
-export default ChatUi;
+export default ChatWidget;

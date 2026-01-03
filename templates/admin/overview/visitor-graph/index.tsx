@@ -43,7 +43,7 @@ const VisitorGraph = ({ visitors }: VisitorCycles) => {
         <Title variant="xs">Visitor Analytics</Title>
 
         {/* The chart is now rendered directly inside the component */}
-        <ChartContainer config={chartConfig} className="h-100 w-full -ml-8">
+        <ChartContainer config={chartConfig} className="h-92 w-full -ml-8">
           <LineChart
             accessibilityLayer
             data={chartData}

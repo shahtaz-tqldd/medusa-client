@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 
 // icons
-import { X } from "lucide-react";
+import { MessageSquare, X } from "lucide-react";
 import { Text, Title } from "../ui/typography";
 
 interface ChatHeaderProps {
@@ -14,6 +14,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ setIsOpen }) => {
   return (
     <div className="flbx">
       <div className="flx gap-2">
+        <MessageSquare size={20} />
         <Title variant="xs">Chatbot Assistant</Title>
       </div>
       <button onClick={() => setIsOpen(false)}>
@@ -77,32 +78,42 @@ export const ChatInputBox: React.FC<MessageInputInterface> = ({
 
   return (
     <div className="relative">
-      <textarea
-        ref={textareaRef}
-        className={`py-2 pl-4 pr-6 rounded-xl border dark:border-white/20 border-black/30 w-full bg-white/75 dark:bg-white/10 outline-none h-[43px] resize-none ${
-          isLoading ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-        placeholder={isLoading ? "Sending..." : "Write your message"}
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyDown={handleKeyDown}
-        disabled={isLoading}
-        style={{ overflowY: "hidden" }}
-      />
-
-      {/* Optional: Send button */}
-      {message.trim() && !isLoading && (
+      <div className="flex items-center gap-1">
+        <textarea
+          ref={textareaRef}
+          className={`py-2 px-3 flex-1 rounded-xl border dark:border-white/20 border-black/30 w-full bg-white/75 dark:bg-white/10 outline-none h-[43px] resize-none ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          placeholder={isLoading ? "Sending..." : "Write your message"}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
+          disabled={isLoading}
+          style={{ overflowY: "hidden" }}
+        />
+        {/* Optional: Send button */}
         <button
-          onClick={handleSendMessage}
-          className="absolute right-2 bottom-[38px] text-blue-500 hover:text-blue-600 tr"
+          onClick={!isLoading && message.trim() ? handleSendMessage : undefined}
+          className={`tr h-10 w-10 center dark:bg-white/10 bg-blue-500/10 rounded-full ${
+            !isLoading && message.trim()
+              ? "text-blue-500 hover:text-blue-600 "
+              : "opacity-30 pointer-events-none"
+          }`}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="translate-x-0.5"
+          >
             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
           </svg>
         </button>
-      )}
-      <Text variant="xs" className="!text-xs text-center">
-        AI Chatot Assistant
+      </div>
+
+      <Text className="!text-[10px] text-center mt-2">
+        AI powered Chatbot Assistant
       </Text>
     </div>
   );

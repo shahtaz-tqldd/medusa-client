@@ -7,7 +7,7 @@ import "prismjs/themes/prism-tomorrow.css";
 import { BLOGS } from "./_data";
 
 import { slugify } from "@/lib/slugify";
-import { text_colors } from "@/lib/colors";
+import { colors } from "@/lib/colors";
 import { Calendar, Clock } from "lucide-react";
 import { BlogContentBlock } from "./_types";
 import { Text, Title } from "@/components/ui/typography";
@@ -57,7 +57,7 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
                 <Text variant="xs">{data.published}</Text>
                 <Title variant="xs" className="mt-1 mb-2">{data?.title}</Title>
                 <div className="w-fit">
-                  <TechBadge color={text_colors[index]}>{data.topic}</TechBadge>
+                  <TechBadge color={colors[index]}>{data.topic}</TechBadge>
                 </div>
               </Link>
             )

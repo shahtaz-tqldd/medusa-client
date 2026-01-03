@@ -27,7 +27,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ data }) => {
           src={img}
           height={500}
           width={700}
-          className="w-full h-72 object-cover rounded-3xl"
+          className="w-full h-60 md:h-72 object-cover rounded-3xl"
           alt={slugify(title)}
         />
         <div className="space-y-2 mt-4">

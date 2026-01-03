@@ -34,7 +34,7 @@ const ChatList = ({
         </Title>
       </div>
 
-      <div className="flex-1 medusa-scroll p-2 space-y-2 center">
+      <div className="flex-1 medusa-scroll p-2 space-y-2">
         {isLoading ? (
           <Text variant="sm">Loading conversations...</Text>
         ) : conversations.length === 0 ? (
@@ -46,20 +46,25 @@ const ChatList = ({
           conversations?.map((conversation) => (
             <Card
               key={conversation.id}
-              className="p-3 md:p-3 lg:p-3 rounded-xl cursor-pointer hover:bg-white/10 transition"
               onClick={() => onSelect(conversation)}
+              className="!py-3 !px-4 cursor-pointer border border-transparent hover:border-blue-500 tr"
             >
-              <h2 className="text-sm font-medium truncate">
-                {conversation.title || "Untitled conversation"}
-              </h2>
+              <div>
+                <Title
+                  variant="xs"
+                  className="truncate !text-base font-semibold"
+                >
+                  {conversation.title || "Untitled conversation"}
+                </Title>
 
-              {conversation.last_message?.content && (
-                <Text className="mt-1 text-[13px] line-clamp-2">
-                  {conversation.last_message.content}
-                </Text>
-              )}
-              <div className="mt-4 text-xs opacity-60 gap-2">
-                <p>{formatTimeFromNow(conversation.created_at)}</p>
+                {conversation.last_message?.content && (
+                  <Text variant="xs" className="mt-1 line-clamp-1">
+                    {conversation.last_message.content}
+                  </Text>
+                )}
+                <div className="mt-2 text-xs opacity-60 gap-2">
+                  <p>{formatTimeFromNow(conversation.created_at)}</p>
+                </div>
               </div>
             </Card>
           ))

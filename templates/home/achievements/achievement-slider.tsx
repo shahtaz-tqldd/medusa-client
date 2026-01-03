@@ -4,7 +4,7 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { ACHIEVEMENTS } from "./_data";
-import AchievementCard from "./achiveent-card";
+import AchievementCard from "./achievement-card";
 
 const AchievementSliderMobile = () => {
   return (
