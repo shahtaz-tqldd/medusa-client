@@ -11,6 +11,7 @@ import { Text, Title } from "../ui/typography";
 import { DRAWER_NAV_LINKS } from "./_data";
 import { SOCIAL_LINK } from "@/components/footer/_data";
 import type { NavDrawerProps } from "./_types";
+import { Button } from "../ui/button";
 
 const NavDrawer: React.FC<NavDrawerProps> = ({
   isOpen,
@@ -27,9 +28,6 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
   const handleLinkClick = () => {
     setIsOpen(false);
   };
-
-  const hover_button_sm =
-    "flx gap-2 dark:hover:bg-white/10 hover:bg-blue-500/10 py-1.5 px-2.5 rounded-full tr";
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
@@ -103,13 +101,11 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
                       target: "_blank",
                       rel: "noopener noreferrer",
                     })}
-                    className={hover_button_sm}
                   >
-                    <item.icon
-                      size={16}
-                      className="text-gray-900 dark:text-white"
-                    />
-                    <span className="text-sm opacity-60">{item.title}</span>
+                    <Button variant="ghost" size="sm">
+                      <item.icon size={14} />
+                      {item.title}
+                    </Button>
                   </Link>
                 ))}
               </div>

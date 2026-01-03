@@ -9,6 +9,7 @@ import { Text, Title } from "@/components/ui/typography";
 import { expertiseData } from "./_data";
 import type { ExpertiseArea } from "./_types";
 import ExpertiseDetailsDrawer from "./expertise-details-drawer";
+import { Button } from "@/components/ui/button";
 
 const Expertise = () => {
   const [selectedId, setSelectedId] = useState<string>(expertiseData[0].id);
@@ -32,7 +33,7 @@ const Expertise = () => {
   const imageInView = useInView(imageRef, { once: true });
 
   return (
-    <section className="container py-12 md:py-20">
+    <section className="container pt-8 pb-8 md:pt-0 md:pb-20">
       <Title variant="lg">Expertise</Title>
 
       <div className="grid md:grid-cols-2 gap-12 mt-8">
@@ -83,13 +84,15 @@ const Expertise = () => {
                 ))}
               </div>
 
-              <button
+              <Button
                 onClick={openDrawer}
-                className="mt-10 inline-flex items-center gap-1 px-5 py-2.5 font-semibold rounded-full bg-blue-500/10 dark:text-blue-500 text-blue-600 hover:bg-blue-500/20 tr"
+                size="lg"
+                variant="secondary"
+                className="mt-8 md:mt-12"
               >
-                <ArrowRight className="-rotate-45 -translate-x-1" size={16} />
+                <ArrowRight className="-rotate-45" size={16} />
                 View Details
-              </button>
+              </Button>
             </motion.div>
           </AnimatePresence>
         </div>

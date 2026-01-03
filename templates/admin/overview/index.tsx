@@ -147,7 +147,7 @@ const OverviewPage = () => {
         <div className="col-span-1 space-y-8">
           <VisitorList visitors={visitors} />
           <BlogPerformance />
-          <ProjectOverview projects={projects.slice(0,5)} />
+          <ProjectOverview projects={projects.slice(0,4)} />
         </div>
       </div>
     </div>

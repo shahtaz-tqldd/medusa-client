@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 export interface AchievementProps {
-  icon: ReactElement;
+  icon?: ReactElement;
   accentColor: string;
   type: string;
   title: string;

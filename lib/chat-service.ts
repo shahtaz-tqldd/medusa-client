@@ -76,7 +76,7 @@ export const fetchConversationMessages = async (
     }
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}chat/conversation/${conversationId}/`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/chat/conversation/${conversationId}/`,
       {
         method: "GET",
         headers: {
@@ -138,7 +138,7 @@ export const fetchConversationList = async (
     const response = await fetch(
       `${
         process.env.NEXT_PUBLIC_SERVER_URL
-      }chat/conversation/list/?${params.toString()}`,
+      }/chat/conversation/list/?${params.toString()}`,
       {
         method: "GET",
         headers: {
@@ -175,7 +175,7 @@ export const sendChatMessage = async (query: string): Promise<string> => {
     const conversationId = localStorage.getItem("conversation_id");
 
     // Build the API URL
-    let apiUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}chat/create-message/`;
+    let apiUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/chat/create-message/`;
     if (conversationId) {
       apiUrl += `?conversation_id=${conversationId}`;
     }

@@ -1,4 +1,3 @@
-// lib/visitor-service.ts
 import { getDeviceName, getDeviceType } from "./device-info";
 
 interface LocationData {
@@ -56,7 +55,7 @@ export const initializeVisitor = async (): Promise<void> => {
     }
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}base/visitors/init/`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/base/visitors/init`,
       {
         method: "POST",
         headers: {

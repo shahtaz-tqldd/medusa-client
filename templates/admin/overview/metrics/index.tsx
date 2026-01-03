@@ -83,8 +83,8 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
                   <div className="dark:bg-white/5 bg-blue-50 rounded-lg h-8 w-8 center">
                     <metric.icon size={16} className="text-blue-500" />
                   </div>
-                  <div>
-                    <Title variant="xs">{metric.title}</Title>
+                  <div className="flex-1">
+                    <Title variant="xs" className="line-clamp-1">{metric.title}</Title>
                   </div>
                 </div>
 

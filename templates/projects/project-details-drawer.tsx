@@ -14,7 +14,6 @@ import { colors } from "@/lib/colors";
 
 import { LabelText, Text } from "@/components/ui/typography";
 import { GithubIcon } from "@/assets/icons/social-links";
-import { hover_button } from "@/lib/styles";
 
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { MetaProps } from "../home/project-list/_types";
@@ -22,6 +21,7 @@ import { projects } from "./_data";
 import ImageSlider from "@/components/slider/img-slider";
 import AnimateDiv from "@/components/animation/animate-div";
 import TechBadge from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface ProjectDetailsDrawerProps {
   meta: MetaProps;
@@ -102,13 +102,9 @@ const ProjectDetailsDrawer: React.FC<ProjectDetailsDrawerProps> = ({
       <DrawerContent>
         <AnimateDiv className="space-y-10">
           <div className="space-y-4">
-            <p
-              className={`pt-2 pb-1.5 px-4 rounded-full text-sm w-fit ${getColors(
-                type
-              )}`}
-            >
-              {type}
-            </p>
+            <div className="w-fit">
+              <TechBadge color={getColors(type)}>{type}</TechBadge>
+            </div>
             <h2 className="text-2xl md:text-4xl leading-[32px] md:leading-[48px]">
               {name}
             </h2>
@@ -143,35 +139,35 @@ const ProjectDetailsDrawer: React.FC<ProjectDetailsDrawerProps> = ({
             </div>
           </div>
 
-          <div className="flx gap-5">
+          <div className="flx gap-2.5">
             {live_link && (
-              <a href={live_link} target="__blank" className={hover_button}>
-                <Link size={16} />
-                <span>Live Link</span>
+              <a href={live_link} target="__blank">
+                <Button variant="ghost" size="sm">
+                  <Link size={14} />
+                  <span>Live Link</span>
+                </Button>
               </a>
             )}
             {github_link && (
-              <a href={github_link} target="__blank" className={hover_button}>
-                <GithubIcon size={16} />
-                <span>Github Link</span>
+              <a href={github_link} target="__blank">
+                <Button variant="ghost" size="sm">
+                  <GithubIcon size={14} />
+                  <span>Github Link</span>
+                </Button>
               </a>
             )}
           </div>
 
           <hr className="border-b-none border-t dark:border-t-white/20 border-blue-500/20 border-dashed mb-3" />
           <div className="flbx">
-            <button onClick={handlePrev} className={hover_button}>
+            <Button variant="secondary" onClick={handlePrev}>
               <ChevronLeft className="h-4 w-4" />
               <span>Previous</span>
-            </button>
-            <button
-              onClick={handleNext}
-              className={hover_button}
-              style={{ paddingRight: "12px", paddingLeft: "16px" }}
-            >
-              <h2>Next</h2>
-              <ChevronRight className="h-4 w-4" />
-            </button>
+            </Button>
+            <Button variant="secondary" onClick={handleNext}>
+              <span className="!translate-x-0.5">Next</span>
+              <ChevronRight className="h-4 w-4 !translate-x-[1px]" />
+            </Button>
           </div>
         </AnimateDiv>
       </DrawerContent>
