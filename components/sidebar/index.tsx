@@ -20,13 +20,13 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
     <div className={`flex flex-col justify-between p-10 ${className}`}>
       <div>
         <Link href={"/"}>_shahtaz</Link>
-        <div className="space-y-5 mt-10">
+        <div className="space-y-1 mt-10">
           {NAV_ITEMS?.map((item, index) => (
             <Link
               href={item.link}
-              className={`flex items-center gap-3 tr ${
+              className={`flex items-center gap-3 py-2 px-3 font-medium rounded-lg tr ${
                 isActive(item.link)
-                  ? "opacity-100"
+                  ? "bg-emerald-500/10 dark:bg-lime-500/10 dark:text-lime-400 text-emerald-700"
                   : "opacity-60 hover:opacity-100"
               }`}
               key={index}

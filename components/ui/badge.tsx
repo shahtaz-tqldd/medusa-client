@@ -11,7 +11,7 @@ const TechBadge = ({
   return (
     <Text
       variant="xs"
-      className={`py-1.5 px-3.5 rounded-full font-semibold ${color}`}
+      className={`py-1.5 px-3.5 w-fit capitalize rounded-full font-semibold ${color}`}
     >
       {children}
     </Text>

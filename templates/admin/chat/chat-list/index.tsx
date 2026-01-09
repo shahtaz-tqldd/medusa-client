@@ -10,7 +10,6 @@ import { FolderOpen } from "lucide-react";
 interface ChatListProps {
   className?: string;
   conversations: Conversation[];
-  isLoading: boolean;
   page: number;
   total: number;
   setPage: (page: number) => void;
@@ -20,7 +19,6 @@ interface ChatListProps {
 const ChatList = ({
   className,
   conversations,
-  isLoading,
   page,
   total,
   setPage,
@@ -35,9 +33,7 @@ const ChatList = ({
       </div>
 
       <div className="flex-1 medusa-scroll p-2 space-y-2">
-        {isLoading ? (
-          <Text variant="sm">Loading conversations...</Text>
-        ) : conversations.length === 0 ? (
+        {total == 0 ? (
           <div className="flex flex-col items-center gap-2">
             <FolderOpen size={32} strokeWidth="1" className="text-300/80" />
             <Text variant="sm">No conversations found</Text>
@@ -70,7 +66,7 @@ const ChatList = ({
           ))
         )}
       </div>
-      <Pagination page={page} setPage={setPage} totalCount={total} />
+      <Pagination page={page} setPage={setPage} total={total} />
     </div>
   );
 };

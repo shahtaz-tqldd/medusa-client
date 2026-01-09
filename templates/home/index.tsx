@@ -7,8 +7,14 @@ import Experiences from "./experiences";
 import BlogPreview from "./blog-preview";
 import Achievement from "./achievements";
 import Expertise from "./expertise";
+import { BlogBasicProps } from "@/lib/api-service/blog";
+import { PaginatedResponse } from "@/lib/api-service/_types";
 
-export default function Homepage() {
+interface HomepageProps {
+  blogs: PaginatedResponse<BlogBasicProps[]>;
+}
+
+export default function Homepage({ blogs }: HomepageProps) {
   return (
     <>
       <Hero />
@@ -17,7 +23,7 @@ export default function Homepage() {
       <ProjectList />
       <Experiences />
       <Achievement />
-      <BlogPreview />
+      <BlogPreview blogs={blogs.results.flat()} total={blogs.count || 0} />
     </>
   );
 }

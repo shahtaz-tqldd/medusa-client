@@ -4,18 +4,18 @@ import IconButton from "../ui/icon-button";
 
 interface PaginationProps {
   page: number;
+  pageSize?: number;
   setPage: (page: number) => void;
-  totalCount: number;
-  limit?: number;
+  total: number;
 }
 
 const Pagination = ({
   page,
+  pageSize = 10,
   setPage,
-  totalCount,
-  limit = 10,
+  total,
 }: PaginationProps) => {
-  const totalPages = Math.ceil(totalCount / limit);
+  const totalPages = Math.ceil(total / pageSize);
   const hasPrevious = page > 1;
   const hasNext = page < totalPages;
 

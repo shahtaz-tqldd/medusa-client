@@ -34,12 +34,13 @@ const LoginPage = () => {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login/`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({
             email: emailOrUsername,
             password: password,
@@ -53,13 +54,6 @@ const LoginPage = () => {
         throw new Error(result?.detail || "Login failed");
       }
 
-      const { access_token, refresh_token } = result.data;
-
-      // Set cookies (you can set expiration based on your needs)
-      localStorage.setItem("access_token", access_token); // 1 day
-      localStorage.setItem("refresh_token", refresh_token);
-
-      // Redirect to dashboard
       router.push("/admin");
     } catch (err: any) {
       setError(err.message || "Something went wrong.");
@@ -67,6 +61,7 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+
   return (
     <section className="h-screen w-screen center px-4 bg-gray-100 dark:bg-[#111]">
       <Card className="max-w-md w-full">

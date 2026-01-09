@@ -1,18 +1,23 @@
 import React from "react";
 import BlogCard from "@/templates/blogs/blog-card";
 
-import { BLOGS } from "@/templates/blogs/_data";
 import { useRouter } from "next/navigation";
 import { Title } from "@/components/ui/typography";
 import { ChevronRight } from "lucide-react";
 import ShinyText from "@/components/animation/shiny-text";
+import { BlogBasicProps } from "@/lib/api-service/blog";
 
-const BlogPreview = () => {
+interface BlogPreviewProps {
+  blogs: BlogBasicProps[];
+  total: number;
+}
+
+const BlogPreview = ({ blogs, total }: BlogPreviewProps) => {
   const router = useRouter();
   const handleNavigate = () => {
     router.push("/blogs");
   };
-  const more_articles = BLOGS?.length - 3;
+  const more_articles = total - blogs.length;
   return (
     <section className="container py-12 md:py-20">
       <div className="flex justify-between items-start md:items-center md:flex-row flex-col">
@@ -37,8 +42,8 @@ const BlogPreview = () => {
         </div>
       </div>
       <div className="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-6">
-        {BLOGS.slice(0, 3)?.map((data, index) => (
-          <BlogCard key={index} data={data} />
+        {blogs.map((data, index) => (
+          <BlogCard key={index} data={data} index={index} />
         ))}
       </div>
       <div className="flex md:hidden mt-12 justify-between">

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Text, Title } from "@/components/ui/typography";
-import { OverviewStats } from "@/lib/overview-service";
+import { OverviewStats } from "@/lib/api-service/overview";
 import {
   MessagesSquare,
   FileText,
@@ -12,18 +12,20 @@ import {
   Monitor,
   Smartphone,
 } from "lucide-react";
+import Link from "next/link";
 
 interface OverviewStatsProps {
   stats: OverviewStats;
 }
 
 const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
+  console.log(stats);
   const conversations = [
     {
       title: "Conversations",
       icon: MessagesSquare,
       subtitle: `Unread conversation ${stats?.conversations?.unread || 20}`,
-      total: stats?.conversations?.total || 0,
+      total: stats.conversations?.total || 0,
     },
     {
       title: "Meeting Scheduled",
@@ -57,9 +59,12 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
 
   // Browser Statistics
   const browserStats = {
-    desktop: stats?.visitors?.desktop || 182,
-    mobile: stats?.visitors?.mobile || 120,
-    total: (stats?.visitors?.desktop || 182) + (stats?.visitors?.mobile || 120),
+    desktop: stats?.visitors.device_wise.desktop || 0,
+    mobile: stats?.visitors.device_wise.mobile || 0,
+    total:
+      stats?.visitors?.device_wise?.desktop ||
+      0 + stats?.visitors?.device_wise?.mobile ||
+      0,
   };
 
   const desktopPercentage = Math.round(
@@ -84,7 +89,9 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
                     <metric.icon size={16} className="text-blue-500" />
                   </div>
                   <div className="flex-1">
-                    <Title variant="xs" className="line-clamp-1">{metric.title}</Title>
+                    <Title variant="xs" className="line-clamp-1">
+                      {metric.title}
+                    </Title>
                   </div>
                 </div>
 
@@ -126,12 +133,14 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
                 <div className="h-9 w-9 rounded-full bg-green-300 -mr-2.5"></div>
                 <div className="h-9 w-9 rounded-full bg-blue-300 -mr-2.5"></div>
                 <div className="h-9 w-9 rounded-full bg-orange-300"></div>
-                <Text variant="sm" className="ml-3">
+                <Text variant="xs" className="ml-3">
                   +20 more countries
                 </Text>
               </div>
 
-              <Button variant="outline">View All Visitors</Button>
+              <Link href="/admin/visitors">
+                <Button variant="secondary">View All Visitors</Button>
+              </Link>
             </div>
           </div>
         </div>

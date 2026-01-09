@@ -1,56 +1,46 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import moment from "moment";
 
 // components
 import AnimateDiv from "@/components/animation/animate-div";
+import TechBadge from "@/components/ui/badge";
 import { Title, Text } from "@/components/ui/typography";
 
 // lib
-import { slugify } from "@/lib/slugify";
 import { colors } from "@/lib/colors";
+import { BlogBasicProps } from "@/lib/api-service/blog";
 
 // data, types and icons
 
-import { BlogCardProps } from "./_types";
+interface BlogCardProps {
+  data: BlogBasicProps;
+  index: number;
+}
 
-const BlogCard: React.FC<BlogCardProps> = ({ data }) => {
-  const { img, title, body, published, tags } = data;
-  const blogLink = `/blogs/${slugify(title)}`;
+const BlogCard = ({ data, index }: BlogCardProps) => {
+  const { title, slug, featured_image, published_at, category } = data;
 
   return (
-    <Link href={blogLink}>
+    <Link href={`/blogs/${slug}`}>
       <AnimateDiv>
         <Image
-          src={img}
+          src={featured_image}
           height={500}
           width={700}
           className="w-full h-60 md:h-72 object-cover rounded-3xl"
-          alt={slugify(title)}
+          alt={title}
         />
         <div className="space-y-2 mt-4">
-          <Text variant="xs">Posted on {published}</Text>
+          <Text variant="xs">
+            Posted on {moment(published_at).format("DD MMM YYYY")}
+          </Text>
           <Title variant="sm">{title}</Title>
         </div>
-        <div className="space-y-4 mt-2">
-          <Text variant="sm" className="line-clamp-2">
-            {body}
-          </Text>
-
-          <div className="flex flex-wrap gap-1">
-            {tags?.map((item, i) => (
-              <p
-                key={i}
-                className={`${
-                  colors[i % colors.length]
-                } py-1.5 px-3 rounded-full text-xs w-fit`}
-              >
-                {item}
-              </p>
-            ))}
-          </div>
+        <div className="w-fit mt-4">
+          <TechBadge color={colors[index % 3]}>{category?.name}</TechBadge>
         </div>
       </AnimateDiv>
     </Link>

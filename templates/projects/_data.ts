@@ -4,19 +4,19 @@ export const projectTabs = [
     value: "all-projects",
   },
   {
-    title: "Web App",
-    value: "Web App",
-  },
-  {
     title: "Software",
     value: "Software",
+  },
+  {
+    title: "Web App",
+    value: "Web App",
   },
 ];
 
 export const projects = [
   {
     id: "1",
-    name: "B2B Custom Supplement Manufacturer Website",
+    name: "Custom Pharmaceticle & Supplement Manufacturer Website",
     description:
       "A responsive and conversion-focused business website built for Dzul Nutra, a B2B custom supplement manufacturing company. The site is designed to present their services, operational process, and capture leads via a dynamic quote request form. It leverages React for component-based architecture, Tailwind CSS for fast UI development, and integrates Google Maps and EmailJS for enhanced user interaction.",
     tags: ["Landing Page", "Business Website", "Lead Generation"],
@@ -101,7 +101,7 @@ export const projects = [
     description:
       "Restro FX is a robust broker management platform tailored for prop firms in the forex trading space. It streamlines account creation and integration with major trading platforms like TradeLocker and MetaTrader. The application supports real-time updates, affiliate tracking, and personalized trading journals. It also includes advanced features such as 2FA authentication, coupon systems, and real-time analytics powered by chart visualizations.",
     images: {
-      main: "https://res.cloudinary.com/dqyv780cz/image/upload/v1751174776/restro_ek9ssg.jpg",
+      main: "https://res.cloudinary.com/dqyv780cz/image/upload/v1762322311/algostar-portfolio/restro_cover_sk2bxi.jpg",
       primary:
         "https://res.cloudinary.com/dqyv780cz/image/upload/v1751177172/restro-min_z4w5lq.png",
       secondary:

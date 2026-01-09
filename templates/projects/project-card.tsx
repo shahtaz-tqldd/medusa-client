@@ -10,6 +10,7 @@ import { ArrowRight, Link } from "lucide-react";
 import AnimateDiv from "@/components/animation/animate-div";
 import TechBadge from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { colors } from "@/lib/colors";
 
 interface ProjectCardProps {
   handleSetProject: (id: string) => void;
@@ -26,10 +27,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     window.open(url, "_blank");
   };
 
-  const colors = [
-    "dark:!text-emerald-500 !text-emerald-600 dark:bg-emerald-100/5 bg-emerald-500/5 scale-75",
-    "dark:!text-orange-500 !text-orange-600 dark:bg-orange-100/5 bg-orange-500/5 scale-75",
-  ];
   return (
     <div className="group cursor-pointer" onClick={() => handleSetProject(id)}>
       <AnimateDiv className="relative">
@@ -41,11 +38,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           width={620}
         />
         <div className="mt-3 space-y-2">
-          <div className="w-fit -translate-x-2.5">
-            <TechBadge color={type === "Web App" ? colors[0] : colors[1]}>
-              {type}
-            </TechBadge>
-          </div>
+          <TechBadge color={type === "Web App" ? colors[0] : colors[1]}>
+            {type}
+          </TechBadge>
           <Title variant="sm">{name}</Title>
         </div>
         <div className="mt-6 text-sm flx gap-2">
