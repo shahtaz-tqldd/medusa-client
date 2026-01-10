@@ -8,15 +8,13 @@ import ShinyText from "@/components/animation/shiny-text";
 import { Text, Title } from "@/components/ui/typography";
 
 // data
-import { skillGroups } from "./_data";
 import TechBadge from "@/components/ui/badge";
+import { SkillsProps } from "@/lib/api-service/skills";
+import { mapApiSkillsToGroups } from "@/templates/admin/skills-expertise";
+import { colors } from "@/lib/colors";
 
-const AboutMe: React.FC = () => {
-  const colors = [
-    "dark:!text-emerald-500 !text-emerald-600 dark:bg-emerald-100/5 bg-emerald-500/5",
-    "dark:!text-orange-500 !text-orange-600 dark:bg-orange-100/5 bg-orange-500/5",
-    "dark:!text-blue-500 !text-blue-600 dark:bg-blue-100/5 bg-blue-500/5",
-  ];
+const AboutMe: React.FC<{ data: SkillsProps }> = ({ data }) => {
+  const skillGroups = mapApiSkillsToGroups(data);
 
   return (
     <div id="about" className="container py-8 md:py-20 relative">
@@ -30,22 +28,11 @@ const AboutMe: React.FC = () => {
               </Title>
             </div>
             <Text variant="lg" className="mt-8 md:text-justify">
-              I’m a software developer with around 2.5 years of experience. I
-              started my journey in frontend development, where I enjoyed
-              turning UI designs into working prototypes that worked smoothly
-              across different browsers and devices. Working on interfaces
-              helped me understand user experience, consistency, and how small
-              details in layout or behavior can make a big difference.
-            </Text>
-            <Text variant="lg" className="mt-6 md:text-justify">
-              As I grew, I moved into backend development and found a real
-              interest in solving problems behind the scenes. I focus on writing
-              clean, readable code and building backend systems that are
-              efficient, reliable, and easy to maintain. When I design a
-              feature, I always think about performance, structure, and how the
-              system will behave in real usage. I like working on projects where
-              I can take ownership, understand the full flow, and build things
-              that actually help users and teams.
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: data.expertise.replace(/\n\n/g, "<br /><br />"),
+                }}
+              />
             </Text>
           </AnimateDiv>
         </div>
@@ -60,9 +47,9 @@ const AboutMe: React.FC = () => {
               <div key={i}>
                 <h3 className="font-medium uppercase mb-4">{group}</h3>
                 <div className="flex flex-wrap gap-2">
-                  {items.map(({ name }, idx) => (
+                  {items.map((item, idx) => (
                     <TechBadge key={idx} color={colors[i]}>
-                      {name}
+                      {item.name}
                     </TechBadge>
                   ))}
                 </div>

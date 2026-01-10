@@ -9,16 +9,22 @@ import Achievement from "./achievements";
 import Expertise from "./expertise";
 import { BlogBasicProps } from "@/lib/api-service/blog";
 import { PaginatedResponse } from "@/lib/api-service/_types";
+import { SkillsProps } from "@/lib/api-service/skills";
 
 interface HomepageProps {
+  data: SkillsProps;
   blogs: PaginatedResponse<BlogBasicProps[]>;
 }
 
-export default function Homepage({ blogs }: HomepageProps) {
+export default function Homepage({ data, blogs }: HomepageProps) {
   return (
     <>
-      <Hero />
-      <AboutMe />
+      <Hero
+        title={data.title}
+        focus_areas={data.key_focus_areas}
+        my_story={data.my_story}
+      />
+      <AboutMe data={data} />
       <Expertise />
       <ProjectList />
       <Experiences />
