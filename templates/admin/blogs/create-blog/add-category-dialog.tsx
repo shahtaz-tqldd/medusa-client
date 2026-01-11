@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/typography";
-import { createBlogCategory } from "@/lib/api-service/blog";
+import { createBlogCategory } from "@/lib/api-service/blog-action";
 
 const AddCategoryDialog = ({
   open,

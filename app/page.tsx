@@ -1,5 +1,9 @@
 import MainLayout from "@/layouts/main-layout";
+import { fetchAchievements } from "@/lib/api-service/achievement";
 import { fetchBlogs } from "@/lib/api-service/blog";
+import { fetchExperiences } from "@/lib/api-service/experiences";
+import { fetchExpertise } from "@/lib/api-service/expertise";
+import { fetchProjects } from "@/lib/api-service/projects";
 import { fetchSkills } from "@/lib/api-service/skills";
 import Homapage from "@/templates/home";
 const DEFAULT_SKILLS_DATA = {
@@ -16,12 +20,30 @@ const DEFAULT_SKILLS_DATA = {
 };
 
 export default async function Home() {
-  const skillsData = await fetchSkills();
-  const blogResponse = await fetchBlogs(1, 4);
+  const [
+    skillsData,
+    expertiseResponse,
+    projectListResponse,
+    experienceResponse,
+    achievementRes,
+    blogResponse,
+  ] = await Promise.all([
+    fetchSkills(),
+    fetchExpertise(),
+    fetchProjects(1, 10),
+    fetchExperiences(),
+    fetchAchievements(),
+    fetchBlogs(1, 4),
+  ]);
+
   return (
     <MainLayout>
       <Homapage
         data={skillsData.data || DEFAULT_SKILLS_DATA}
+        expertises={expertiseResponse?.data || []}
+        projects={projectListResponse.data.results || []}
+        experiences={experienceResponse?.data || []}
+        achievements={achievementRes?.data.flat() || []}
         blogs={blogResponse?.data}
       />
     </MainLayout>

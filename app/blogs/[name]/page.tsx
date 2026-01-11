@@ -1,6 +1,6 @@
 import MainLayout from "@/layouts/main-layout";
-import { fetchBlogDetails, fetchBlogs } from "@/lib/api-service/blog";
 import BlogDetailsPage from "@/templates/blogs/blog-details";
+import { fetchBlogDetails, fetchBlogs } from "@/lib/api-service/blog";
 
 type Params = Promise<{ name: string }>;
 

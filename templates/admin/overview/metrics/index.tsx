@@ -5,12 +5,13 @@ import { Text, Title } from "@/components/ui/typography";
 import { OverviewStats } from "@/lib/api-service/overview";
 import {
   MessagesSquare,
-  FileText,
   PenLine,
   Clock1,
   Users2,
   Monitor,
   Smartphone,
+  Layers,
+  ChartNoAxesGantt,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -19,20 +20,17 @@ interface OverviewStatsProps {
 }
 
 const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
-  console.log(stats);
   const conversations = [
     {
       title: "Conversations",
       icon: MessagesSquare,
-      subtitle: `Unread conversation ${stats?.conversations?.unread || 20}`,
+      subtitle: `${stats?.conversations?.unread || 20} unread conversation `,
       total: stats.conversations?.total || 0,
     },
     {
-      title: "Meeting Scheduled",
-      icon: Clock1,
-      subtitle: `Upcoming meeting ${
-        stats?.conversations?.upcoming_meetings || 3
-      }`,
+      title: "Proposal",
+      icon: ChartNoAxesGantt,
+      subtitle: `${stats?.conversations?.upcoming_meetings || 3} new proposal`,
       total: stats?.conversations?.meetings_scheduled || 0,
     },
   ];
@@ -45,15 +43,15 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
       total: stats?.blogs?.total_reads || 0,
       subtitle: `${stats?.blogs?.total || 0} total blogs`,
       color: "text-emerald-500",
-      bgColor: "bg-emerald-50 dark:bg-emerald-500/10",
+      bgColor: "bg-emerald-500/10",
     },
     {
-      label: "Proposals",
-      icon: FileText,
-      total: stats?.proposals?.total || 0,
-      subtitle: `${stats?.proposals?.onboarded_clients || 0} clients onboarded`,
+      label: "Project Views",
+      icon: Layers,
+      total: stats?.projects?.total_views || 0,
+      subtitle: `${stats?.projects?.total || 0} total projects`,
       color: "text-blue-500",
-      bgColor: "bg-blue-50 dark:bg-blue-500/10",
+      bgColor: "bg-blue-500/10",
     },
   ];
 
@@ -85,8 +83,11 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
                 className="rounded-2xl p-6 pb-4 dark:bg-white/5 bg-white"
               >
                 <div className="flx gap-3">
-                  <div className="dark:bg-white/5 bg-blue-50 rounded-lg h-8 w-8 center">
-                    <metric.icon size={16} className="text-blue-500" />
+                  <div className="dark:bg-white/5 bg-emerald-500/10 rounded-lg h-8 w-8 center">
+                    <metric.icon
+                      size={16}
+                      className="dark:text-lime-400 text-emerald-600"
+                    />
                   </div>
                   <div className="flex-1">
                     <Title variant="xs" className="line-clamp-1">
@@ -102,10 +103,13 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
               </div>
             ))}
           </div>
-          <div className="rounded-2xl p-8 border border-blue-400">
+          <div className="rounded-2xl p-8 border border-lime-400">
             <div className="flx gap-3">
-              <div className="dark:bg-white/5 bg-blue-50 rounded-lg h-10 w-10 center">
-                <Users2 size={18} className="text-blue-500" />
+              <div className="dark:bg-white/5 bg-emerald-500/10 rounded-lg h-10 w-10 center">
+                <Users2
+                  size={18}
+                  className="text-emerald-600 dark:text-lime-400"
+                />
               </div>
               <div>
                 <Title variant="xs">Visitors</Title>
@@ -146,49 +150,7 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
         </div>
         <div className="col-span-5 md:col-span-2 space-y-4">
           {/* Blog & Proposal Status Card */}
-          <div className="border border-white/20 bg-blue-200 p-6 rounded-2xl h-60">
-            <Title variant="xs" className="mb-8 !text-gray-700 font-semibold">
-              Content & Proposals
-            </Title>
-
-            <div className="space-y-6">
-              {contentStatus.map((item, index) => (
-                <div key={index}>
-                  <div className="flx gap-3">
-                    <div
-                      className={`${item.bgColor} rounded-lg h-8 w-8 center`}
-                    >
-                      <item.icon size={16} className={item.color} />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flbx">
-                        <div>
-                          <Text
-                            variant="xs"
-                            className="font-medium !text-gray-800"
-                          >
-                            {item.label}
-                          </Text>
-                          <Text
-                            variant="xs"
-                            className="text-gray-500 !text-gray-600"
-                          >
-                            {item.subtitle}
-                          </Text>
-                        </div>
-                        <Title
-                          variant="xs"
-                          className="!font-bold !text-gray-700"
-                        >
-                          {item.total}
-                        </Title>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <ContentCard contentStatus={contentStatus} />
 
           {/* Browser Statistics Card */}
           <div className="dark:bg-white/5 bg-white p-6 rounded-2xl">
@@ -265,3 +227,68 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
 };
 
 export default OverviewMetrics;
+
+interface ContentStatusItem {
+  label: string;
+  icon: React.ElementType;
+  total: number;
+  subtitle: string;
+  color: string;
+  bgColor: string;
+}
+
+const ContentCard = ({
+  contentStatus,
+}: {
+  contentStatus: ContentStatusItem[];
+}) => {
+  return (
+    <div className="relative overflow-hidden bg-gradient-to-br from-lime-400 via-lime-300 to-emerald-400 p-6 rounded-2xl w-full">
+      {/* Circular gradient overlays */}
+      <div className="absolute top-0 right-0 w-48 h-48 bg-lime-200 rounded-full blur-3xl opacity-60 -translate-y-12 translate-x-12"></div>
+      <div className="absolute bottom-0 left-0 w-56 h-56 bg-emerald-300 rounded-full blur-3xl opacity-50 translate-y-16 -translate-x-16"></div>
+      <div className="absolute top-1/2 left-1/2 w-40 h-40 bg-yellow-200 rounded-full blur-2xl opacity-40 -translate-x-1/2 -translate-y-1/2"></div>
+
+      {/* Content */}
+      <div className="relative z-10">
+        <Title variant="xs" className="mb-5 font-semibold !text-gray-800">
+          Projects & Content
+        </Title>
+
+        <div className="space-y-2.5">
+          {contentStatus.map((item, index: number) => (
+            <div
+              key={index}
+              className="backdrop-blur-sm bg-white/30 border border-white/40 rounded-2xl p-3 hover:bg-white/40 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+            >
+              <div className="flex gap-3 items-center">
+                <div
+                  className={`${item.bgColor} backdrop-blur-md rounded-xl h-11 w-11 flex items-center justify-center shadow-sm`}
+                >
+                  <item.icon
+                    size={20}
+                    className={item.color}
+                    strokeWidth={2.5}
+                  />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800">
+                        {item.label}
+                      </p>
+                      <p className="text-xs text-gray-700">{item.subtitle}</p>
+                    </div>
+                    <p className="text-2xl font-bold text-gray-800">
+                      {item.total}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};

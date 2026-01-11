@@ -1,9 +1,11 @@
 import {
-  ChartNoAxesGantt,
+  Atom,
   Coffee,
   FolderKanban,
+  Gift,
+  Layers,
   MessageSquareDot,
-  ShieldUser,
+  PenLine,
   Sparkles,
   Text,
   Users,
@@ -26,14 +28,19 @@ export const NAV_ITEMS = [
     icon: Users,
   },
   {
-    title: "Projects",
-    link: "/admin/projects",
-    icon: ChartNoAxesGantt,
+    title: "Skills",
+    link: "/admin/skills",
+    icon: Sparkles,
   },
   {
-    title: "Skills & Expertise",
-    link: "/admin/skills-expertise",
-    icon: Sparkles,
+    title: "Expertise",
+    link: "/admin/expertise",
+    icon: Atom,
+  },
+  {
+    title: "Projects",
+    link: "/admin/projects",
+    icon: Layers,
   },
   {
     title: "Experiences",
@@ -43,11 +50,11 @@ export const NAV_ITEMS = [
   {
     title: "Blogs",
     link: "/admin/blogs",
-    icon: Text,
+    icon: PenLine,
   },
   {
-    title: "Clients",
-    link: "/admin/clients",
-    icon: ShieldUser,
+    title: "Achievements",
+    link: "/admin/achievements",
+    icon: Gift,
   },
 ];

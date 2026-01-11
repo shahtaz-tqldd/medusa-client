@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
-import { sendChatMessage, fetchConversationMessages } from "@/lib/chat-service";
+import { fetchConversationMessages } from "@/lib/chat-service";
 
 // components
 import {
@@ -16,6 +16,8 @@ import { ChatHeader, ChatInputBox } from "./init-page";
 import LordIcon from "@/assets/icons/lord-icons";
 import { Calendar } from "lucide-react";
 import { Button } from "../ui/button";
+import { ChatResponse, sendMessage } from "@/lib/api-service/chat-action";
+import { VisitorStorage } from "@/lib/visitor";
 
 interface MessageItem {
   sender: string;
@@ -155,12 +157,29 @@ const ChatWidget: React.FC = () => {
     // Add user message immediately
     setMessages((prev) => [...prev, { sender: "user", text: userMessage }]);
     setIsLoading(true);
-
+    let visitorId = VisitorStorage.getVisitorId();
+    if (!visitorId) {
+      visitorId = "temp";
+    }
+    const conversation_id = localStorage.getItem("conversation_id") || null;
     try {
-      const aiResponse = await sendChatMessage(userMessage);
+      const payload: {
+        query: string;
+        visitor_id: string;
+      } = {
+        query: userMessage,
+        visitor_id: visitorId,
+      };
+
+      const res: ChatResponse = await sendMessage(payload, conversation_id);
 
       // Add AI response
-      setMessages((prev) => [...prev, { sender: "ai", text: aiResponse }]);
+      setMessages((prev) => [...prev, { sender: "ai", text: res.response }]);
+
+      // set conversation id on local storage
+      if (!conversation_id && res.conversation_id) {
+        localStorage.setItem("conversation_id", res.conversation_id);
+      }
     } catch (error) {
       console.error("Failed to send message:", error);
 
@@ -291,7 +310,9 @@ const ChatWidget: React.FC = () => {
                     <div
                       key={index}
                       className={`flex ${
-                        item.sender === "user" ? "justify-end mr-3 md:mr-0" : "justify-start"
+                        item.sender === "user"
+                          ? "justify-end mr-3 md:mr-0"
+                          : "justify-start"
                       }`}
                     >
                       <div className="max-w-[75%] flex flex-col gap-2">

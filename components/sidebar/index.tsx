@@ -14,7 +14,11 @@ const Sidebar: React.FC<SidebarProps> = ({ className }) => {
   const pathname = usePathname();
 
   const isActive = (link: string) => {
-    return link === pathname;
+    if (link === "/admin") {
+      return pathname === "/admin";
+    }
+
+    return pathname === link || pathname.startsWith(`${link}/`);
   };
   return (
     <div className={`flex flex-col justify-between p-10 ${className}`}>

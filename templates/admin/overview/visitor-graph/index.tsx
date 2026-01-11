@@ -38,7 +38,7 @@ const VisitorGraph = ({ visitors }: VisitorCycles) => {
   const chartData = visitors;
 
   return (
-    <div className="rounded-2xl p-8 border dark:border-white/20 border-blue-500">
+    <div className="rounded-2xl p-8 border dark:border-white/20 border-emerald-500">
       <div className="flex flex-col justify-between h-full gap-4">
         <Title variant="xs">Visitor Analytics</Title>
 

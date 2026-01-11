@@ -35,9 +35,9 @@ export interface OverviewStats {
     total_reads: number;
   };
 
-  proposals: {
+  projects: {
     total: number;
-    onboarded_clients: number;
+    total_views: number;
   };
 }
 

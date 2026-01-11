@@ -5,23 +5,23 @@ import Image from "next/image";
 
 import { Title } from "@/components/ui/typography";
 
-import type { Project } from "./_types";
 import { ArrowRight, Link } from "lucide-react";
 import AnimateDiv from "@/components/animation/animate-div";
 import TechBadge from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { colors } from "@/lib/colors";
+import { ProjectBasicProps } from "@/lib/api-service/projects";
 
 interface ProjectCardProps {
   handleSetProject: (id: string) => void;
-  data: Project;
+  data: ProjectBasicProps;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
   data,
   handleSetProject,
 }) => {
-  const { id, name, images, type, live_link } = data;
+  const { id, title, featured_image_url, type, live_link } = data;
 
   const handleSeeLiveLink = (url: string) => {
     window.open(url, "_blank");
@@ -31,9 +31,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     <div className="group cursor-pointer" onClick={() => handleSetProject(id)}>
       <AnimateDiv className="relative">
         <Image
-          src={images?.main}
+          src={featured_image_url}
           className="h-60 md:h-72 w-full object-cover rounded-3xl"
-          alt={name}
+          alt={title}
           height={400}
           width={620}
         />
@@ -41,7 +41,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           <TechBadge color={type === "Web App" ? colors[0] : colors[1]}>
             {type}
           </TechBadge>
-          <Title variant="sm">{name}</Title>
+          <Title variant="sm">{title}</Title>
         </div>
         <div className="mt-6 text-sm flx gap-2">
           <Button variant="secondary">

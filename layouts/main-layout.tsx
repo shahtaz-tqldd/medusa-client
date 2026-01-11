@@ -4,8 +4,8 @@ import React, { useEffect } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
-import { initializeVisitor } from "@/lib/visitor-service";
 import ChatAssistant from "@/components/chat";
+import { VisitorService } from "@/lib/visitor";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -13,8 +13,9 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   useEffect(() => {
-    initializeVisitor();
+    VisitorService.initialize();
   }, []);
+
   return (
     <React.Fragment>
       <Header />

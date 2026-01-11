@@ -1,5 +1,9 @@
-import { apiFetch } from "./client";
+import { DataResponse, PaginatedResponse } from './_types';
+import { apiFetch } from './client';
 
+/**
+ * Visitor data structure from backend
+ */
 export interface Visitor {
   id: number;
   city: string;
@@ -11,30 +15,18 @@ export interface Visitor {
   first_visit: string;
 }
 
-export interface PaginatedResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Visitor[];
-}
 
-interface fetchVisitorsResponse {
-  status: number;
-  success: boolean;
-  message: string;
-  data: PaginatedResponse
-}
-
-export async function fetchVisitors(page = 1, page_size = 10) {
+export async function fetchVisitors(page = 1, pageSize = 10) {
   const params = new URLSearchParams({
-    offset: ((page - 1) * page_size).toString(),
-    limit: page_size.toString(),
+    offset: ((page - 1) * pageSize).toString(),
+    limit: pageSize.toString(),
   });
-  return apiFetch<fetchVisitorsResponse>(
+
+  return apiFetch<DataResponse<PaginatedResponse<Visitor[]>>>(
     `/base/visitors/list?${params.toString()}`,
     {
       auth: true,
-      cache: "no-store",
+      cache: 'no-store',
     }
   );
 }

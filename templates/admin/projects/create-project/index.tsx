@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Text, Title } from "@/components/ui/typography";
-import { createProject } from "@/lib/api-service/projects";
+import { createProject } from "@/lib/api-service/project-action";
 import { Plus, Save, Trash2, X, Upload } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -230,7 +230,7 @@ const CreateProjectPage = () => {
 
       <form className="grid md:grid-cols-5 grid-cols-1 gap-4">
         <div className="md:col-span-3 space-y-4">
-          <Card>
+          <Card className="space-y-6">
             <div>
               <Label htmlFor="title">Title *</Label>
               <Input
@@ -293,7 +293,7 @@ const CreateProjectPage = () => {
             </div>
           </Card>
 
-          <Card>
+          <Card className="space-y-6">
             <Title variant="xs">Project Screens</Title>
 
             {/* Upload/Drop Zone */}
@@ -348,7 +348,7 @@ const CreateProjectPage = () => {
         </div>
 
         <div className="md:col-span-2 space-y-4">
-          <Card>
+          <Card className="space-y-6">
             <ImageDropzone
               label="Add a featured Image"
               name="featured_image"

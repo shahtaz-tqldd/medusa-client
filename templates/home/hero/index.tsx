@@ -36,7 +36,7 @@ const Hero: React.FC<{
               Interested to know my story of becoming a software developer —{" "}
               <button
                 onClick={() => setIsOpen(true)}
-                className="dark:text-blue-500 text-blue-700"
+                className="dark:text-lime-400 text-emerald-600"
               >
                 <span>Here’s a short version</span>
               </button>

@@ -34,7 +34,7 @@ const BlogPreview = ({ blogs, total }: BlogPreviewProps) => {
           )}
           <button
             onClick={() => handleNavigate()}
-            className="text-blue-700 dark:text-blue-500 tr group flx gap-2"
+            className="text-emerald-600 dark:text-lime-400 tr group flx gap-2"
           >
             <span>View All</span>
             <ChevronRight className="group-hover:translate-x-2 tr" size={16} />
@@ -54,7 +54,7 @@ const BlogPreview = ({ blogs, total }: BlogPreviewProps) => {
         )}
         <button
           onClick={() => handleNavigate()}
-          className="text-blue-700 dark:text-blue-500 tr group flx gap-2"
+          className="text-emerald-600 dark:text-lime-400 tr group flx gap-2"
         >
           <span>View All</span>
           <ChevronRight className="group-hover:translate-x-2 tr" size={16} />

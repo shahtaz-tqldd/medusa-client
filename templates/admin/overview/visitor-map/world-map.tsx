@@ -107,7 +107,7 @@ const WorldMap: React.FC<WorldMapProps> = ({ data, darkMode = false }) => {
           alt="world map"
           width={1200}
           height={600}
-          className="w-full h-auto invert-80 dark:invert-15"
+          className="w-full h-auto invert-65 dark:invert-25"
           onLoadingComplete={(img) => {
             setImgSize({
               width: img.naturalWidth,
@@ -137,7 +137,7 @@ const WorldMap: React.FC<WorldMapProps> = ({ data, darkMode = false }) => {
                     cx="0"
                     cy="0"
                     r="8"
-                    className="fill-orange-500 opacity-30"
+                    className="fill-lime-400 opacity-30"
                   >
                     <animate
                       attributeName="r"
@@ -148,7 +148,7 @@ const WorldMap: React.FC<WorldMapProps> = ({ data, darkMode = false }) => {
                   </circle>
                   <path
                     d="M 0,-12 C -3,-12 -5,-10 -5,-7 C -5,-4 0,0 0,0 C 0,0 5,-4 5,-7 C 5,-10 3,-12 0,-12 Z"
-                    className="fill-orange-600 drop-shadow-lg"
+                    className="fill-lime-400 drop-shadow-lg"
                   />
                   <circle cx="0" cy="-7" r="2" className="fill-white" />
                 </g>
@@ -177,7 +177,7 @@ const WorldMap: React.FC<WorldMapProps> = ({ data, darkMode = false }) => {
               <div className="font-semibold text-sm text-black">
                 {hoveredCountry}
               </div>
-              <div className="text-sm text-orange-500">
+              <div className="text-sm text-emerald-600">
                 {dataMap.get(hoveredCountry)?.toLocaleString()} visitors
               </div>
             </div>

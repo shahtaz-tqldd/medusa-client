@@ -12,7 +12,7 @@ export interface SkillsProps {
 }
 
 export async function fetchSkills() {
-  return apiFetch<DataResponse<SkillsProps>>("/services/skills", {
+  return apiFetch<DataResponse<SkillsProps>>("/services/skills/", {
     auth: false,
     cache: "no-store",
   });

@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { colors } from "@/lib/colors";
 import DeleteDialog from "@/components/dialog/delete-dialog";
 import { SkillsProps } from "@/lib/api-service/skills";
-import { updateSkills } from "@/lib/api-service/skill-update";
+import { updateSkills } from "@/lib/api-service/skill-action";
 
 type SkillItem = { name: string };
 

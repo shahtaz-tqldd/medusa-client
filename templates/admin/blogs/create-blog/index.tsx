@@ -32,7 +32,8 @@ import {
 } from "lucide-react";
 import IconButton from "@/components/ui/icon-button";
 import ImageDropzone from "@/components/ui/image-upload";
-import { BlogCategory, createBlog } from "@/lib/api-service/blog";
+import { BlogCategory } from "@/lib/api-service/blog";
+import { createBlog } from "@/lib/api-service/blog-action";
 import { useRouter } from "next/navigation";
 import AddCategoryDialog from "./add-category-dialog";
 import { toast } from "sonner";
@@ -505,7 +506,7 @@ const CreateBlogPage = ({ categories }: CreateBlogProps) => {
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="grid grid-cols-5 gap-5">
           {/* Content Blocks */}
-          <Card className="col-span-3 h-fit">
+          <Card className="col-span-3 h-fit space-y-6">
             <Title variant="xs" className="-mt-1">
               Content
             </Title>
@@ -599,7 +600,7 @@ const CreateBlogPage = ({ categories }: CreateBlogProps) => {
           </Card>
 
           {/* Basic Information */}
-          <Card className="col-span-2 h-fit">
+          <Card className="col-span-2 h-fit space-y-6">
             <ImageDropzone
               label="Add a featured Image"
               name="featured_image"

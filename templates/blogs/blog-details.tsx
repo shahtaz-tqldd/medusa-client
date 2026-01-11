@@ -77,18 +77,10 @@ type BlogDetailsPageProps = {
 };
 
 const BlogDetailsPage = ({ blog, blogs }: BlogDetailsPageProps) => {
-  console.log(blog);
   if (!blog)
     return <div className="container py-80 center">Blog not found</div>;
 
-  const {
-    title,
-    published_at,
-    category,
-    content_blocks,
-    reading_time,
-    view_count,
-  } = blog;
+  const { title, published_at, category, content_blocks, reading_time } = blog;
 
   return (
     <section className="container flex gap-10 py-20 md:mt-6">
@@ -98,7 +90,7 @@ const BlogDetailsPage = ({ blog, blogs }: BlogDetailsPageProps) => {
           <TechBadge>{category.name}</TechBadge>
           <p className="opacity-60 flx gap-2">
             <Clock size={14} />
-            {reading_time} mins read
+            {reading_time || 7} mins read
           </p>
           <p className="opacity-60 flx gap-2">
             <Calendar size={14} />
@@ -222,8 +214,10 @@ const RenderBlogs: React.FC<RenderBlogsProps> = ({ content_blocks }) => {
                     className="absolute right-4 top-3"
                     onClick={() => handleCopy(code)}
                   >
-                    <Copy size={14} />
-                    <Text variant="xs">Copy Code</Text>
+                    <Copy size={14} className="text-lime-400" />
+                    <Text variant="xs" className="!text-lime-400">
+                      Copy Code
+                    </Text>
                   </Button>
                   <pre
                     className={`language-${language} rounded-2xl !bg-[#121212] !p-8 overflow-x-auto`}

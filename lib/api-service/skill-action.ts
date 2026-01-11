@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { SkillsProps } from "../api-service/skills";
+import { SkillsProps } from "./skills";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
@@ -13,7 +13,7 @@ export async function updateSkills(
   const cookieState = await cookies();
   const token = cookieState.get("access_token")?.value;
   
-  const res = await fetch(`${API_BASE_URL}/services/skills/update`, {
+  const res = await fetch(`${API_BASE_URL}/services/skills/update/`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

@@ -10,12 +10,11 @@ import { Title } from "@/components/ui/typography";
 import { Tab, Tabs } from "@/components/ui/tabs";
 
 // data
-import { MetaProps } from "./_types";
-import { projects, projectTabs } from "@/templates/projects/_data";
+import { projectTabs } from "@/templates/projects/_data";
+import { ProjectBasicProps } from "@/lib/api-service/projects";
 
-const ProjectList = () => {
+const ProjectList = ({ projects }: { projects: ProjectBasicProps[] }) => {
   const [active, setActive] = useState<Tab>(projectTabs[0]);
-  const [meta, setMeta] = useState<MetaProps | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const filteredProjects =
@@ -23,19 +22,13 @@ const ProjectList = () => {
       ? projects
       : projects.filter((project) => project.type === active.value);
 
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
+    null
+  );
+
   const handleSetProject = (id: string) => {
-    if (id) {
-      setMeta({
-        currentId: id,
-        nextId: JSON.stringify(
-          parseInt(id) === projects?.length ? 1 : parseInt(id) + 1
-        ),
-        prevId: JSON.stringify(
-          parseInt(id) === 1 ? projects?.length : parseInt(id) - 1
-        ),
-      });
-      setIsOpen(true);
-    }
+    setSelectedProjectId(id);
+    setIsOpen(true);
   };
 
   return (
@@ -60,10 +53,9 @@ const ProjectList = () => {
       </div>
 
       <ProjectDetailsDrawer
-        meta={meta || { currentId: "", nextId: "", prevId: "" }}
-        setMeta={setMeta}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        projectId={selectedProjectId}
       />
     </section>
   );

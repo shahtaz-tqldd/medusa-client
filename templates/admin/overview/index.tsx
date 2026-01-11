@@ -8,21 +8,26 @@ import { Text, Title } from "@/components/ui/typography";
 import VisitorGraph from "./visitor-graph";
 import VisitorMap from "./visitor-map";
 import ProjectOverview from "./project-overview";
-import { projects } from "@/templates/projects/_data";
 import BlogPerformance from "./blog-performance";
 
 import { OverviewStats } from "@/lib/api-service/overview";
-import { PaginatedResponse } from "@/lib/api-service/_types";
 import { BlogBasicProps } from "@/lib/api-service/blog";
 import { Visitor } from "@/lib/api-service/visitor";
+import { ProjectBasicProps } from "@/lib/api-service/projects";
 
 interface OverviewPageProps {
   data: OverviewStats;
-  latestVisitors: PaginatedResponse<Visitor[]>;
-  blogs: PaginatedResponse<BlogBasicProps[]>;
+  latestVisitors: Visitor[];
+  blogs: BlogBasicProps[];
+  projects: ProjectBasicProps[];
 }
 
-const OverviewPage = ({ data, latestVisitors, blogs }: OverviewPageProps) => {
+const OverviewPage = ({
+  data,
+  latestVisitors,
+  blogs,
+  projects,
+}: OverviewPageProps) => {
   return (
     <div>
       <Text>Hello Mr. Shahtaz</Text>
@@ -35,9 +40,9 @@ const OverviewPage = ({ data, latestVisitors, blogs }: OverviewPageProps) => {
         </div>
 
         <div className="col-span-1 space-y-8">
-          <VisitorList visitors={latestVisitors?.results} />
-          <BlogPerformance blogs={blogs.results} />
-          <ProjectOverview projects={projects.slice(0, 4)} />
+          <VisitorList visitors={latestVisitors} />
+          <BlogPerformance blogs={blogs} />
+          <ProjectOverview projects={projects} />
         </div>
       </div>
     </div>

@@ -2,10 +2,16 @@
 
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { Title, Text, LabelText } from "@/components/ui/typography";
-import type { FeatureDetailsDrawerProps } from "./_types";
-import { Check, Code2, Folder } from "lucide-react";
+import { Check, Code2 } from "lucide-react";
 import AnimateDiv from "@/components/animation/animate-div";
 import TechBadge from "@/components/ui/badge";
+import { ExpertiseProps } from "@/lib/api-service/expertise";
+
+interface FeatureDetailsDrawerProps {
+  data: ExpertiseProps | null;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}
 
 const ExpertiseDetailsDrawer = ({
   data,
@@ -17,46 +23,31 @@ const ExpertiseDetailsDrawer = ({
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerContent>
-        <AnimateDiv className="space-y-10">
+        <AnimateDiv className="space-y-10 p-6">
+          {/* Header */}
           <div className="space-y-4">
-            <Title>{data.title} Development</Title>
-            <Text className="mt-4" variant="lg">
-              {data.experience}
-            </Text>
+            <Title>{data.name} Development</Title>
+            <Text variant="lg">{data.description}</Text>
           </div>
 
+          {/* Features */}
           <div className="grid md:grid-cols-2 grid-cols-1 gap-x-6 gap-y-2">
-            {data.keyPoints.map((point) => (
-              <div key={point} className="flex gap-3">
+            {data.features.map((feature) => (
+              <div key={feature} className="flex gap-3">
                 <Check className="mt-1.5 text-emerald-500" size={14} />
                 <Text variant="lg" className="flex-1">
-                  {point}
+                  {feature}
                 </Text>
               </div>
             ))}
           </div>
 
+          {/* Tech Stack */}
           <div className="space-y-4">
-            <LabelText icon={Code2}>Tech-Stack Proficiency</LabelText>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {data.technologies.map((tech, idx) => (
-                <TechBadge key={idx}>{tech}</TechBadge>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <LabelText icon={Folder}>Projects</LabelText>
-            <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
-              {data.projects.map((project, idx) => (
-                <div key={idx} className="">
-                  <Title variant="xs" className="flex-1 font-semibold">
-                    {project.name}
-                  </Title>
-                  <Text variant="sm" className="flex-1">
-                    {project.description}
-                  </Text>
-                </div>
+            <LabelText icon={Code2}>Tech Stack</LabelText>
+            <div className="flex flex-wrap gap-2">
+              {data.tech_stacks.map((tech) => (
+                <TechBadge key={tech}>{tech}</TechBadge>
               ))}
             </div>
           </div>

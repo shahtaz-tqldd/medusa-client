@@ -12,8 +12,8 @@ const BlogPerformance = ({ blogs }: BlogPerformanceProps) => {
   return (
     <div className="rounded-2xl p-6 dark:bg-white/5 bg-white flex flex-col">
       <div className="flx gap-2">
-        <div className="h-10 w-10 center bg-white/10 rounded-lg">
-          <PencilLine size={16} className="text-blue-500" />
+        <div className="h-10 w-10 center dark:bg-white/10 bg-emerald-500/10 rounded-lg">
+          <PencilLine size={16} className="text-emerald-600 dark:text-lime-400" />
         </div>
         <Title variant="xs">Top Blog Performance</Title>
       </div>

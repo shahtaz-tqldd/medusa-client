@@ -18,9 +18,9 @@ import Pagination from "./pagination";
 import DeleteDialog from "../dialog/delete-dialog";
 import { useState } from "react";
 
-export type Column<T> = {
+export type Column = {
   header: string;
-  accessorKey: keyof T | "action";
+  accessorKey: string;
 };
 
 export type TableOption = {
@@ -32,10 +32,9 @@ export type TableOption = {
 
 interface ReusableTableProps<T extends { id: number | string }> {
   data: T[];
-  columns: Column<T>[];
+  columns: Column[];
 
   /* Optional */
-  isLoading?: boolean;
   table_options?: TableOption[];
   onDeleteConfirm?: (id: number | string) => Promise<void> | void;
   deleteLoading?: boolean;
@@ -48,10 +47,6 @@ interface ReusableTableProps<T extends { id: number | string }> {
   pageSize: number;
   setPageSize: (size: number) => void;
 }
-
-/* =======================
-   Component
-======================= */
 
 function ReusableTable<T extends { id: number | string }>({
   data,
@@ -102,7 +97,7 @@ function ReusableTable<T extends { id: number | string }>({
             <TableRow>
               <TableCell colSpan={columns.length} className="h-40">
                 <div className="flex flex-col items-center justify-center h-full gap-4 opacity-30">
-                  <FolderOpen />
+                  <FolderOpen size={40} strokeWidth={1} />
                   <span>No Data Found!</span>
                 </div>
               </TableCell>
@@ -150,33 +145,35 @@ function ReusableTable<T extends { id: number | string }>({
       </Table>
 
       {/* Pagination */}
-      <div className="flbx mt-8">
-        <div className="flx gap-4">
-          <Select
-            value={String(pageSize)}
-            onValueChange={(value) => setPageSize(Number(value))}
-          >
-            <SelectTrigger>{pageSize}</SelectTrigger>
-            <SelectContent>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="20">20</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-            </SelectContent>
-          </Select>
+      {totalItems > pageSize && (
+        <div className="flbx mt-8">
+          <div className="flx gap-4">
+            <Select
+              value={String(pageSize)}
+              onValueChange={(value) => setPageSize(Number(value))}
+            >
+              <SelectTrigger>{pageSize}</SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+              </SelectContent>
+            </Select>
 
-          <p className="text-sm px-2 text-muted-foreground">
-            Showing {(page - 1) * pageSize + 1} to{" "}
-            {Math.min(page * pageSize, totalItems)} of {totalItems} items
-          </p>
+            <p className="text-sm px-2 text-muted-foreground">
+              Showing {(page - 1) * pageSize + 1} to{" "}
+              {Math.min(page * pageSize, totalItems)} of {totalItems} items
+            </p>
+          </div>
+
+          <Pagination
+            page={page}
+            setPage={setPage}
+            pageSize={pageSize}
+            total={totalItems}
+          />
         </div>
-
-        <Pagination
-          page={page}
-          setPage={setPage}
-          pageSize={pageSize}
-          total={totalItems}
-        />
-      </div>
+      )}
 
       <DeleteDialog
         open={deleteDialogOpen}

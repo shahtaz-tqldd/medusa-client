@@ -10,13 +10,19 @@ export default function ImageDropzone({
   label,
   name,
   setValue,
+  className,
+  initialImageUrl = "",
 }: {
   label: string;
   name: string;
   setValue: (name: string, file: File) => void;
+  className?: string;
+  initialImageUrl?: string;
 }) {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(
+    initialImageUrl || null
+  );
   const [isDragging, setIsDragging] = useState(false);
 
   const openFilePicker = () => {
@@ -46,6 +52,8 @@ export default function ImageDropzone({
   const handleRemove = () => {
     setPreview(null);
     if (inputRef.current) inputRef.current.value = "";
+    // Optionally, reset the form value for this field
+    setValue(name, null as unknown as File); // cast to satisfy TS
   };
 
   return (
@@ -69,10 +77,11 @@ export default function ImageDropzone({
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
         className={cn(
-          "relative w-full h-60 rounded-xl border border-dashed cursor-pointer dark:border-white/20 broder-gray-200 overflow-hidden",
+          "relative w-full h-60 px-8 rounded-xl border border-dashed cursor-pointer dark:border-white/20 border-gray-200 overflow-hidden",
           "flex items-center justify-center text-sm text-muted-foreground",
           isDragging ? "border-primary bg-primary/5" : "border-border",
-          preview && "border-none"
+          preview && "border-none",
+          className
         )}
       >
         {/* Empty state */}
@@ -80,7 +89,7 @@ export default function ImageDropzone({
           <div className="text-center space-y-2 pointer-events-none">
             <Title variant="xs">{label}</Title>
             <Text variant="xs" className="max-w-[240px]">
-              Drag & Drop or Click to Upload from you Device
+              Drag & Drop or Click to Upload from your Device
             </Text>
           </div>
         )}
