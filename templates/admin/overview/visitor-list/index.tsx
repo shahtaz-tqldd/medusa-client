@@ -1,21 +1,8 @@
 import React from "react";
 import { Text, Title } from "@/components/ui/typography";
 import { Laptop, Monitor, Smartphone } from "lucide-react"; // Using lucide-react for icons
-import { Visitor } from "@/lib/overview-service";
-
-// A simple map for country flags. In a real app, you might use a library.
-const countryFlags: { [key: string]: string } = {
-  "United States": "🇺🇸",
-  "United Kingdom": "🇬🇧",
-  Japan: "🇯🇵",
-  Australia: "🇦🇺",
-  Canada: "🇨🇦",
-  France: "🇫🇷",
-  Germany: "🇩🇪",
-  India: "🇮🇳",
-  Brazil: "🇧🇷",
-  "South Africa": "🇿🇦",
-};
+import { Visitor } from "@/lib/api-service/visitor";
+import { countryFlags } from "@/lib/country";
 
 const getCountryFlag = (country: string) => {
   return countryFlags[country] || "🌍";
@@ -53,28 +40,16 @@ const formatLastVisit = (dateString: string) => {
 
 // --- 4. The Component ---
 
-interface VisitorListProps {
-  visitors: Visitor[]; // Make prop optional to use demo data by default
-}
-
-const VisitorList = ({ visitors }: VisitorListProps) => {
-  // Sort visitors by last_visit date to get the most recent ones
-  const sortedVisitors = [...visitors]
-    .sort(
-      (a, b) =>
-        new Date(b.last_visit).getTime() - new Date(a.last_visit).getTime()
-    )
-    .slice(0, 10);
-
+const VisitorList = ({ visitors }: { visitors: Visitor[] }) => {
   return (
-    <div className="rounded-2xl p-6 border dark:border-white/20 border-blue-500 flex flex-col">
+    <div className="rounded-2xl p-6 border dark:border-white/20 border-emerald-500 flex flex-col">
       <Title variant="xs" className="mb-6">
         Recent Visitors
       </Title>
 
       {/* This container will be scrollable if content overflows */}
       <div className="flex-1 space-y-3 overflow-y-auto pr-2">
-        {sortedVisitors.map((visitor) => (
+        {visitors.map((visitor) => (
           <div
             key={visitor.id}
             className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"

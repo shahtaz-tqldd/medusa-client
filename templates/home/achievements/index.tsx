@@ -1,11 +1,15 @@
-import { Title } from "@/components/ui/typography";
+import Image from "next/image";
 import AchievementSliderMobile from "./achievement-slider";
-import { ACHIEVEMENTS } from "./_data";
 import AchievementCard from "./achievement-card";
 import ShinyText from "@/components/animation/shiny-text";
-import Image from "next/image";
+import { Title } from "@/components/ui/typography";
+import { AchievementProps } from "@/lib/api-service/achievement";
 
-const Achievement = () => {
+const Achievement = ({
+  achievements,
+}: {
+  achievements: AchievementProps[];
+}) => {
   return (
     <section className="container py-8 md:py-20 relative">
       <div className="z-10 relative">
@@ -15,13 +19,17 @@ const Achievement = () => {
         </div>
         {/* Mobile slider */}
         <div className="mt-8 md:hidden">
-          <AchievementSliderMobile />
+          <AchievementSliderMobile achievements={achievements} />
         </div>
 
         {/* Desktop grid */}
         <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-          {ACHIEVEMENTS.map((achievement, index) => (
-            <AchievementCard key={index} achievement={achievement} />
+          {achievements.map((achievement, index) => (
+            <AchievementCard
+              key={index}
+              achievement={achievement}
+              index={index}
+            />
           ))}
         </div>
       </div>

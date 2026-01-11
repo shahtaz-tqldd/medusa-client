@@ -1,24 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { BLOGS } from "./_data";
 import BlogCard from "./blog-card";
-import { Search } from "lucide-react";
 import { Title } from "@/components/ui/typography";
+import { BlogBasicProps } from "@/lib/api-service/blog";
+import { Search } from "lucide-react";
 
-const BlogPage = () => {
+interface BlogPageProps {
+  blogs: BlogBasicProps[];
+}
+
+const BlogPage = ({ blogs }: BlogPageProps) => {
   const [searchTerm, setSearchTerm] = useState("");
-
-  // Filter blogs based on title or tags matching the search term
-  const filteredBlogs = BLOGS.filter((blog) => {
-    const titleMatch = blog.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const tagMatch = blog.tags?.some((tag) =>
-      tag.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    return titleMatch || tagMatch;
-  });
 
   return (
     <section className="container py-20">
@@ -38,15 +31,9 @@ const BlogPage = () => {
       </div>
 
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredBlogs.length > 0 ? (
-          filteredBlogs.map((data, index) => (
-            <BlogCard key={index} data={data} />
-          ))
-        ) : (
-          <p className="col-span-full text-center text-muted-foreground">
-            No blogs found.
-          </p>
-        )}
+        {blogs.map((data, index) => (
+          <BlogCard key={index} data={data} index={index} />
+        ))}
       </div>
     </section>
   );

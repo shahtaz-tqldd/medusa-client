@@ -110,9 +110,9 @@ const ChatWindow = ({ messages, isLoading }: ChatWindowProps) => {
             >
               <div className="max-w-[75%] flex flex-col gap-2">
                 <div
-                  className={`px-4 py-2 rounded-xl text-sm whitespace-pre-line ${
+                  className={`p-4 rounded-xl text-sm whitespace-pre-line ${
                     item.sender === "ai"
-                      ? "bg-[#2b7fff] text-white rounded-br-none"
+                      ? "bg-emerald-600 text-white rounded-br-none"
                       : "bg-blue-500/10 dark:bg-white/10 text-black dark:text-white"
                   }`}
                 >
@@ -157,7 +157,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
       <div className="flbx">
         <h2 className="font-medium text-base">Visitor Info</h2>
         <div className="flx gap-3">
-          <span className="text-sm text-blue-500">Chat Summary</span>
+          <span className="text-sm dark:text-lime-400 text-emerald-600">Chat Summary</span>
           <IconButton icon={ChevronDown} />
         </div>
       </div>

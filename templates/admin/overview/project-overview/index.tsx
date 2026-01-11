@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import { Text, Title } from "@/components/ui/typography";
-import { Project } from "@/templates/projects/_types";
+import { ProjectBasicProps } from "@/lib/api-service/projects";
 
 interface ProjectOverviewProps {
-  projects: Project[];
+  projects: ProjectBasicProps[];
 }
 
 const ProjectOverview = ({ projects }: ProjectOverviewProps) => {
@@ -23,8 +23,8 @@ const ProjectOverview = ({ projects }: ProjectOverviewProps) => {
           >
             {/* Project Thumbnail */}
             <Image
-              src={project.images.main}
-              alt={`${project.name} thumbnail`}
+              src={project.featured_image_url}
+              alt={`${project.title} thumbnail`}
               className="w-20 h-20 rounded-lg object-cover flex-shrink-0"
               height={120}
               width={120}
@@ -34,25 +34,15 @@ const ProjectOverview = ({ projects }: ProjectOverviewProps) => {
             <div className="flex-1 justify-between">
               <div>
                 <Title variant="xs" className="!text-lg">
-                  {project.name}
+                  {project.title}
                 </Title>
               </div>
 
               {/* Footer: Status Badge and Action Links */}
-              <div className="flbx">
-                <div className="flex flex-wrap gap-3.5 mt-2">
-                  {/* Show only the first 3 tech stacks to save space */}
-                  {project.tech_stacks.slice(0, 3).map((tech) => (
-                    <Text key={tech} className="!text-xs">
-                      {tech}
-                    </Text>
-                  ))}
-                  {project.tech_stacks.length > 3 && (
-                    <Text className="!text-xs">
-                      +{project.tech_stacks.length - 3}
-                    </Text>
-                  )}
-                </div>
+              <div className="flx">
+                <Text className="!text-xs">
+                  {project.view_count || 0} Views
+                </Text>
               </div>
             </div>
           </div>

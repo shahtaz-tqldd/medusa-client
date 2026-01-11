@@ -1,68 +1,121 @@
+"use client";
+
 import React from "react";
+import moment from "moment";
 import Link from "next/link";
 
 import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css";
+// Import additional language support as needed
+import "prismjs/components/prism-python";
+import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-jsx";
+import "prismjs/components/prism-sql";
 
-import { BLOGS } from "./_data";
-
-import { slugify } from "@/lib/slugify";
-import { colors } from "@/lib/colors";
-import { Calendar, Clock } from "lucide-react";
-import { BlogContentBlock } from "./_types";
+import { Calendar, Clock, Copy, PencilLine } from "lucide-react";
 import { Text, Title } from "@/components/ui/typography";
 import TechBadge from "@/components/ui/badge";
+import { BlogBasicProps, BlogDetailsProps } from "@/lib/api-service/blog";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { colors } from "@/lib/colors";
 
-type Props = {
-  name: string;
+// Updated types to match Django backend structure
+export interface TextContent {
+  content: string;
+}
+
+export interface HeadingContent {
+  content: string;
+  level: number;
+}
+
+export interface CodeContent {
+  code: string;
+  language: string;
+  caption?: string;
+  line_numbers?: boolean;
+}
+
+export interface ImageContent {
+  image: string;
+  caption?: string;
+  alt_text?: string;
+}
+
+export interface QuoteContent {
+  content: string;
+  source?: string;
+}
+
+export interface ListItem {
+  content: string;
+  order: number;
+}
+
+export interface ListContent {
+  list_type: "ordered" | "unordered";
+  items: ListItem[];
+}
+
+export interface BlogContentBlock {
+  id: string;
+  block_type: "text" | "heading" | "code" | "image" | "quote" | "list";
+  order: number;
+  text_content?: TextContent;
+  heading_content?: HeadingContent;
+  code_content?: CodeContent;
+  image_content?: ImageContent;
+  quote_content?: QuoteContent;
+  list_content?: ListContent;
+}
+
+type BlogDetailsPageProps = {
+  blog: BlogDetailsProps;
+  blogs: BlogBasicProps[];
 };
 
-const BlogDetailsPage: React.FC<Props> = ({ name }) => {
-  const blog = BLOGS.find((b) => slugify(b.title) === name);
-
+const BlogDetailsPage = ({ blog, blogs }: BlogDetailsPageProps) => {
   if (!blog)
     return <div className="container py-80 center">Blog not found</div>;
 
-  const { title, published, topic, content, read_mins } = blog;
+  const { title, published_at, category, content_blocks, reading_time } = blog;
 
   return (
     <section className="container flex gap-10 py-20 md:mt-6">
       <div className="w-full md:w-2/3">
-        <h2 className="leading-[32px] md:leading-[48px] text-2xl md:text-4xl font-medium mt-4 dark:text-gray-300 text-slate-800">
-          {title}
-        </h2>
+        <Title variant="lg">{title}</Title>
         <div className="flex text-sm gap-6 mt-8">
-          <TechBadge>{topic}</TechBadge>
+          <TechBadge>{category.name}</TechBadge>
           <p className="opacity-60 flx gap-2">
             <Clock size={14} />
-            {read_mins} mins read
+            {reading_time || 7} mins read
           </p>
           <p className="opacity-60 flx gap-2">
             <Calendar size={14} />
-            {published}
+            {moment(published_at).format("DD MMM YYYY")}
           </p>
         </div>
-        <RenderBlogs content={content} />
+        <RenderBlogs content_blocks={content_blocks} />
       </div>
 
-      <aside className="hidden md:block md:w-1/3">
-        <div className="sticky w-full top-28 space-y-10 max-h-[60vh]">
-          {BLOGS.filter((b) => slugify(b.title) !== name)?.map(
-            (data, index) => (
-              <Link
-                key={index}
-                className="block"
-                href={`/blogs/${slugify(data?.title)}`}
-              >
-                <Text variant="xs">{data.published}</Text>
-                <Title variant="xs" className="mt-1 mb-2">{data?.title}</Title>
-                <div className="w-fit">
-                  <TechBadge color={colors[index]}>{data.topic}</TechBadge>
-                </div>
-              </Link>
-            )
-          )}
-        </div>
+      <aside className="hidden md:block md:w-1/3 space-y-6 sticky top-24 h-fit">
+        {/* Add related blogs here if needed */}
+        {blogs.map((blog, index) => (
+          <Link href={`/blogs/${blog.slug}`} key={index}>
+            <Text variant="sm" className="flx gap-2">
+              <PencilLine size={14} />
+              {moment(blog.published_at).format("DD MMM YYYY")}
+            </Text>
+            <Title variant="xs" className="mt-2 mb-4">
+              {blog.title}
+            </Title>
+            <TechBadge color={colors[(index + 1) % 3]}>
+              {blog.category.name}
+            </TechBadge>
+          </Link>
+        ))}
       </aside>
     </section>
   );
@@ -71,51 +124,107 @@ const BlogDetailsPage: React.FC<Props> = ({ name }) => {
 export default BlogDetailsPage;
 
 interface RenderBlogsProps {
-  content: BlogContentBlock[];
+  content_blocks: BlogContentBlock[];
 }
-const RenderBlogs: React.FC<RenderBlogsProps> = ({ content }) => {
+
+const RenderBlogs: React.FC<RenderBlogsProps> = ({ content_blocks }) => {
+  // Helper function to get Prism language
+  const getPrismLanguage = (language: string) => {
+    const languageMap: { [key: string]: any } = {
+      python: Prism.languages.python,
+      javaScript: Prism.languages.javascript,
+      javascript: Prism.languages.javascript,
+      typescript: Prism.languages.typescript,
+      jsx: Prism.languages.jsx,
+      tsx: Prism.languages.tsx,
+      sql: Prism.languages.sql,
+      html: Prism.languages.html,
+      css: Prism.languages.css,
+    };
+
+    return languageMap[language] || Prism.languages.javascript;
+  };
+
+  const handleCopy = async (code: string) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      // optional: toast / state feedback
+      toast.success("Code copied!");
+    } catch (err) {
+      console.error("Failed to copy code", err);
+    }
+  };
+
   return (
     <div className="mt-8 space-y-6">
-      {content.map((block, index) => {
-        switch (block.type) {
-          case "text_content":
-          case "heading_content":
-          case "quote_content":
-            if (typeof block.value === "string") {
-              const className =
-                block.type === "heading_content"
-                  ? "text-2xl font-semibold text-slate-800 dark:text-gray-200 mt-10 mb-4"
-                  : block.type === "quote_content"
-                  ? "border-l-4 border-blue-500 pl-4 italic text-slate-600 dark:text-gray-400"
-                  : "text-lg";
-
-              const Wrapper =
-                block.type === "heading_content"
-                  ? "h2"
-                  : block.type === "quote_content"
-                  ? "blockquote"
-                  : Text;
-
+      {content_blocks.map((block, index) => {
+        switch (block.block_type) {
+          case "text":
+            if (block.text_content) {
               return (
-                <Wrapper key={index} className={className}>
-                  {block.value}
-                </Wrapper>
+                <Text
+                  key={block.id || index}
+                  className="text-lg leading-relaxed"
+                >
+                  {block.text_content.content}
+                </Text>
               );
             }
             return null;
 
-          case "code_content":
-            if (typeof block.value === "string") {
+          case "heading":
+            if (block.heading_content) {
+              const { content, level } = block.heading_content;
+              const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
+
+              const headingClasses = {
+                1: "text-4xl font-bold text-slate-800 dark:text-gray-100 mt-12 mb-6",
+                2: "text-3xl font-semibold text-slate-800 dark:text-gray-200 mt-10 mb-4",
+                3: "text-2xl font-semibold text-slate-700 dark:text-gray-300 mt-8 mb-3",
+              };
+
               return (
-                <div className="my-10" key={index}>
-                  <pre className="language-javascript rounded-xl">
+                <HeadingTag
+                  key={block.id || index}
+                  className={
+                    headingClasses[level as keyof typeof headingClasses]
+                  }
+                >
+                  {content}
+                </HeadingTag>
+              );
+            }
+            return null;
+
+          case "code":
+            if (block.code_content) {
+              const { code, language, caption } = block.code_content;
+              const prismLanguage = getPrismLanguage(language);
+
+              return (
+                <div key={block.id || index} className="my-8 relative">
+                  {caption && (
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                      {caption}
+                    </p>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-4 top-3"
+                    onClick={() => handleCopy(code)}
+                  >
+                    <Copy size={14} className="text-lime-400" />
+                    <Text variant="xs" className="!text-lime-400">
+                      Copy Code
+                    </Text>
+                  </Button>
+                  <pre
+                    className={`language-${language} rounded-2xl !bg-[#121212] !p-8 overflow-x-auto`}
+                  >
                     <code
                       dangerouslySetInnerHTML={{
-                        __html: Prism.highlight(
-                          block.value,
-                          Prism.languages.javascript,
-                          "javascript"
-                        ),
+                        __html: Prism.highlight(code, prismLanguage, language),
                       }}
                     />
                   </pre>
@@ -124,35 +233,76 @@ const RenderBlogs: React.FC<RenderBlogsProps> = ({ content }) => {
             }
             return null;
 
-          case "image_content":
-            if (typeof block.value === "string") {
+          case "image":
+            if (block.image_content) {
+              const { image, caption, alt_text } = block.image_content;
+
               return (
-                <img
-                  key={index}
-                  src={block.value}
-                  alt={`blog-image-${index}`}
-                  className="w-full rounded-xl"
-                />
+                <figure key={block.id || index} className="my-8">
+                  <Image
+                    src={image}
+                    alt={alt_text || caption || `Image ${index + 1}`}
+                    className="w-full rounded-xl"
+                    height={400}
+                    width={600}
+                  />
+                  {caption && (
+                    <figcaption className="text-sm text-center text-gray-600 dark:text-gray-400 mt-3">
+                      {caption}
+                    </figcaption>
+                  )}
+                </figure>
               );
             }
             return null;
 
-          case "list_content":
-            if (Array.isArray(block.value)) {
+          case "quote":
+            if (block.quote_content) {
+              const { content, source } = block.quote_content;
+
               return (
-                <ul
-                  key={index}
-                  className="list-disc space-y-2 pl-5 text-slate-600 dark:text-gray-400 text-lg"
+                <blockquote
+                  key={block.id || index}
+                  className="border-l-4 border-blue-500 pl-6 py-4 my-8 italic"
                 >
-                  {block.value.map((item: string, i: number) => (
-                    <li key={i}>{item}</li>
+                  <p className="text-xl text-slate-700 dark:text-gray-300 mb-2">
+                    &quot;{content}&quot;
+                  </p>
+                  {source && (
+                    <cite className="text-sm text-slate-600 dark:text-gray-400 not-italic">
+                      — {source}
+                    </cite>
+                  )}
+                </blockquote>
+              );
+            }
+            return null;
+
+          case "list":
+            if (block.list_content) {
+              const { list_type, items } = block.list_content;
+
+              // Sort items by order
+              const sortedItems = [...items].sort((a, b) => a.order - b.order);
+
+              const ListTag = list_type === "ordered" ? "ol" : "ul";
+              const listClass =
+                list_type === "ordered"
+                  ? "list-decimal space-y-2 pl-6 text-slate-600 dark:text-gray-400 text-lg"
+                  : "list-disc space-y-2 pl-6 text-slate-600 dark:text-gray-400 text-lg";
+
+              return (
+                <ListTag key={block.id || index} className={listClass}>
+                  {sortedItems.map((item, i) => (
+                    <li key={i}>{item.content}</li>
                   ))}
-                </ul>
+                </ListTag>
               );
             }
             return null;
 
           default:
+            console.warn(`Unknown block type: ${block.block_type}`);
             return null;
         }
       })}

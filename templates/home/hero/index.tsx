@@ -13,9 +13,12 @@ import { Text, Title } from "@/components/ui/typography";
 // icons
 import { Dot } from "lucide-react";
 
-const Hero: React.FC = () => {
+const Hero: React.FC<{
+  title: string;
+  my_story: string;
+  focus_areas: string[];
+}> = ({ title, my_story, focus_areas }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const SKILLS = ["React", "Node JS", "Django", "FastAPI"];
 
   return (
     <section className="py-8 md:py-20 h-auto w-screen center overflow-hidden relative">
@@ -27,20 +30,19 @@ const Hero: React.FC = () => {
               Full-stack Software Developer
             </ShinyText>
             <Title variant="lg" className="max-w-2xl">
-              Hey, this is Shahtaz. I am a software developer by passion, and a
-              full-stack alchemist by choice!
+              {title}
             </Title>
             <Text className="max-w-lg mt-10 md:mt-14">
               Interested to know my story of becoming a software developer —{" "}
               <button
                 onClick={() => setIsOpen(true)}
-                className="dark:text-blue-500 text-blue-700"
+                className="dark:text-lime-400 text-emerald-600"
               >
                 <span>Here’s a short version</span>
               </button>
             </Text>
             <div className="mt-10 md:mt-32 -ml-2.5 flex items-center flex-wrap gap-x-4 gap-y-2 font-medium dark:text-gray-300 text-slate-600 text-sm">
-              {SKILLS.map((skill, idx) => (
+              {focus_areas?.map((skill, idx) => (
                 <Text
                   key={idx}
                   variant="sm"
@@ -56,7 +58,7 @@ const Hero: React.FC = () => {
         <HeroImage />
       </div>
       <BgGrid />
-      <MyStoryDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
+      <MyStoryDrawer isOpen={isOpen} setIsOpen={setIsOpen} content={my_story} />
     </section>
   );
 };

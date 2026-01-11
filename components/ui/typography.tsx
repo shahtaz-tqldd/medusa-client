@@ -32,7 +32,7 @@ export const Text = ({ children, className, variant = "md" }: TextProps) => {
 };
 export const Title = ({ children, className, variant = "md" }: TextProps) => {
   const variants = {
-    xs: "text-lg md:text-xl",
+    xs: "text-base md:text-lg",
     sm: "text-xl md:text-2xl",
     md: "text-2xl md:text-3xl",
     lg: "text-2xl md:text-4xl",

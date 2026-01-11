@@ -1,33 +1,46 @@
 import {
-  BotMessageSquare,
-  ChartNoAxesGantt,
+  Atom,
   Coffee,
-  Shapes,
+  FolderKanban,
+  Gift,
+  Layers,
+  MessageSquareDot,
+  PenLine,
   Sparkles,
   Text,
-  User2,
+  Users,
 } from "lucide-react";
 
 export const NAV_ITEMS = [
   {
     title: "Overview",
     link: "/admin",
-    icon: Shapes,
+    icon: FolderKanban,
   },
   {
     title: "Messages",
     link: "/admin/messages",
-    icon: BotMessageSquare,
+    icon: MessageSquareDot,
+  },
+  {
+    title: "Visitors",
+    link: "/admin/visitors",
+    icon: Users,
+  },
+  {
+    title: "Skills",
+    link: "/admin/skills",
+    icon: Sparkles,
+  },
+  {
+    title: "Expertise",
+    link: "/admin/expertise",
+    icon: Atom,
   },
   {
     title: "Projects",
     link: "/admin/projects",
-    icon: ChartNoAxesGantt,
-  },
-  {
-    title: "Skills & Expertise",
-    link: "/admin/skills",
-    icon: Sparkles,
+    icon: Layers,
   },
   {
     title: "Experiences",
@@ -37,11 +50,11 @@ export const NAV_ITEMS = [
   {
     title: "Blogs",
     link: "/admin/blogs",
-    icon: Text,
+    icon: PenLine,
   },
   {
-    title: "Clients",
-    link: "/admin/clients",
-    icon: User2,
+    title: "Achievements",
+    link: "/admin/achievements",
+    icon: Gift,
   },
 ];

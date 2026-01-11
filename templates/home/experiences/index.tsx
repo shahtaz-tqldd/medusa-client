@@ -9,12 +9,13 @@ import ExperienceDetailsDrawer from "./experience-details-drawer";
 import ExperienceCard from "./experience-card";
 
 // data
-import { WORK_EXPERIENCES } from "./_data";
-import type { ExperienceProps } from "./_types";
 import { Title } from "@/components/ui/typography";
 import ShinyText from "@/components/animation/shiny-text";
+import { ExperienceProps } from "@/lib/api-service/experiences";
 
-const Experiences: React.FC = () => {
+const Experiences: React.FC<{ experiences: ExperienceProps[] }> = ({
+  experiences,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [expData, setExpData] = useState<ExperienceProps | null>(null);
   const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
@@ -94,12 +95,12 @@ const Experiences: React.FC = () => {
         <div className="relative" ref={timelineRef}>
           <div className="hidden md:block absolute left-6 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-white/10"></div>
           <motion.div
-            className="hidden md:block absolute left-6 top-0 w-0.5 bg-gradient-to-b from-blue-600/80 to-blue-600"
+            className="hidden md:block absolute left-6 top-0 w-0.5 bg-gradient-to-b from-emerald-600/80 dark:from-lime-600/80 dark:to-lime-400 to-emerald-600"
             style={{ height: progressHeight }}
           ></motion.div>
           <div className="space-y-8 relative">
             <div className="hidden md:block bg-gradient-to-b dark:from-[#121212] from-white dark:to-black/0 to-white/0 h-20 w-0.5 absolute top-0 left-6"></div>
-            {WORK_EXPERIENCES?.map((item, index) => (
+            {experiences?.map((item, index) => (
               <div
                 key={index}
                 className="relative z-10"
@@ -112,7 +113,7 @@ const Experiences: React.FC = () => {
                   <div
                     className={`w-4 h-4 rounded-full border-2 transition-all duration-300 ${
                       visibleCards.has(index)
-                        ? "bg-blue-600 border-blue-600"
+                        ? "dark:bg-lime-400 bg-emerald-600 dark:border-lime-400 border-emerald-600"
                         : "bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600"
                     }`}
                   >

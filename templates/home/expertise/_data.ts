@@ -1,7 +1,6 @@
 import { Coffee, Cpu, Brain } from "lucide-react";
-import type { ExpertiseArea } from "./_types";
 
-export const expertiseData: ExpertiseArea[] = [
+export const expertiseData = [
   {
     id: "frontend",
     title: "Frontend",

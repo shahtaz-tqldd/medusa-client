@@ -2,27 +2,25 @@
 
 import React, { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Code } from "lucide-react";
 import Image from "next/image";
+
 import { Text, Title } from "@/components/ui/typography";
-
-import { expertiseData } from "./_data";
-import type { ExpertiseArea } from "./_types";
-import ExpertiseDetailsDrawer from "./expertise-details-drawer";
 import { Button } from "@/components/ui/button";
+import ExpertiseDetailsDrawer from "./expertise-details-drawer";
+import { ExpertiseProps } from "@/lib/api-service/expertise";
 
-const Expertise = () => {
-  const [selectedId, setSelectedId] = useState<string>(expertiseData[0].id);
+const Expertise = ({ expertises }: { expertises: ExpertiseProps[] }) => {
+  const [selectedId, setSelectedId] = useState<string>(expertises[0]?.id);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [selectedFeature, setSelectedFeature] = useState<ExpertiseArea | null>(
-    null
-  );
+  const [selectedExpertise, setSelectedExpertise] =
+    useState<ExpertiseProps | null>(null);
 
   const currentExpertise =
-    expertiseData.find((e) => e.id === selectedId) ?? expertiseData[0];
+    expertises.find((e) => e.id === selectedId) ?? expertises[0];
 
   const openDrawer = () => {
-    setSelectedFeature(currentExpertise);
+    setSelectedExpertise(currentExpertise);
     setDrawerOpen(true);
   };
 
@@ -41,44 +39,40 @@ const Expertise = () => {
         <div>
           {/* Tabs */}
           <div className="flex gap-6 border-b dark:border-white/5 border-gray-200 mb-8">
-            {expertiseData.map((item) => {
-              const TabIcon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setSelectedId(item.id)}
-                  className={`flex items-center gap-2 pb-2 border-b-2 transition ${
-                    selectedId === item.id
-                      ? "dark:border-white dark:border-gray-900 dark:text-white text-gray-900"
-                      : "border-transparent dark:text-gray-300/80 text-gray-400"
-                  }`}
-                >
-                  <TabIcon size={18} />
-                  {item.title}
-                  <span className="md:block hidden">Development</span>
-                </button>
-              );
-            })}
+            {expertises.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setSelectedId(item.id)}
+                className={`flex items-center gap-2 pb-2 border-b-2 transition ${
+                  selectedId === item.id
+                    ? "border-gray-900 dark:border-white text-gray-900 dark:text-white"
+                    : "border-transparent text-gray-400 dark:text-gray-300/80"
+                }`}
+              >
+                <Code size={18} />
+                {item.name}
+              </button>
+            ))}
           </div>
 
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedId}
+              ref={textRef}
               initial={{ opacity: 0, x: -20 }}
               animate={
                 textInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
               }
               exit={{ opacity: 0, x: 20 }}
-              ref={textRef}
             >
               <Text variant="lg">{currentExpertise.description}</Text>
 
               <div className="mt-6 space-y-2 max-w-md">
-                {currentExpertise.keyPoints.map((point) => (
-                  <div key={point} className="flex gap-3">
+                {currentExpertise.features.map((feature) => (
+                  <div key={feature} className="flex gap-3">
                     <Check className="mt-1.5 text-emerald-500" size={14} />
                     <Text variant="lg" className="flex-1">
-                      {point}
+                      {feature}
                     </Text>
                   </div>
                 ))}
@@ -102,6 +96,7 @@ const Expertise = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedId}
+              ref={imageRef}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={
                 imageInView
@@ -110,11 +105,10 @@ const Expertise = () => {
               }
               exit={{ opacity: 0, scale: 0.95 }}
               className="max-h-[480px] h-full"
-              ref={imageRef}
             >
               <Image
-                src={currentExpertise.img}
-                alt={currentExpertise.title}
+                src={currentExpertise.featured_image}
+                alt={currentExpertise.name}
                 width={800}
                 height={520}
                 className="rounded-2xl object-cover w-full h-full"
@@ -125,7 +119,7 @@ const Expertise = () => {
       </div>
 
       <ExpertiseDetailsDrawer
-        data={selectedFeature}
+        data={selectedExpertise}
         isOpen={drawerOpen}
         setIsOpen={setDrawerOpen}
       />

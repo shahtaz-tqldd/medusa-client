@@ -1,18 +1,25 @@
-import { Title } from "@/components/ui/typography";
-import Image from "next/image";
 import React from "react";
+import { Text, Title } from "@/components/ui/typography";
+import WorldMap, { CountryData } from "./world-map";
+import { Globe } from "lucide-react";
 
-const VisitorMap = () => {
+interface VisitorMapProps {
+  visitors: CountryData[];
+}
+
+const VisitorMap = ({ visitors }: VisitorMapProps) => {
   return (
     <div className="w-full dark:bg-white/5 bg-white rounded-2xl p-8">
-      <Title variant="xs">Visitor Demography</Title>
-      <Image
-        src="/world_map.png"
-        className="w-full mt-8"
-        height={600}
-        width={800}
-        alt="World Map"
-      />
+      <div className="space-y-1">
+        <Title variant="xs">Visitor Demography</Title>
+        <Text variant="xs" className="flx gap-2">
+          <Globe className="text-emerald-500" size={16} />
+          From {visitors.length} countries around the globe
+        </Text>
+      </div>
+      <div className="px-6 pt-6">
+        <WorldMap data={visitors} />
+      </div>
     </div>
   );
 };

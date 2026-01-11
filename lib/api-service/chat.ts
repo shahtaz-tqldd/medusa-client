@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiFetch, queryKeys } from "./client";
+import { PaginatedResponse } from "./_types";
 
 
 /* ------------------ TYPES ------------------ */
@@ -29,7 +30,6 @@ export interface Conversation {
   user: chatUserProps;
 }
 
-
 interface ConversationMessage {
   id: string;
   sender: "user" | "ai";
@@ -41,6 +41,19 @@ interface ConversationResponse {
   success: boolean;
   data: {
     messages: ConversationMessage[];
+  };
+}
+
+interface ChatMessagePayload {
+  query: string;
+  visitor_id: string;
+}
+
+interface ChatResponse {
+  success: boolean;
+  data: {
+    conversation_id: string;
+    response: string;
   };
 }
 
@@ -65,49 +78,21 @@ export const useConversationMessages = (conversationId: string | null) => {
   });
 };
 
-interface ConversationListResponse {
-  count: number;
-  results: Conversation[];
-}
 
-export const useConversationList = (
-  page = 1,
-  search = "",
-  limit = 10
-) => {
-  return useQuery({
-    queryKey: queryKeys.conversations({ page, search, limit }),
-    queryFn: async () => {
-      const params = new URLSearchParams({
-        offset: ((page - 1) * limit).toString(),
-        ...(search ? { search } : {}),
-      });
-
-      const data = await apiFetch<ConversationListResponse>(
-        `chat/conversation/list/?${params.toString()}`,
-        { auth: true }
-      );
-
-      return {
-        convos: data.results ?? [],
-        total: data.count ?? 0,
-      };
-    },
+export async function fetchConversationList(page = 1, limit = 10, search = "") {
+  const params = new URLSearchParams({
+    offset: ((page - 1) * limit).toString(),
+    ...(search ? { search } : {}),
   });
-};
-
-interface ChatMessagePayload {
-  query: string;
-  visitor_id: string;
+  return await apiFetch<PaginatedResponse<Conversation[]>>(
+    `/chat/conversation/list/?${params.toString()}`,
+    { auth: true, cache: "no-store" }
+  );
 }
 
-interface ChatResponse {
-  success: boolean;
-  data: {
-    conversation_id: string;
-    response: string;
-  };
-}
+
+
+
 
 export const useSendChatMessage = () => {
   return useMutation({

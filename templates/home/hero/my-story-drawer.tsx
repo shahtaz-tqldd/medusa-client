@@ -9,10 +9,17 @@ import { Text, Title } from "@/components/ui/typography";
 import { Code, Zap } from "lucide-react";
 
 // data
-import { MY_STORY } from "./_data";
-import type { MyStoryDialogProps } from "./_types";
+export interface MyStoryDialogProps {
+  isOpen: boolean;
+  content: string;
+  setIsOpen: (isOpen: boolean) => void;
+}
 
-const MyStoryDrawer: React.FC<MyStoryDialogProps> = ({ isOpen, setIsOpen }) => {
+const MyStoryDrawer: React.FC<MyStoryDialogProps> = ({
+  isOpen,
+  content,
+  setIsOpen,
+}) => {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerContent>
@@ -20,11 +27,14 @@ const MyStoryDrawer: React.FC<MyStoryDialogProps> = ({ isOpen, setIsOpen }) => {
           <Title variant="lg">
             My Background story of Becoming a Software Developer
           </Title>
-          {MY_STORY.map((item, index) => (
-            <Text key={index} className="md:text-justify" variant="lg">
-              {item.content}
-            </Text>
-          ))}
+
+          <Text variant="lg" className="md:text-justify">
+            <span
+              dangerouslySetInnerHTML={{
+                __html: content.replace(/\n\n/g, "<br /><br />"),
+              }}
+            />
+          </Text>
         </AnimateDiv>
 
         <div className="absolute top-20 left-8 opacity-5">

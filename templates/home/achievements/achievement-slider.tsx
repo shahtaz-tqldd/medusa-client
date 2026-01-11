@@ -3,10 +3,14 @@ import { Pagination } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import { ACHIEVEMENTS } from "./_data";
 import AchievementCard from "./achievement-card";
+import { AchievementProps } from "@/lib/api-service/achievement";
 
-const AchievementSliderMobile = () => {
+const AchievementSliderMobile = ({
+  achievements,
+}: {
+  achievements: AchievementProps[];
+}) => {
   return (
     <Swiper
       modules={[Pagination]}
@@ -15,9 +19,9 @@ const AchievementSliderMobile = () => {
       pagination={{ clickable: true }}
       className="md:hidden"
     >
-      {ACHIEVEMENTS.map((achievement, index) => (
+      {achievements.map((achievement, index) => (
         <SwiperSlide key={index} className="pb-8">
-          <AchievementCard achievement={achievement} />
+          <AchievementCard achievement={achievement} index={index} />
         </SwiperSlide>
       ))}
     </Swiper>
