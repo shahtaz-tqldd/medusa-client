@@ -50,26 +50,29 @@ const AdminAchievementPage = ({
         </Button>
       </div>
 
-      {achievements?.length === 0 && <NoData />}
+      {achievements?.length === 0 ? (
+        <NoData />
+      ) : (
+        <div className="grid grid-cols-3 gap-5">
+          {achievements.map((item, index) => (
+            <AchievementCard
+              key={index}
+              achievement={item}
+              index={index}
+              is_admin
+              handleDelete={() => {
+                setDeleteModalOpen(true);
+                setSelectedId(item.id);
+              }}
+              handleEdit={() => {
+                setSelectedAchievement(item);
+                setEditModalOpen(true);
+              }}
+            />
+          ))}
+        </div>
+      )}
 
-      <div className="grid grid-cols-3 gap-5">
-        {achievements.map((item, index) => (
-          <AchievementCard
-            key={index}
-            achievement={item}
-            index={index}
-            is_admin
-            handleDelete={() => {
-              setDeleteModalOpen(true);
-              setSelectedId(item.id);
-            }}
-            handleEdit={() => {
-              setSelectedAchievement(item);
-              setEditModalOpen(true);
-            }}
-          />
-        ))}
-      </div>
       <AddAchievementDialog open={addModalOpen} setOpen={setAddModalOpen} />
       <AddAchievementDialog
         open={editModalOpen}
