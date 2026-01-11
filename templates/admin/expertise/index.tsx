@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Text, Title } from "@/components/ui/typography";
 import { Ellipsis, FolderOpen, PenLine, Plus, Trash2 } from "lucide-react";
 
-import { deleteExperience } from "@/lib/api-service/experience-action";
 import { ExpertiseProps } from "@/lib/api-service/expertise";
 import { Card } from "@/components/ui/card";
 import {
@@ -18,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import DeleteDialog from "@/components/dialog/delete-dialog";
 import Image from "next/image";
+import { deleteExpertise } from "@/lib/api-service/expertise-action";
 
 interface ExpertisePageProps {
   expertises: ExpertiseProps[];
@@ -30,7 +30,7 @@ const AdminExpertisePage = ({ expertises }: ExpertisePageProps) => {
 
   const handleDeleteExpertise = async () => {
     if (!selectedId) return;
-    const res = await deleteExperience(selectedId);
+    const res = await deleteExpertise(selectedId);
     if (res?.success) {
       toast.success("Expertise Deleted Successfully!");
       setDeleteModalOpen(false);
@@ -54,22 +54,25 @@ const AdminExpertisePage = ({ expertises }: ExpertisePageProps) => {
           </Button>
         </Link>
       </div>
-      {expertises?.length === 0 && <NoData />}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {expertises.map((item) => (
-          <ExpertiseCard
-            expertise={item}
-            key={item.id}
-            handleDelete={() => {
-              setDeleteModalOpen(true);
-              setSelectedId(item.id);
-            }}
-            handleEdit={() => {
-              router.push(`/admin/expertise/${item.id}/update`);
-            }}
-          />
-        ))}
-      </div>
+      {expertises?.length === 0 ? (
+        <NoData />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {expertises.map((item) => (
+            <ExpertiseCard
+              expertise={item}
+              key={item.id}
+              handleDelete={() => {
+                setDeleteModalOpen(true);
+                setSelectedId(item.id);
+              }}
+              handleEdit={() => {
+                router.push(`/admin/expertise/${item.id}/update`);
+              }}
+            />
+          ))}
+        </div>
+      )}
       <DeleteDialog
         open={deleteModalOpen}
         setOpen={setDeleteModalOpen}

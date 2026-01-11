@@ -62,7 +62,7 @@ const AdminExperiencePage = ({ experiences }: ExperiencePageProps) => {
       ),
     })) || [];
 
-  const handleDeleteProject = async (id: string | number) => {
+  const handleDeleteExperience = async (id: string | number) => {
     const res = await deleteExperience(id.toString());
     if (res?.success) {
       toast.success("Experience Deleted Successfully!");
@@ -90,7 +90,7 @@ const AdminExperiencePage = ({ experiences }: ExperiencePageProps) => {
         columns={experience_columns}
         totalItems={experiences?.length}
         table_options={table_options}
-        onDeleteConfirm={handleDeleteProject}
+        onDeleteConfirm={handleDeleteExperience}
         deleteLoading={false}
         page={1}
         setPage={() => {}}
