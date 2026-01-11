@@ -4,11 +4,12 @@ import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReusableTable from "@/components/tables/reusable-table";
 import { Text, Title } from "@/components/ui/typography";
-import { PaginatedResponse } from "@/lib/api-service/visitor";
 import { formatTimeFromNow } from "@/lib/date";
+import { PaginatedResponse } from "@/lib/api-service/_types";
+import { Visitor } from "@/lib/api-service/visitor";
 
 interface Props {
-  visitor: PaginatedResponse;
+  visitor: PaginatedResponse<Visitor[]>;
   page: number;
   pageSize: number;
 }
@@ -35,8 +36,9 @@ const VisitorListPage = ({ visitor, page, pageSize }: Props) => {
     { header: "Visit Count", accessorKey: "visit_count" },
   ];
 
-  const visitor_list = visitor.results.map((v) => ({
+  const visitor_list = visitor?.results?.map((v) => ({
     ...v,
+    id: String(v.id), // Convert id to string
     city: <span className="opacity-60">{v.city}</span>,
     country: <span className="opacity-60">{v.country}</span>,
     device_name: <span className="opacity-60">{v.device_name}</span>,

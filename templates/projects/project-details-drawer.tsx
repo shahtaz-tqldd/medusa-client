@@ -73,14 +73,22 @@ const ProjectDetailsDrawer: React.FC<ProjectDetailsDrawerProps> = ({
           <AnimateDiv className="space-y-10">
             <div className="space-y-4">
               <div className="w-fit">
-                <TechBadge color={getColors(type)}>{type}</TechBadge>
+                <TechBadge color={getColors(type || "default")}>
+                  {type || "Default"}
+                </TechBadge>
               </div>
               <h2 className="text-2xl md:text-4xl leading-[32px] md:leading-[48px]">
                 {title}
               </h2>
               <Text variant="lg">{description}</Text>
             </div>
-            <ImageSlider images={imageUrls} name={title} />
+            <ImageSlider
+              images={imageUrls.reduce((acc, url, index) => {
+                acc[index.toString()] = url;
+                return acc;
+              }, {} as Record<string, string | null>)}
+              name={title || "Untitled"}
+            />
 
             <div className="space-y-4">
               <LabelText icon={Layers} variant="sm">

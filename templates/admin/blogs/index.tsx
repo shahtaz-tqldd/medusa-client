@@ -31,17 +31,21 @@ const AdminBlogPage = ({ blogs }: BlogPageProps) => {
     {
       label: "View",
       icon: Eye,
-      action: null,
+      action: (id: string) => {
+        console.log("View", id);
+      },
     },
     {
       label: "Update",
       icon: PenLine,
-      action: null,
+      action: (id: string) => {
+        console.log("View", id);
+      },
     },
     {
       label: "Delete",
       icon: Trash2,
-      type: "delete",
+      type: "delete" as const,
     },
   ];
   const blog_list =
@@ -85,7 +89,6 @@ const AdminBlogPage = ({ blogs }: BlogPageProps) => {
       <ReusableTable
         data={blog_list}
         columns={blogs_columns}
-        isLoading={false}
         page={page}
         setPage={setPage}
         pageSize={pageSize}

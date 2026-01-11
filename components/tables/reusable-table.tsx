@@ -27,16 +27,16 @@ export type TableOption = {
   label: string;
   type?: "delete";
   icon: LucideIcon;
-  action?: (id: number | string) => void;
+  action?: (id: string) => void;
 };
 
-interface ReusableTableProps<T extends { id: number | string }> {
+interface ReusableTableProps<T extends { id: string }> {
   data: T[];
   columns: Column[];
 
   /* Optional */
   table_options?: TableOption[];
-  onDeleteConfirm?: (id: number | string) => Promise<void> | void;
+  onDeleteConfirm?: (id: string) => Promise<void> | void;
   deleteLoading?: boolean;
   className?: string;
 
@@ -48,7 +48,7 @@ interface ReusableTableProps<T extends { id: number | string }> {
   setPageSize: (size: number) => void;
 }
 
-function ReusableTable<T extends { id: number | string }>({
+function ReusableTable<T extends { id: string }>({
   data,
   columns,
   totalItems,
@@ -62,9 +62,9 @@ function ReusableTable<T extends { id: number | string }>({
   className,
 }: ReusableTableProps<T>) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState<number | string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const openDeleteDialog = (id: number | string) => {
+  const openDeleteDialog = (id: string) => {
     setSelectedId(id);
     setDeleteDialogOpen(true);
   };

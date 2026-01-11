@@ -36,17 +36,21 @@ const AdminProjectListPage = ({
     {
       label: "View",
       icon: Eye,
-      action: null,
+      action: (id: string) => {
+        console.log("View", id);
+      },
     },
     {
       label: "Update",
       icon: PenLine,
-      action: null,
+      action: (id: string) => {
+        console.log("Update", id);
+      },
     },
     {
       label: "Delete",
       icon: Trash2,
-      type: "delete",
+      type: "delete" as const,
     },
   ];
 
@@ -94,7 +98,6 @@ const AdminProjectListPage = ({
       <ReusableTable
         data={project_list}
         columns={project_columns}
-        isLoading={false}
         page={page}
         setPage={setPage}
         pageSize={pageSize}

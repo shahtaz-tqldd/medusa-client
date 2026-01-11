@@ -30,15 +30,21 @@ const AdminExperiencePage = ({ experiences }: ExperiencePageProps) => {
     {
       label: "View",
       icon: Eye,
+      action: (id: string) => {
+        console.log("View", id);
+      },
     },
     {
       label: "Update",
       icon: PenLine,
+      action: (id: string) => {
+        console.log("Update", id);
+      },
     },
     {
       label: "Delete",
       icon: Trash2,
-      type: "delete",
+      type: "delete" as const,
     },
   ];
 
@@ -86,6 +92,10 @@ const AdminExperiencePage = ({ experiences }: ExperiencePageProps) => {
         table_options={table_options}
         onDeleteConfirm={handleDeleteProject}
         deleteLoading={false}
+        page={1}
+        setPage={() => {}}
+        pageSize={10}
+        setPageSize={() => {}}
       />
     </div>
   );
