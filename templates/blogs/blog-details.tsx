@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { JSX } from "react";
 import moment from "moment";
 import Link from "next/link";
 
@@ -97,11 +97,14 @@ const BlogDetailsPage = ({ blog, blogs }: BlogDetailsPageProps) => {
             {moment(published_at).format("DD MMM YYYY")}
           </p>
         </div>
-        <RenderBlogs content_blocks={content_blocks} />
+        {Array.isArray(content_blocks) ? (
+          <RenderBlogs content_blocks={content_blocks as BlogContentBlock[]} />
+        ) : (
+          <div className="text-red-500">Invalid content blocks</div>
+        )}
       </div>
 
       <aside className="hidden md:block md:w-1/3 space-y-6 sticky top-24 h-fit">
-        {/* Add related blogs here if needed */}
         {blogs.map((blog, index) => (
           <Link href={`/blogs/${blog.slug}`} key={index}>
             <Text variant="sm" className="flx gap-2">
@@ -111,7 +114,7 @@ const BlogDetailsPage = ({ blog, blogs }: BlogDetailsPageProps) => {
             <Title variant="xs" className="mt-2 mb-4">
               {blog.title}
             </Title>
-            <TechBadge color={colors[(index + 1) % 3]}>
+            <TechBadge color={colors[(index + 1) % colors.length]}>
               {blog.category.name}
             </TechBadge>
           </Link>
@@ -129,17 +132,17 @@ interface RenderBlogsProps {
 
 const RenderBlogs: React.FC<RenderBlogsProps> = ({ content_blocks }) => {
   // Helper function to get Prism language
-  const getPrismLanguage = (language: string) => {
-    const languageMap: { [key: string]: any } = {
-      python: Prism.languages.python,
+  const getPrismLanguage = (language: string): Prism.Grammar => {
+    const languageMap: Record<string, Prism.Grammar> = {
+      python: Prism.languages.python || Prism.languages.javascript,
       javaScript: Prism.languages.javascript,
       javascript: Prism.languages.javascript,
-      typescript: Prism.languages.typescript,
-      jsx: Prism.languages.jsx,
-      tsx: Prism.languages.tsx,
-      sql: Prism.languages.sql,
-      html: Prism.languages.html,
-      css: Prism.languages.css,
+      typescript: Prism.languages.typescript || Prism.languages.javascript,
+      jsx: Prism.languages.jsx || Prism.languages.javascript,
+      tsx: Prism.languages.tsx || Prism.languages.javascript,
+      sql: Prism.languages.sql || Prism.languages.javascript,
+      html: Prism.languages.html || Prism.languages.markup,
+      css: Prism.languages.css || Prism.languages.javascript,
     };
 
     return languageMap[language] || Prism.languages.javascript;
@@ -148,7 +151,6 @@ const RenderBlogs: React.FC<RenderBlogsProps> = ({ content_blocks }) => {
   const handleCopy = async (code: string) => {
     try {
       await navigator.clipboard.writeText(code);
-      // optional: toast / state feedback
       toast.success("Code copied!");
     } catch (err) {
       console.error("Failed to copy code", err);
@@ -175,20 +177,24 @@ const RenderBlogs: React.FC<RenderBlogsProps> = ({ content_blocks }) => {
           case "heading":
             if (block.heading_content) {
               const { content, level } = block.heading_content;
-              const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
+              const HeadingTag = `h${level}` as keyof Pick<
+                JSX.IntrinsicElements,
+                "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+              >;
 
-              const headingClasses = {
+              const headingClasses: Record<number, string> = {
                 1: "text-4xl font-bold text-slate-800 dark:text-gray-100 mt-12 mb-6",
                 2: "text-3xl font-semibold text-slate-800 dark:text-gray-200 mt-10 mb-4",
                 3: "text-2xl font-semibold text-slate-700 dark:text-gray-300 mt-8 mb-3",
+                4: "text-xl font-semibold text-slate-700 dark:text-gray-300 mt-6 mb-2",
+                5: "text-lg font-semibold text-slate-700 dark:text-gray-300 mt-4 mb-2",
+                6: "text-base font-semibold text-slate-700 dark:text-gray-300 mt-4 mb-2",
               };
 
               return (
                 <HeadingTag
                   key={block.id || index}
-                  className={
-                    headingClasses[level as keyof typeof headingClasses]
-                  }
+                  className={headingClasses[level] || headingClasses[3]}
                 >
                   {content}
                 </HeadingTag>
