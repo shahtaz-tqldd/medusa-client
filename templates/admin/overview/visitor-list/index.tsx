@@ -2,10 +2,10 @@ import React from "react";
 import { Text, Title } from "@/components/ui/typography";
 import { Laptop, Monitor, Smartphone } from "lucide-react"; // Using lucide-react for icons
 import { Visitor } from "@/lib/api-service/visitor";
-import { countryFlags } from "@/lib/country";
+import { country } from "@/lib/country";
 
-const getCountryFlag = (country: string) => {
-  return countryFlags[country] || "🌍";
+const getCountryFlag = (country_name: string) => {
+  return country.find((c) => c.name === country_name)?.flag || "🌍";
 };
 
 // Function to get device icon
