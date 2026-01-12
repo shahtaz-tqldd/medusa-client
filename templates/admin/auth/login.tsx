@@ -55,7 +55,7 @@ const LoginPage = () => {
       }
 
       router.push("/admin");
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message || "Something went wrong.");
     } finally {
       setLoading(false);

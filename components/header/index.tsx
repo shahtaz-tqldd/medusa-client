@@ -2,17 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useTheme } from "next-themes";
 
 // components
 import EmailDrawer from "./email-drawer";
 import NavDrawer from "./nav-drawer";
 import ThemeToggle from "@/components/themes/theme-toggle";
-import { Text } from "lucide-react";
+import { Calendar, Text } from "lucide-react";
 import { Button } from "../ui/button";
 
 // icons
-import LordIcon from "@/assets/icons/lord-icons";
 import { HEADER_LINKS } from "./_data";
 
 const Header: React.FC = () => {
@@ -21,8 +19,6 @@ const Header: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
-
-  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,13 +78,7 @@ const Header: React.FC = () => {
             <div className="flx gap-1.5 -ml-4">
               <Link href="https://calendly.com/shahtaz67" target="__blank">
                 <Button>
-                  <LordIcon
-                    icon="uoljexdg"
-                    height={16}
-                    width={16}
-                    primary={theme === "dark" ? "#222" : "#fff"}
-                    target="button"
-                  />
+                  <Calendar size={16} />
                   Schedule a Call
                 </Button>
               </Link>

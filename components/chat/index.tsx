@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useTheme } from "next-themes";
 import { fetchConversationMessages } from "@/lib/chat-service";
 
 // components
@@ -13,9 +12,7 @@ import {
 import { ChatHeader, ChatInputBox } from "./init-page";
 
 // icons
-import LordIcon from "@/assets/icons/lord-icons";
 import { Calendar, MessageSquareDot } from "lucide-react";
-import { Button } from "../ui/button";
 import { ChatResponse, sendMessage } from "@/lib/api-service/chat-action";
 import { VisitorStorage } from "@/lib/visitor";
 

@@ -1,4 +1,3 @@
-import Script from "next/script";
 import { Figtree } from "next/font/google";
 
 import { Toaster } from "@/components/ui/sonner";
@@ -27,12 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <Script
-          src="https://cdn.lordicon.com/lordicon.js"
-          strategy="beforeInteractive"
-        />
-      </head>
+      <head></head>
       <body className={feetgree.className} cz-shortcut-listen="false">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
