@@ -1,4 +1,3 @@
-// app/admin/layout.tsx
 import Sidebar from "@/components/sidebar";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

@@ -38,7 +38,7 @@ interface AddAchievementDialogProps {
 interface AchievementFormData {
   title: string;
   subtitle: string;
-  score: number;
+  score: number | null;
   type: string;
   icon_image: File | null;
   credential_url: string;
@@ -54,18 +54,19 @@ const AddAchievementDialog = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
+  console.log(initialData);
   const {
     register,
     control,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, dirtyFields },
     reset,
   } = useForm<AchievementFormData>({
     defaultValues: {
       title: initialData?.title || "",
       subtitle: initialData?.subtitle || "",
-      score: initialData?.score || 0,
+      score: initialData?.score ?? null,
       type: initialData?.type || "",
       icon_image: null,
       credential_url: initialData?.credential_url || "",
@@ -77,7 +78,7 @@ const AddAchievementDialog = ({
       reset({
         title: initialData?.title || "",
         subtitle: initialData?.subtitle || "",
-        score: initialData?.score || 0,
+        score: initialData?.score ?? null,
         type: initialData?.type || "",
         icon_image: null,
         credential_url: initialData?.credential_url || "",
@@ -89,21 +90,38 @@ const AddAchievementDialog = ({
     setIsSubmitting(true);
 
     try {
-      // Create FormData object
       const formData = new FormData();
 
-      // Append simple fields
-      formData.append("title", data.title);
-      formData.append("subtitle", data.subtitle);
-      formData.append("type", data.type);
-      formData.append("credential_url", data.credential_url);
-
-      if (data.score) {
-        formData.append("score", data.score.toString());
+      // CREATE MODE → send everything
+      if (!isEditMode) {
+        Object.entries(data).forEach(([key, value]) => {
+          if (value !== null && value !== undefined && value !== "") {
+            formData.append(key, value instanceof File ? value : String(value));
+          }
+        });
       }
-      // Append icon image
-      if (data.icon_image) {
-        formData.append("icon_image", data.icon_image);
+
+      // EDIT MODE → send only changed fields
+      if (isEditMode) {
+        (Object.keys(dirtyFields) as (keyof AchievementFormData)[]).forEach(
+          (key) => {
+            const value = data[key];
+
+            if (value !== null && value !== undefined && value !== "") {
+              formData.append(
+                key,
+                value instanceof File ? value : String(value)
+              );
+            }
+          }
+        );
+      }
+
+      // Prevent empty update request
+      if (isEditMode && formData.entries().next().done) {
+        toast.info("No changes detected");
+        setIsSubmitting(false);
+        return;
       }
 
       const res =
@@ -120,11 +138,11 @@ const AddAchievementDialog = ({
         setOpen(false);
         router.refresh();
       } else {
-        toast.error(res?.message || "Failed to create achievement");
+        toast.error(res?.message || "Operation failed");
       }
     } catch (error) {
-      console.error("Achievement creation error:", error);
-      toast.error("An error occurred while creating the achievement");
+      console.error("Achievement error:", error);
+      toast.error("Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
@@ -224,13 +242,14 @@ const AddAchievementDialog = ({
               </Text>
             )}
           </div>
-          <div className="max-w-[260px]">
+          <div className="max-w-[200px]">
             <ImageDropzone
-              label="Add a featured Icon"
+              label="Add an icon"
               name="icon_image"
               setValue={(name: string, file: File) =>
                 setValue(name as keyof AchievementFormData, file)
               }
+              initialImageUrl={initialData?.icon_image}
               className="h-40"
             />
           </div>

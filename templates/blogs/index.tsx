@@ -15,7 +15,7 @@ const BlogPage = ({ blogs }: BlogPageProps) => {
 
   return (
     <section className="container py-20">
-      <div className="flbx md:flex-row flex-col mt-6">
+      <div className="flbx md:flex-row flex-col gap-5 md:mt-6">
         <Title variant="lg">Blogs and Articles</Title>
         <div className="relative w-[300px]">
           <input

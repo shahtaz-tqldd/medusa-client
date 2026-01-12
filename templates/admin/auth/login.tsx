@@ -34,7 +34,7 @@ const LoginPage = () => {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login/`,
         {
           method: "POST",
           headers: {
@@ -55,7 +55,7 @@ const LoginPage = () => {
       }
 
       router.push("/admin");
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message || "Something went wrong.");
     } finally {
       setLoading(false);
@@ -66,8 +66,8 @@ const LoginPage = () => {
     <section className="h-screen w-screen center px-4 bg-gray-100 dark:bg-[#111]">
       <Card className="max-w-md w-full">
         <div className="center">
-          <div className="h-12 w-12 dark:bg-white/5 bg-blue-500/10 rounded-xl center">
-            <h2 className="dark:text-blue-500 text-blue-700 text-xl font-semibold">
+          <div className="h-12 w-12 rounded-xl center bg-emerald-500/10 dark:bg-lime-400/10">
+            <h2 className="text-emerald-600 dark:text-lime-400 text-xl font-semibold">
               SR
             </h2>
           </div>
@@ -113,7 +113,7 @@ const LoginPage = () => {
           <SwithDarkMode />
           <Link
             href="/"
-            className="bg-blue-500/10 text-blue-500 hover:bg-blue-500/15 hover:text-blue-400 font-semibold py-2 px-4 text-xs rounded-full"
+            className="bg-emerald-500/10 dark:bg-lime-500/10 dark:text-lime-400 text-emerald-600 hover:bg-emerald-500/15 hover:dark:bg-lime-500/15 font-semibold py-2 px-4 text-xs tr rounded-full"
           >
             Go Back
           </Link>
