@@ -6,7 +6,6 @@ import { OverviewStats } from "@/lib/api-service/overview";
 import {
   MessagesSquare,
   PenLine,
-  Clock1,
   Users2,
   Monitor,
   Smartphone,
@@ -20,18 +19,21 @@ interface OverviewStatsProps {
 }
 
 const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
+  console.log(stats.visitors.country_wise);
   const conversations = [
     {
       title: "Conversations",
       icon: MessagesSquare,
-      subtitle: `${stats?.conversations?.unread || 20} unread conversation `,
+      subtitle: `${
+        stats?.conversations?.meetings_scheduled || 0
+      } meeting scheduled `,
       total: stats.conversations?.total || 0,
     },
     {
       title: "Proposal",
       icon: ChartNoAxesGantt,
-      subtitle: `${stats?.conversations?.upcoming_meetings || 3} new proposal`,
-      total: stats?.conversations?.meetings_scheduled || 0,
+      subtitle: `${stats?.proposals?.onboarded_clients || 0} onboarded clients`,
+      total: stats?.projects?.total || 0,
     },
   ];
 
@@ -41,7 +43,7 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
       label: "Blog Reads",
       icon: PenLine,
       total: stats?.blogs?.total_reads || 0,
-      subtitle: `${stats?.blogs?.total || 0} total blogs`,
+      subtitle: `total ${stats?.blogs?.total || 0} blogs`,
       color: "text-emerald-500",
       bgColor: "bg-emerald-500/10",
     },
@@ -49,7 +51,7 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
       label: "Project Views",
       icon: Layers,
       total: stats?.projects?.total_views || 0,
-      subtitle: `${stats?.projects?.total || 0} total projects`,
+      subtitle: `total ${stats?.projects?.total || 0} projects`,
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
     },
@@ -60,9 +62,8 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
     desktop: stats?.visitors.device_wise.desktop || 0,
     mobile: stats?.visitors.device_wise.mobile || 0,
     total:
-      stats?.visitors?.device_wise?.desktop ||
-      0 + stats?.visitors?.device_wise?.mobile ||
-      0,
+      (stats?.visitors?.device_wise?.desktop || 0) +
+      (stats?.visitors?.device_wise?.mobile || 0),
   };
 
   const desktopPercentage = Math.round(
@@ -73,149 +74,139 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
   );
 
   return (
-    <div>
-      <div className="grid grid-cols-5 gap-6">
-        <div className="col-span-5 md:col-span-3 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {conversations.map((metric, index) => (
-              <div
-                key={index}
-                className="rounded-2xl p-6 pb-4 dark:bg-white/5 bg-white"
-              >
-                <div className="flx gap-3">
-                  <div className="dark:bg-white/5 bg-emerald-500/10 rounded-lg h-8 w-8 center">
-                    <metric.icon
-                      size={16}
-                      className="dark:text-lime-400 text-emerald-600"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <Title variant="xs" className="line-clamp-1">
-                      {metric.title}
-                    </Title>
-                  </div>
+    <div className="grid grid-cols-5 gap-6">
+      <div className="col-span-5 md:col-span-3 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {conversations.map((metric, index) => (
+            <div
+              key={index}
+              className="rounded-2xl p-6 pb-4 dark:bg-white/5 bg-white"
+            >
+              <div className="flx gap-3">
+                <div className="dark:bg-white/5 bg-emerald-500/10 rounded-lg h-8 w-8 center">
+                  <metric.icon
+                    size={16}
+                    className="dark:text-lime-400 text-emerald-600"
+                  />
                 </div>
-
-                <div className="space-y-2 mt-4">
-                  <h2 className="text-3xl">{metric.total}</h2>
-                  <Text variant="xs">{metric.subtitle}</Text>
+                <div className="flex-1">
+                  <Title variant="xs" className="line-clamp-1">
+                    {metric.title}
+                  </Title>
                 </div>
               </div>
-            ))}
+
+              <div className="space-y-2 mt-4">
+                <h2 className="text-3xl">{metric.total}</h2>
+                <Text variant="xs">{metric.subtitle}</Text>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="rounded-2xl p-8 border border-lime-400">
+          <div className="flx gap-3">
+            <div className="dark:bg-white/5 bg-emerald-500/10 rounded-lg h-10 w-10 center">
+              <Users2
+                size={18}
+                className="text-emerald-600 dark:text-lime-400"
+              />
+            </div>
+            <div>
+              <Title variant="xs">Visitors</Title>
+              <Text variant="xs">Visitors Landed on the Site</Text>
+            </div>
           </div>
-          <div className="rounded-2xl p-8 border border-lime-400">
-            <div className="flx gap-3">
-              <div className="dark:bg-white/5 bg-emerald-500/10 rounded-lg h-10 w-10 center">
-                <Users2
-                  size={18}
-                  className="text-emerald-600 dark:text-lime-400"
-                />
-              </div>
-              <div>
-                <Title variant="xs">Visitors</Title>
-                <Text variant="xs">Visitors Landed on the Site</Text>
-              </div>
+          <div className="grid grid-cols-2 mt-12">
+            <div>
+              <Title variant="lg" className="!font-bold">
+                {stats?.visitors?.total || 302}
+              </Title>
+              <Text variant="sm">All time site visitor</Text>
             </div>
-            <div className="grid grid-cols-2 mt-12">
-              <div>
-                <Title variant="lg" className="!font-bold">
-                  {stats?.visitors?.total || 302}
-                </Title>
-                <Text variant="sm">All time site visitor</Text>
-              </div>
-              <div>
-                <Title variant="lg" className="!font-bold">
-                  {stats?.visitors?.this_month || 20}
-                </Title>
-                <Text variant="sm">Visited this month</Text>
-              </div>
+            <div>
+              <Title variant="lg" className="!font-bold">
+                {stats?.visitors?.this_month || 20}
+              </Title>
+              <Text variant="sm">Visited this month</Text>
             </div>
+          </div>
 
-            <div className="flbx mt-14">
-              <div className="flx">
-                <div className="h-9 w-9 rounded-full bg-rose-300 -mr-2.5"></div>
-                <div className="h-9 w-9 rounded-full bg-green-300 -mr-2.5"></div>
-                <div className="h-9 w-9 rounded-full bg-blue-300 -mr-2.5"></div>
-                <div className="h-9 w-9 rounded-full bg-orange-300"></div>
-                <Text variant="xs" className="ml-3">
-                  +20 more countries
-                </Text>
-              </div>
+          <div className="flbx mt-14">
+            <CountryVisitors countries={stats.visitors.country_wise} />
 
-              <Link href="/admin/visitors">
-                <Button variant="secondary">View All Visitors</Button>
-              </Link>
-            </div>
+            <Link href="/admin/visitors">
+              <Button variant="secondary">View All Visitors</Button>
+            </Link>
           </div>
         </div>
-        <div className="col-span-5 md:col-span-2 space-y-4">
-          {/* Blog & Proposal Status Card */}
-          <ContentCard contentStatus={contentStatus} />
+      </div>
+      <div className="col-span-5 md:col-span-2 space-y-4">
+        {/* Blog & Proposal Status Card */}
+        <ContentCard contentStatus={contentStatus} />
 
-          {/* Browser Statistics Card */}
-          <div className="dark:bg-white/5 bg-white p-6 rounded-2xl">
-            <Title variant="xs" className="mb-6">
-              Browser Statistics
-            </Title>
+        {/* Browser Statistics Card */}
+        <div className="dark:bg-white/5 bg-white p-6 rounded-2xl">
+          <Title variant="xs" className="mb-6">
+            Browser Statistics
+          </Title>
 
-            <div className="space-y-6">
-              <div className="space-y-3">
-                <div className="flx gap-3">
-                  <div className="dark:bg-white/5 bg-orange-50 rounded-lg h-10 w-10 center">
-                    <Monitor size={18} className="text-orange-500" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flbx mb-1">
-                      <Text variant="xs" className="font-medium">
-                        Desktop
-                      </Text>
-                      <Text variant="sm" className="font-bold">
-                        {browserStats.desktop}
-                      </Text>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div
-                        className="bg-orange-500 h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${desktopPercentage}%` }}
-                      ></div>
-                    </div>
-                    <Text
-                      variant="xs"
-                      className="text-gray-500 dark:text-gray-400 mt-1"
-                    >
-                      {desktopPercentage}% of total
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <div className="flx gap-3">
+                <div className="dark:bg-white/5 bg-orange-50 rounded-lg h-10 w-10 center">
+                  <Monitor size={18} className="text-orange-500" />
+                </div>
+                <div className="flex-1">
+                  <div className="flbx mb-1">
+                    <Text variant="xs" className="font-medium">
+                      Desktop
+                    </Text>
+                    <Text variant="sm" className="font-bold">
+                      {browserStats.desktop}
                     </Text>
                   </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div
+                      className="bg-orange-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${desktopPercentage}%` }}
+                    ></div>
+                  </div>
+                  <Text
+                    variant="xs"
+                    className="text-gray-500 dark:text-gray-400 mt-1"
+                  >
+                    {desktopPercentage}% of total
+                  </Text>
                 </div>
               </div>
+            </div>
 
-              <div className="space-y-3">
-                <div className="flx gap-3">
-                  <div className="dark:bg-white/5 bg-emerald-50 rounded-lg h-10 w-10 center">
-                    <Smartphone size={18} className="text-emerald-500" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flbx mb-1">
-                      <Text variant="xs" className="font-medium">
-                        Mobile
-                      </Text>
-                      <Text variant="sm" className="font-bold">
-                        {browserStats.mobile}
-                      </Text>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div
-                        className="bg-emerald-500 h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${mobilePercentage}%` }}
-                      ></div>
-                    </div>
-                    <Text
-                      variant="xs"
-                      className="text-gray-500 dark:text-gray-400 mt-1"
-                    >
-                      {mobilePercentage}% of total
+            <div className="space-y-3">
+              <div className="flx gap-3">
+                <div className="dark:bg-white/5 bg-emerald-50 rounded-lg h-10 w-10 center">
+                  <Smartphone size={18} className="text-emerald-500" />
+                </div>
+                <div className="flex-1">
+                  <div className="flbx mb-1">
+                    <Text variant="xs" className="font-medium">
+                      Mobile
+                    </Text>
+                    <Text variant="sm" className="font-bold">
+                      {browserStats.mobile}
                     </Text>
                   </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div
+                      className="bg-emerald-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${mobilePercentage}%` }}
+                    ></div>
+                  </div>
+                  <Text
+                    variant="xs"
+                    className="text-gray-500 dark:text-gray-400 mt-1"
+                  >
+                    {mobilePercentage}% of total
+                  </Text>
                 </div>
               </div>
             </div>
@@ -289,6 +280,57 @@ const ContentCard = ({
           ))}
         </div>
       </div>
+    </div>
+  );
+};
+
+interface CountryStat {
+  country: string;
+  visitor_count: number;
+}
+
+interface Props {
+  countries: CountryStat[];
+}
+
+const CountryVisitors = ({ countries }: Props) => {
+  const maxVisible = 4;
+  const visibleCountries = countries.slice(0, maxVisible);
+  const remainingCount = countries.length - maxVisible;
+
+  // Simple color palette
+  const colors = [
+    "bg-rose-300",
+    "bg-green-300",
+    "bg-blue-300",
+    "bg-orange-300",
+  ];
+
+  return (
+    <div className="flex items-center">
+      <div className="flex -space-x-2">
+        {visibleCountries.map((country, index) => (
+          <div
+            key={country.country}
+            className={`h-9 w-9 rounded-full flex items-center justify-center text-white font-semibold ${
+              colors[index % colors.length]
+            }`}
+          >
+            {country.country[0].toUpperCase()}
+          </div>
+        ))}
+        {remainingCount > 0 && (
+          <div className="h-9 w-9 rounded-full flex items-center justify-center bg-gray-400 text-white font-semibold">
+            +{remainingCount}
+          </div>
+        )}
+      </div>
+
+      {countries.length > 0 && (
+        <Text variant="xs" className="ml-3">
+          {countries.length} countries
+        </Text>
+      )}
     </div>
   );
 };

@@ -12,9 +12,8 @@ const Footer = () => {
         <div>
           <AnimateDiv className="space-y-6 md:space-y-12">
             <Text variant="xs" className="max-w-md text-center md:text-left">
-              Built with Next.js and TypeScript on the frontend, using the
-              shadcn UI library. Powered by a Django + PostgreSQL backend, with
-              a chatbot integrated via the Gemini API.
+              Built with Next.js, TypeScript, Framer motion, ShadCn, Django
+              (REST Framework), PostgreSQL and Google Gemini in Chatbot Agent.
             </Text>
 
             <Text variant="xs" className="text-center md:text-left">

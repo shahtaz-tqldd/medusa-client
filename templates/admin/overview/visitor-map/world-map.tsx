@@ -19,7 +19,7 @@ interface WorldMapProps {
 }
 
 const countryCoordinates: CountryCoordinates[] = [
-  { name: "USA", lat: 37.0902, lng: -95.7129 },
+  { name: "United States", lat: 37.0902, lng: -95.7129 },
   { name: "Canada", lat: 56.1304, lng: -106.3468 },
   { name: "Bangladesh", lat: 23.685, lng: 90.3563 },
   { name: "Mexico", lat: 23.6345, lng: -102.5528 },

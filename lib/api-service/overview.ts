@@ -9,32 +9,29 @@ export interface OverviewStats {
       month: string;
       visitor_count: number;
     }[];
-
-    device_wise: {
-      desktop: number;
-      mobile: number;
-    };
     country_wise: {
       country: string;
       visitor_count: number;
     }[];
-
-    desktop: number;
-    mobile: number;
+    device_wise: {
+      desktop: number;
+      mobile: number;
+    };
   };
 
   conversations: {
     total: number;
-    unread: number;
     meetings_scheduled: number;
-    upcoming_meetings: number;
+  };
+  proposals: {
+    total: number;
+    onboarded_clients: number;
   };
 
   blogs: {
     total: number;
     total_reads: number;
   };
-
   projects: {
     total: number;
     total_views: number;

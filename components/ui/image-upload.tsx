@@ -88,7 +88,7 @@ export default function ImageDropzone({
         {!preview && (
           <div className="text-center space-y-2 pointer-events-none">
             <Title variant="xs">{label}</Title>
-            <Text variant="xs" className="max-w-[240px]">
+            <Text variant="xs" className="max-w-[240px] !text-xs">
               Drag & Drop or Click to Upload from your Device
             </Text>
           </div>

@@ -35,7 +35,7 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
         <div className="flex flex-col h-full overflow-y-auto -mt-4">
           {/* Header */}
           <div className="flex items-center justify-between pb-6 px-2 border-b border-gray-200 dark:border-gray-700">
-            <div className="space-y-2">
+            <div className="space-y-1">
               <Title variant="sm">Navigation</Title>
               <Text variant="sm">Explore my digital space</Text>
             </div>
@@ -53,7 +53,7 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
                     key={index}
                     href={link.href}
                     onClick={handleLinkClick}
-                    className="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
+                    className="flex items-center gap-4 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
                   >
                     <Text className="flx gap-3">
                       <link.icon size={18} />
@@ -67,7 +67,7 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
                       if (link.handleClick) link.handleClick(true);
                       handleLinkClick();
                     }}
-                    className="w-full text-left flex items-center gap-4 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
+                    className="w-full text-left flex items-center gap-4 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
                   >
                     <Text className="flx gap-3">
                       <link.icon size={18} />

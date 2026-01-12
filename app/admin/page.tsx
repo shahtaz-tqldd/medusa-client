@@ -6,10 +6,13 @@ import { fetchBlogs } from "@/lib/api-service/blog";
 import { fetchProjects } from "@/lib/api-service/projects";
 
 export default async function AdminOverview() {
-  const overviewData = await fetchOverviewStats();
-  const visitorsResponse = await fetchVisitors(1, 6);
-  const blogResponse = await fetchBlogs(1, 3, "", "view_count");
-  const projectListResponse = await fetchProjects(1, 4, "view_count");
+  const [overviewData, visitorsResponse, blogResponse, projectListResponse] =
+    await Promise.all([
+      fetchOverviewStats(),
+      fetchVisitors(1, 6),
+      fetchBlogs(1, 3, "", "view_count"),
+      fetchProjects(1, 4, "view_count"),
+    ]);
 
   return (
     <DashboardLayout>

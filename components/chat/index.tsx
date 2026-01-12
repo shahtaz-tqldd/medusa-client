@@ -14,7 +14,7 @@ import { ChatHeader, ChatInputBox } from "./init-page";
 
 // icons
 import LordIcon from "@/assets/icons/lord-icons";
-import { Calendar } from "lucide-react";
+import { Calendar, MessageSquareDot } from "lucide-react";
 import { Button } from "../ui/button";
 import { ChatResponse, sendMessage } from "@/lib/api-service/chat-action";
 import { VisitorStorage } from "@/lib/visitor";
@@ -27,7 +27,6 @@ interface MessageItem {
 const ChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const { theme } = useTheme();
   const [messages, setMessages] = useState<MessageItem[]>([
     {
       sender: "ai",
@@ -234,31 +233,25 @@ const ChatWidget: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-8 translate-x-5 md:translate-x-[88vw] z-[1000]">
+    <div className="fixed bottom-6 md:bottom-12 translate-x-1/2 md:translate-x-[88vw] z-[1000]">
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger>
-          <Button
-            role="presentation"
-            className={`pl-2 md:pl-4 pr-2 md:pr-5 scale-125 md:scale-100 ${
+          <div
+            className={`flx gap-2 backdrop-blur-lg dark:bg-white/90 bg-gray-800 text-white dark:text-gray-800 text-xs md:text-base py-2 md:py-2.5 px-3 md:px-4 rounded-full ${
               isOpen ? "opacity-0" : "opacity-100"
             }`}
           >
-            <LordIcon
-              icon="bpptgtfr"
-              height={22}
-              width={22}
-              primary={theme === "dark" ? "#222" : "#fff"}
-              target="button"
-            />
+            <MessageSquareDot className="h-3.5 md:h-4 w-3.5 md:w-4" />
             <span className="hidden md:block">Let&apos;s talk</span>
-          </Button>
+            <span className="block md:hidden">Chat with my AI Assitant</span>
+          </div>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
           className={`
             dark:bg-[#121212]/80 bg-gray-50 backdrop-blur-2xl 
             max-h-screen md:max-h-[620px] w-screen md:w-[400px] 
-            mr-0 md:mr-10 -mb-[84px] md:-mb-14 
+            mr-0 md:mr-10 -mb-[68px]
             border-0 md:border dark:border-white/20 border-blue-600/10 
             rounded-none md:rounded-2xl px-0 md:px-5 py-0 md:py-4 flex flex-col
           `}

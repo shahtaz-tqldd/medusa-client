@@ -4,7 +4,6 @@ import { Figtree } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/themes/theme-provider";
 
-
 import "@/assets/styles/layout.css";
 import "@/assets/styles/global.css";
 
@@ -29,7 +28,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <Script
           src="https://cdn.lordicon.com/lordicon.js"
           strategy="beforeInteractive"

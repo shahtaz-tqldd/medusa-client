@@ -21,7 +21,7 @@ const Hero: React.FC<{
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section className="py-8 md:py-20 h-auto w-screen center overflow-hidden relative">
+    <section className="py-8 md:py-20 min-h-screen w-screen center overflow-hidden relative">
       <div className="container flbx md:flex-row flex-col-reverse relative -mt-8 md:mt-8">
         <div>
           <AnimateDiv>
