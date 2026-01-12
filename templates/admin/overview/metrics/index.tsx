@@ -315,22 +315,17 @@ const CountryVisitors = ({ countries }: Props) => {
             className={`h-9 w-9 rounded-full flex items-center justify-center text-white font-semibold ${
               colors[index % colors.length]
             }`}
+            title={country.country}
           >
             {country.country[0].toUpperCase()}
           </div>
         ))}
         {remainingCount > 0 && (
-          <div className="h-9 w-9 rounded-full flex items-center justify-center bg-gray-400 text-white font-semibold">
-            +{remainingCount}
-          </div>
+          <Text variant="xs" className="ml-3">
+            +{remainingCount} more countries
+          </Text>
         )}
       </div>
-
-      {countries.length > 0 && (
-        <Text variant="xs" className="ml-3">
-          {countries.length} countries
-        </Text>
-      )}
     </div>
   );
 };
