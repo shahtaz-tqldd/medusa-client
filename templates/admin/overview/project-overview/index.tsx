@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { Text, Title } from "@/components/ui/typography";
 import { ProjectBasicProps } from "@/lib/api-service/projects";
+import { Layers } from "lucide-react";
+import Link from "next/link";
 
 interface ProjectOverviewProps {
   projects: ProjectBasicProps[];
@@ -9,10 +11,22 @@ interface ProjectOverviewProps {
 
 const ProjectOverview = ({ projects }: ProjectOverviewProps) => {
   return (
-    <div className="flex flex-col">
-      <Title variant="xs" className="mb-6">
-        Project Overview
-      </Title>
+    <div className="flex flex-col gap-6">
+      <div className="flbx">
+        <div className="flx gap-2">
+          <div className="h-10 w-10 center dark:bg-white/10 bg-emerald-500/10 rounded-lg">
+            <Layers size={16} className="text-emerald-600 dark:text-lime-400" />
+          </div>
+
+          <Title variant="xs">Project Overview</Title>
+        </div>
+        <Link
+          href="/admin/projects"
+          className="text-sm text-emerald-600 dark:text-lime-400"
+        >
+          All Projects
+        </Link>
+      </div>
 
       {/* This container will be scrollable if there are many projects */}
       <div className="flex-1 space-y-2.5 overflow-y-auto pr-2">

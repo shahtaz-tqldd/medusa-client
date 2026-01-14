@@ -13,7 +13,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Select, SelectItem, SelectContent, SelectTrigger } from "../ui/select";
+import {
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import Pagination from "./pagination";
 import DeleteDialog from "../dialog/delete-dialog";
 import { useState } from "react";
@@ -152,7 +158,10 @@ function ReusableTable<T extends { id: string }>({
               value={String(pageSize)}
               onValueChange={(value) => setPageSize(Number(value))}
             >
-              <SelectTrigger>{pageSize}</SelectTrigger>
+              <SelectTrigger className="w-20 h-10">
+                <SelectValue />
+              </SelectTrigger>
+
               <SelectContent>
                 <SelectItem value="10">10</SelectItem>
                 <SelectItem value="20">20</SelectItem>

@@ -639,27 +639,47 @@ const CreateBlogPage = ({ categories }: CreateBlogProps) => {
                 control={control}
                 rules={{ required: "Category is required" }}
                 render={({ field }) => (
-                  <Select value={field.value} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => {
+                      if (value === "__add__") {
+                        setCategoryAddDialogOpen(true);
+                        return;
+                      }
+                      field.onChange(value);
+                    }}
+                  >
                     <SelectTrigger className="w-full !h-11">
                       <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
+
                     <SelectContent>
-                      <button
-                        onClick={() => setCategoryAddDialogOpen(true)}
-                        className="flex items-center gap-2 py-1.5 px-2 hover:dark:bg-white/5 hover:bg-blue-100 rounded-md w-full text-sm"
-                      >
-                        <Plus size={14} /> Add Category
-                      </button>
+                      {/* ✅ Add Category must be a SelectItem */}
+                      <SelectItem value="__add__" className="font-medium">
+                        <div className="flex items-center gap-2">
+                          <Plus size={14} />
+                          Add Category
+                        </div>
+                      </SelectItem>
+
                       <SelectSeparator />
-                      {categories?.map((cat) => (
-                        <SelectItem key={cat.id} value={cat.id}>
-                          {cat.name}
+
+                      {categories?.length ? (
+                        categories.map((cat) => (
+                          <SelectItem key={cat.id} value={cat.id}>
+                            {cat.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectItem value="__empty__" disabled>
+                          No categories found
                         </SelectItem>
-                      ))}
+                      )}
                     </SelectContent>
                   </Select>
                 )}
               />
+
               {errors.category && (
                 <Text variant="sm" className="text-red-500 mt-1">
                   {errors.category.message}

@@ -9,15 +9,15 @@ import { BlogBasicProps } from "@/lib/api-service/blog";
 
 interface BlogPreviewProps {
   blogs: BlogBasicProps[];
-  total: number;
+  total_blog: number;
 }
 
-const BlogPreview = ({ blogs, total }: BlogPreviewProps) => {
+const BlogPreview = ({ blogs, total_blog }: BlogPreviewProps) => {
   const router = useRouter();
   const handleNavigate = () => {
     router.push("/blogs");
   };
-  const more_articles = total - blogs.length;
+  const more_articles = total_blog - blogs.length;
   return (
     <section className="container py-12 md:py-20">
       <div className="flex justify-between items-start md:items-center md:flex-row flex-col">

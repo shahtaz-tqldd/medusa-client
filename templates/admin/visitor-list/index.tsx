@@ -32,8 +32,8 @@ const VisitorListPage = ({ visitor, page, pageSize }: Props) => {
     { header: "Device", accessorKey: "device_name" },
     { header: "Device Type", accessorKey: "device_type" },
     { header: "Last Visit", accessorKey: "last_visit" },
-    { header: "First Visit", accessorKey: "first_visit" },
     { header: "Visit Count", accessorKey: "visit_count" },
+    { header: "First Visit", accessorKey: "first_visit" },
   ];
 
   const visitor_list = visitor?.results?.map((v) => ({
