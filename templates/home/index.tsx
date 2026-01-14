@@ -8,7 +8,6 @@ import BlogPreview from "./blog-preview";
 import Achievement from "./achievements";
 import Expertise from "./expertise";
 import { BlogBasicProps } from "@/lib/api-service/blog";
-import { PaginatedResponse } from "@/lib/api-service/_types";
 import { SkillsProps } from "@/lib/api-service/skills";
 import { ExperienceProps } from "@/lib/api-service/experiences";
 import { ExpertiseProps } from "@/lib/api-service/expertise";
@@ -21,7 +20,8 @@ interface HomepageProps {
   projects: ProjectBasicProps[];
   experiences: ExperienceProps[];
   achievements: AchievementProps[];
-  blogs: PaginatedResponse<BlogBasicProps[]>;
+  blogs: BlogBasicProps[];
+  total_blog: number;
 }
 
 export default function Homepage({
@@ -31,6 +31,7 @@ export default function Homepage({
   experiences,
   achievements,
   blogs,
+  total_blog,
 }: HomepageProps) {
   return (
     <>
@@ -44,7 +45,7 @@ export default function Homepage({
       <ProjectList projects={projects} />
       <Experiences experiences={experiences} />
       <Achievement achievements={achievements} />
-      <BlogPreview blogs={blogs.results.flat()} total={blogs.count || 0} />
+      <BlogPreview blogs={blogs} total_blog={total_blog} />
     </>
   );
 }

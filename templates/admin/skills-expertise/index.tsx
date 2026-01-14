@@ -11,6 +11,7 @@ import { colors } from "@/lib/colors";
 import DeleteDialog from "@/components/dialog/delete-dialog";
 import { SkillsProps } from "@/lib/api-service/skills";
 import { updateSkills } from "@/lib/api-service/skill-action";
+import { toast } from "sonner";
 
 type SkillItem = { name: string };
 
@@ -220,7 +221,11 @@ const FocusAreaManager: React.FC<FocusAreaManagerProps> = ({
       ) : (
         <div className="flex flex-wrap gap-6">
           {focusAreas.map((area, index) => (
-            <Text variant="lg" key={index} className="!text-emerald-600 dark:!text-lime-400">
+            <Text
+              variant="lg"
+              key={index}
+              className="!text-emerald-600 dark:!text-lime-400"
+            >
               {area}
             </Text>
           ))}
@@ -376,12 +381,22 @@ const SkillsExpertisePage = ({ data }: { data: SkillsProps }) => {
   );
 
   const saveField = async (field: keyof SkillsProps, value: string) => {
-    await updateSkills({ [field]: value });
+    const res = await updateSkills({ [field]: value });
+    if (res?.success) {
+      toast.success(res?.message || "Expertise Updated!");
+    } else {
+      toast.error(res?.error?.data?.message || "Expertise Update Failed!");
+    }
   };
 
   const updateFocusAreas = async (areas: string[]) => {
-    await updateSkills({ key_focus_areas: areas });
-    setFocusAreas(areas);
+    const res = await updateSkills({ key_focus_areas: areas });
+    if (res?.success) {
+      toast.success(res?.message || "Expertise Updated!");
+      setFocusAreas(areas);
+    } else {
+      toast.error(res?.error?.data?.message || "Expertise Update Failed!");
+    }
   };
 
   const updateSkillGroup = async (
@@ -389,12 +404,16 @@ const SkillsExpertisePage = ({ data }: { data: SkillsProps }) => {
     skills: string[]
   ) => {
     const field = GROUP_FIELD_MAP[group];
-    await updateSkills({ [field]: skills });
-
-    setSkillGroups((prev) => ({
-      ...prev,
-      [group]: skills.map((s) => ({ name: s })),
-    }));
+    const res = await updateSkills({ [field]: skills });
+    if (res?.success) {
+      toast.success(res?.message || "Expertise Updated!");
+      setSkillGroups((prev) => ({
+        ...prev,
+        [group]: skills.map((s) => ({ name: s })),
+      }));
+    } else {
+      toast.error(res?.error?.data?.message || "Expertise Update Failed!");
+    }
   };
 
   return (

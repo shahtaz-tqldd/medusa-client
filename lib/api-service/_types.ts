@@ -5,6 +5,7 @@ export interface DataResponse<T> {
   data: T;
 }
 
+
 export interface PaginatedResponse<T> {
   count: number;
   next: string | null;

@@ -9,10 +9,10 @@ export type SkillsUpdatePayload = Partial<SkillsProps>;
 
 export async function updateSkills(
   payload: SkillsUpdatePayload
-): Promise<SkillsProps> {
+) {
   const cookieState = await cookies();
   const token = cookieState.get("access_token")?.value;
-  
+
   const res = await fetch(`${API_BASE_URL}/services/skills/update/`, {
     method: "PATCH",
     headers: {
@@ -27,6 +27,5 @@ export async function updateSkills(
     throw new Error("Failed to update skills");
   }
 
-  const json = await res.json();
-  return json.data;
+  return await res.json()
 }

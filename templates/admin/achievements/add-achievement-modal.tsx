@@ -54,7 +54,6 @@ const AddAchievementDialog = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  console.log(initialData);
   const {
     register,
     control,

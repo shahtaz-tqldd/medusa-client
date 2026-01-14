@@ -19,7 +19,6 @@ interface OverviewStatsProps {
 }
 
 const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
-  console.log(stats.visitors.country_wise);
   const conversations = [
     {
       title: "Conversations",
@@ -307,25 +306,23 @@ const CountryVisitors = ({ countries }: Props) => {
   ];
 
   return (
-    <div className="flex items-center">
-      <div className="flex -space-x-2">
-        {visibleCountries.map((country, index) => (
-          <div
-            key={country.country}
-            className={`h-9 w-9 rounded-full flex items-center justify-center text-white font-semibold ${
-              colors[index % colors.length]
-            }`}
-            title={country.country}
-          >
-            {country.country[0].toUpperCase()}
-          </div>
-        ))}
-        {remainingCount > 0 && (
-          <Text variant="xs" className="ml-3">
-            +{remainingCount} more countries
-          </Text>
-        )}
-      </div>
+    <div className="flx -space-x-2">
+      {visibleCountries.map((country, index) => (
+        <div
+          key={country.country}
+          className={`h-9 w-9 rounded-full flex items-center justify-center text-white font-semibold ${
+            colors[index % colors.length]
+          }`}
+          title={country.country}
+        >
+          {country.country[0].toUpperCase()}
+        </div>
+      ))}
+      {remainingCount > 0 && (
+        <Text variant="xs" className="ml-3">
+          +{remainingCount} more countries
+        </Text>
+      )}
     </div>
   );
 };
