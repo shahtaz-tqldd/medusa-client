@@ -65,7 +65,7 @@ const AdminExperiencePage = ({ experiences }: ExperiencePageProps) => {
   const handleDeleteExperience = async (id: string | number) => {
     const res = await deleteExperience(id.toString());
     if (res?.success) {
-      toast.success("Experience Deleted Successfully!");
+      toast.success(res?.message || "Experience Deleted Successfully!");
       router.refresh();
     } else {
       toast.error(res?.message || "Failed to delete Experience");

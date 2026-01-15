@@ -11,6 +11,10 @@ import { colors } from "@/lib/colors";
 import { formatTimeFromNow } from "@/lib/date";
 import { ProjectBasicProps } from "@/lib/api-service/projects";
 import Image from "next/image";
+import { deleteProject } from "@/lib/api-service/project-action";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import ProjectDetailsDrawer from "@/templates/projects/project-details-drawer";
 
 interface AdminProjectPageProps {
   projects: ProjectBasicProps[];
@@ -21,8 +25,11 @@ const AdminProjectListPage = ({
   projects,
   total_count,
 }: AdminProjectPageProps) => {
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [projectView, setProjectView] = useState(false);
+  const [projectId, setProjectId] = useState<string | null>(null);
 
   const project_columns = [
     { header: "Project", accessorKey: "title" },
@@ -37,14 +44,15 @@ const AdminProjectListPage = ({
       label: "View",
       icon: Eye,
       action: (id: string) => {
-        console.log("View", id);
+        setProjectView(true);
+        setProjectId(id);
       },
     },
     {
       label: "Update",
       icon: PenLine,
       action: (id: string) => {
-        console.log("Update", id);
+        router.push(`/admin/projects/${id}/update`);
       },
     },
     {
@@ -69,15 +77,25 @@ const AdminProjectListPage = ({
           <Text variant="sm">{item.title}</Text>
         </div>
       ),
-      type: <TechBadge color={colors[index % 3]}>{item.type}</TechBadge>,
+      type: (
+        <TechBadge color={colors[index % 3]}>
+          {item.type?.split("_").join(" ")}
+        </TechBadge>
+      ),
       view_count: <span className="opacity-60">{item?.view_count || 0}</span>,
       created_at: (
         <span className="opacity-60">{formatTimeFromNow(item.created_at)}</span>
       ),
     })) || [];
 
-  const handleDeleteProject = (id: string | number) => {
-    console.log(id);
+  const handleDeleteProject = async (id: string) => {
+    const res = await deleteProject(id.toString());
+    if (res?.success) {
+      toast.success(res?.message || "Projct Deleted Successfully!");
+      router.refresh();
+    } else {
+      toast.error(res?.message || "Failed to delete Project");
+    }
   };
 
   return (
@@ -106,6 +124,13 @@ const AdminProjectListPage = ({
         table_options={table_options}
         onDeleteConfirm={handleDeleteProject}
         deleteLoading={false}
+      />
+
+      <ProjectDetailsDrawer
+        isOpen={projectView}
+        setIsOpen={setProjectView}
+        projectId={projectId}
+        admin_view
       />
     </div>
   );

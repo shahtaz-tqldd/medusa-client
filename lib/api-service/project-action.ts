@@ -43,7 +43,7 @@ export async function createProject(formData: FormData) {
     throw new Error("Not authenticated");
   }
 
-  const res = await fetch(`${API_BASE_URL}/projects/create`, {
+  const res = await fetch(`${API_BASE_URL}/projects/create/`, {
     method: "POST",
     body: formData,
     headers: {
@@ -59,9 +59,59 @@ export async function createProject(formData: FormData) {
   return res.json();
 }
 
-export async function fetchProjectById(id: string) {
-  const res = await fetch(`${API_BASE_URL}/projects/${id}/`, {
-    method: "GET",
+export async function fetchProjectById(id: string, admin_view = false) {
+  // Build the API URL
+  let apiUrl = `${API_BASE_URL}/projects/${id}/`;
+  if (admin_view) {
+    apiUrl += `?admin_view=true`;
+  }
+  const res = await fetch(apiUrl);
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text);
+  }
+
+  return res.json();
+}
+
+export async function updateProject(projectId: string, payload: FormData) {
+  const cookieState = await cookies()
+  const token = cookieState.get("access_token")?.value;
+
+  if (!token) {
+    throw new Error("Not authenticated");
+  }
+
+  const res = await fetch(`${API_BASE_URL}/projects/update/${projectId}/`, {
+    method: "PATCH",
+    body: payload,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text);
+  }
+
+  return res.json();
+}
+
+export async function deleteProject(id: string) {
+  const cookieState = await cookies()
+  const token = cookieState.get("access_token")?.value;
+
+  if (!token) {
+    throw new Error("Not authenticated");
+  }
+
+  const res = await fetch(`${API_BASE_URL}/projects/delete/${id}/`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!res.ok) {

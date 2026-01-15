@@ -38,8 +38,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           width={620}
         />
         <div className="mt-3 space-y-2">
-          <TechBadge color={type === "Web App" ? colors[0] : colors[1]}>
-            {type}
+          <TechBadge color={type === "web_app" ? colors[0] : colors[1]}>
+            {type?.split("_").join(" ")}
           </TechBadge>
           <Title variant="sm">{title}</Title>
         </div>

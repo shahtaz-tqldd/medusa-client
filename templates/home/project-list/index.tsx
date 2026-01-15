@@ -20,10 +20,7 @@ const ProjectList = ({ projects }: { projects: ProjectBasicProps[] }) => {
   const filteredProjects =
     active.value === "all-projects"
       ? projects
-      : projects.filter(
-          (project) =>
-            project.type.toLowerCase() === active.value.toLocaleLowerCase()
-        );
+      : projects.filter((project) => project.type === active.value);
 
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(
     null

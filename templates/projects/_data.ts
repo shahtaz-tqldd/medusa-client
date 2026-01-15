@@ -5,11 +5,11 @@ export const projectTabs = [
   },
   {
     title: "Software",
-    value: "Software",
+    value: "software",
   },
   {
     title: "Web App",
-    value: "Web App",
+    value: "web_app",
   },
 ];
 
