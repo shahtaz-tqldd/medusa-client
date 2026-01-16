@@ -435,7 +435,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                     setValue={(name: string, file: File) => {
                       field.onChange(file);
                     }}
-                    // initialImageUrl={block.existingImageUrl}
+                    initialImageUrl={block.existingImageUrl}
                   />
                 )}
               />
