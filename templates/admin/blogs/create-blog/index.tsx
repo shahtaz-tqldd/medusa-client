@@ -38,9 +38,8 @@ import { useRouter } from "next/navigation";
 import AddCategoryDialog from "./add-category-dialog";
 import { toast } from "sonner";
 
-// Types matching your Django models
 interface ContentBlock {
-  id?: string; // Add id for existing blocks
+  id?: string;
   block_type: "text" | "heading" | "code" | "image" | "quote" | "list";
   content?: string;
   level?: number;
@@ -48,7 +47,7 @@ interface ContentBlock {
   language?: string;
   caption?: string;
   image?: File;
-  existingImageUrl?: string; // For existing images
+  existingImageUrl?: string;
   alt_text?: string;
   source?: string;
   list_type?: "ordered" | "unordered";
@@ -60,7 +59,7 @@ interface BlogFormData {
   subtitle?: string;
   excerpt?: string;
   featured_image?: File;
-  existingFeaturedImage?: string; // For existing featured image
+  existingFeaturedImage?: string;
   status: "draft" | "published";
   category: string;
   tags: string[];
@@ -69,9 +68,17 @@ interface BlogFormData {
 
 interface CreateBlogProps {
   categories: BlogCategory[];
-  initialData?: BlogDetailsProps | null; // Made optional for create mode
+  initialData?: BlogDetailsProps | null;
   slug?: string;
 }
+
+const normalizeCategoryValue = (
+  category?: BlogDetailsProps["category"] | string | null
+) => {
+  if (!category) return "";
+  if (typeof category === "string") return category;
+  return category.id ? String(category.id) : "";
+};
 
 // Helper function to transform content blocks from API to form format
 const transformContentBlocksToForm = (blocks: any[]): ContentBlock[] => {
@@ -138,9 +145,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
   const [inputValue, setInputValue] = useState("");
   const [categoryAddDialogOpen, setCategoryAddDialogOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const isEditMode = !!initialData && !!slug;
-
-  console.log(initialData);
+  const isEditMode = !!slug;
 
   const {
     register,
@@ -148,6 +153,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
     handleSubmit,
     setValue,
     reset,
+    watch,
     formState: { errors },
   } = useForm<BlogFormData>({
     defaultValues: {
@@ -162,6 +168,11 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
     control,
     name: "content_blocks",
   });
+  const selectedCategoryId = watch("category");
+  const initialCategoryValue = normalizeCategoryValue(initialData?.category);
+  const hasSelectedCategory =
+    !!selectedCategoryId &&
+    categories?.some((cat) => String(cat.id) === String(selectedCategoryId));
 
   // Load initial data in edit mode
   useEffect(() => {
@@ -172,14 +183,27 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
         excerpt: initialData.excerpt || "",
         existingFeaturedImage: initialData?.featured_image || "",
         status: initialData.status || "draft",
-        category: initialData.category?.id || "",
+        category: initialCategoryValue,
         tags: initialData.tags?.map((tag: any) => tag.name || tag) || [],
         content_blocks: transformContentBlocksToForm(
           initialData.content_blocks || []
         ),
       });
+      setValue("category", normalizeCategoryValue(initialData.category), {
+        shouldValidate: true,
+        shouldDirty: false,
+      });
     }
-  }, [isEditMode, initialData, reset]);
+  }, [isEditMode, initialData, initialCategoryValue, reset, setValue]);
+
+  useEffect(() => {
+    if (isEditMode && initialCategoryValue && !selectedCategoryId) {
+      setValue("category", initialCategoryValue, {
+        shouldValidate: true,
+        shouldDirty: false,
+      });
+    }
+  }, [isEditMode, initialCategoryValue, selectedCategoryId, setValue]);
 
   const onSubmit = async (data: BlogFormData) => {
     setIsSubmitting(true);
@@ -280,7 +304,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
 
       formData.append("content_blocks", JSON.stringify(processedBlocks));
 
-      // Call appropriate API function
+      // Calling API based on the current view
       const res = isEditMode
         ? await updateBlog(slug!, formData)
         : await createBlog(formData);
@@ -587,8 +611,8 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                 ? "Updating..."
                 : "Publishing..."
               : isEditMode
-              ? "Update"
-              : "Publish"}
+                ? "Update"
+                : "Publish"}
           </Button>
         </div>
       </div>
@@ -754,10 +778,18 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                         </div>
                       </SelectItem>
                       <SelectSeparator />
+                      {selectedCategoryId && !hasSelectedCategory && (
+                        <>
+                          <SelectItem value={String(selectedCategoryId)}>
+                            {initialData?.category?.name || "Current category"}
+                          </SelectItem>
+                          <SelectSeparator />
+                        </>
+                      )}
 
                       {categories?.length ? (
                         categories.map((cat) => (
-                          <SelectItem key={cat.id} value={cat.id}>
+                          <SelectItem key={cat.id} value={String(cat.id)}>
                             {cat.name}
                           </SelectItem>
                         ))

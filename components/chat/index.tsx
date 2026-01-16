@@ -40,9 +40,8 @@ const ChatWidget: React.FC = () => {
       setIsLoadingConversation(true);
       try {
         const conversationId = localStorage.getItem("conversation_id");
-        const existingMessages = await fetchConversationMessages(
-          conversationId
-        );
+        const existingMessages =
+          await fetchConversationMessages(conversationId);
 
         if (existingMessages.length > 0) {
           setMessages(existingMessages);
@@ -230,7 +229,7 @@ const ChatWidget: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 md:bottom-12 translate-x-1/2 md:translate-x-[88vw] z-[1000]">
+    <div className="fixed bottom-6 md:bottom-12 translate-x-1/2 right-1/2 md:translate-x-[88%] md:right-[12%] z-[1000]">
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger>
           <div
@@ -239,8 +238,8 @@ const ChatWidget: React.FC = () => {
             }`}
           >
             <MessageSquareDot className="h-3.5 md:h-4 w-3.5 md:w-4" />
-            <span className="hidden md:block">Let&apos;s talk</span>
-            <span className="block md:hidden">Chat with my AI Assitant</span>
+            <span className="hidden md:block">Let&apos;s Chat</span>
+            <span className="block md:hidden">Chat with Assitant</span>
           </div>
         </DropdownMenuTrigger>
 

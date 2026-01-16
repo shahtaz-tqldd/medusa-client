@@ -4,15 +4,25 @@ import React, { useState } from "react";
 import ChatList from "./chat-list";
 import ChatDetails from "./chat-details";
 import { Conversation } from "@/lib/api-service/chat";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const ChatPage = ({
   conversationList,
   total_count,
+  page,
 }: {
   conversationList: Conversation[];
   total_count: number;
+  page: number;
 }) => {
-  const [page, setPage] = useState<number>(1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const updatePagination = (newPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(newPage));
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
 
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation | null>(null);
@@ -27,10 +37,11 @@ const ChatPage = ({
             setSelectedConversation(conversation);
           }}
           page={page}
-          setPage={setPage}
+          setPage={(p) => updatePagination(p)}
           total={total_count}
+          selected_id={selectedConversation?.id || null}
         />
-        <ChatDetails className="" conversation={selectedConversation} />
+        <ChatDetails conversation={selectedConversation} />
       </div>
     </div>
   );

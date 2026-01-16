@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Text, Title } from "@/components/ui/typography";
 import { ProjectBasicProps } from "@/lib/api-service/projects";
-import { Layers } from "lucide-react";
+import { Layers, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
 interface ProjectOverviewProps {
@@ -45,16 +45,15 @@ const ProjectOverview = ({ projects }: ProjectOverviewProps) => {
             />
 
             {/* Project Details */}
-            <div className="flex-1 justify-between">
-              <div>
-                <Title variant="xs" className="!text-lg">
-                  {project.title}
-                </Title>
-              </div>
+            <div className="flex-1 flex flex-col justify-between">
+              <Title variant="xs" className="line-clamp-2">
+                {project.title}
+              </Title>
 
               {/* Footer: Status Badge and Action Links */}
-              <div className="flx">
-                <Text className="!text-xs">
+              <div className="flx gap-2 dark:text-yellow-400 text-orange-500">
+                <TrendingUp size={14} />
+                <Text variant="xs" className="dark:!text-yellow-400 text-orange-500">
                   {project.view_count || 0} Views
                 </Text>
               </div>

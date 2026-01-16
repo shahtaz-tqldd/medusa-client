@@ -2,21 +2,15 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-import IconButton from "@/components/ui/icon-button";
-import {
-  ChevronDown,
-  GanttChart,
-  Laptop,
-  MapPin,
-  MessageSquareDot,
-} from "lucide-react";
+import { Text, Title } from "@/components/ui/typography";
 import {
   chatUserProps,
   Conversation,
   fetchConversationMessages,
 } from "@/lib/chat-service";
 import { formatTimeFromNow } from "@/lib/date";
-import { Text } from "@/components/ui/typography";
+
+import { GanttChart, Laptop, MapPin, MessageSquareDot } from "lucide-react";
 
 interface MessageProps {
   sender: string;
@@ -24,13 +18,12 @@ interface MessageProps {
 }
 
 interface ChatDetailsProps {
-  className: string;
+  className?: string;
   conversation: Conversation | null;
 }
 
 const ChatDetails = ({ className, conversation }: ChatDetailsProps) => {
   const [messages, setMessages] = useState<MessageProps[]>([]);
-
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (conversation?.id) {
@@ -153,13 +146,9 @@ const UserDetails = ({ user }: UserDetailsProps) => {
     ip_address,
   } = user;
   return (
-    <div className="m-4 w-[300px] rounded-xl dark:bg-white/5 bg-white p-5 border dark:border-white/10 border-blue-500/10 space-y-4 text-sm">
+    <div className="m-4 w-[300px] rounded-xl dark:bg-white/5 bg-white p-5 border dark:border-white/10 border-blue-500/10 space-y-6 text-sm">
       <div className="flbx">
-        <h2 className="font-medium text-base">Visitor Info</h2>
-        <div className="flx gap-3">
-          <span className="text-sm dark:text-lime-400 text-emerald-600">Chat Summary</span>
-          <IconButton icon={ChevronDown} />
-        </div>
+        <Title variant="xs">Visitor Info</Title>
       </div>
 
       <div className="space-y-2">
@@ -167,7 +156,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
           <span className="opacity-60">IP Address</span>
           <span className="font-medium ">{ip_address}</span>
         </div>
-        <div className="flbx ">
+        <div className="flbx">
           <span className="opacity-60">First Visit</span>
           <span className="font-medium ">{formatTimeFromNow(first_visit)}</span>
         </div>
@@ -177,7 +166,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
         </div>
       </div>
 
-      <div className="border-t border-white/10 pt-4 space-y-2">
+      <div className="border-t border-white/10 pt-6 space-y-2">
         <h3 className=" font-medium flx gap-2">
           <Laptop size={16} /> Device
         </h3>
@@ -191,7 +180,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
         </div>
       </div>
 
-      <div className="border-t border-white/10 pt-4 space-y-2">
+      <div className="border-t border-white/10 pt-6 space-y-2">
         <h3 className=" font-medium flx gap-2">
           <MapPin size={16} /> Location
         </h3>
@@ -212,7 +201,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
         </div>
       </div>
 
-      <div className="border-t border-white/10 pt-4 space-y-2">
+      <div className="border-t border-white/10 pt-6 space-y-2">
         <h3 className=" font-medium flx gap-2">
           <GanttChart size={16} /> Analytics
         </h3>

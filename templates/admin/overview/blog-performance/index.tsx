@@ -13,7 +13,10 @@ const BlogPerformance = ({ blogs }: BlogPerformanceProps) => {
     <div className="rounded-2xl p-6 dark:bg-white/5 bg-white flex flex-col">
       <div className="flx gap-2">
         <div className="h-10 w-10 center dark:bg-white/10 bg-emerald-500/10 rounded-lg">
-          <PencilLine size={16} className="text-emerald-600 dark:text-lime-400" />
+          <PencilLine
+            size={16}
+            className="text-emerald-600 dark:text-lime-400"
+          />
         </div>
         <Title variant="xs">Top Blog Performance</Title>
       </div>
@@ -29,9 +32,14 @@ const BlogPerformance = ({ blogs }: BlogPerformanceProps) => {
           >
             <Title variant="xs">{post.title}</Title>
             <div className="flex items-center justify-between text-xs mt-2 text-muted-foreground">
-              <div className="flx gap-2">
-                <TrendingUp size={12} />
-                <Text variant="xs">{post.view_count} reads</Text>
+              <div className="flx gap-2 dark:text-yellow-400 text-orange-500">
+                <TrendingUp size={14} />
+                <Text
+                  variant="xs"
+                  className="dark:!text-yellow-400 text-orange-500"
+                >
+                  {post.view_count || 0} reads
+                </Text>
               </div>
               <Text variant="xs">
                 {moment(post.published_at).format("DD MMM YYYY")}

@@ -25,5 +25,10 @@ export const country = [
   { "name": "Hong Kong", "lat": 22.3193, "lng": 114.1694, "flag": "🇭🇰" },
   { "name": "Japan", "lat": 36.2048, "lng": 138.2529, "flag": "🇯🇵" },
   { "name": "Netherlands", "lat": 52.1326, "lng": 5.2913, "flag": "🇳🇱" },
-  { "name": "Israel", "lat": 31.0461, "lng": 34.8516, "flag": "🇮🇱" }
+  { "name": "Israel", "lat": 31.0461, "lng": 34.8516, "flag": "🇮🇱" },
+  { "name": "default", "lat": 90, "lng": 90, "flag": "🇧🇩" }
 ];
+
+export const getFlag = (cn: string) => {
+  return country.find(c => c.name.toLowerCase() === cn.toLowerCase())?.flag
+}

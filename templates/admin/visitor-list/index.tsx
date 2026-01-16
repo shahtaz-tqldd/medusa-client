@@ -22,7 +22,6 @@ const VisitorListPage = ({ visitor, page, pageSize }: Props) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(newPage));
     params.set("pageSize", String(newPageSize));
-
     router.push(`?${params.toString()}`, { scroll: false });
   };
 

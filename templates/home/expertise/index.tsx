@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { ArrowRight, Check, Code } from "lucide-react";
+import { ArrowRight, Brain, Check, Code, Coffee, Cpu } from "lucide-react";
 import Image from "next/image";
 
 import { Text, Title } from "@/components/ui/typography";
@@ -34,6 +34,8 @@ const Expertise = ({ expertises }: { expertises: ExpertiseProps[] }) => {
   const textInView = useInView(textRef, { once: true });
   const imageInView = useInView(imageRef, { once: true });
 
+  const icons = [Coffee, Cpu, Brain, Code];
+
   return (
     <section className="container pt-8 pb-8 md:pt-0 md:pb-20">
       <Title variant="lg">Expertise</Title>
@@ -51,20 +53,26 @@ const Expertise = ({ expertises }: { expertises: ExpertiseProps[] }) => {
           <div>
             {/* Tabs */}
             <div className="flex gap-6 border-b dark:border-white/5 border-gray-200 mb-8">
-              {expertises.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setSelectedId(item.id)}
-                  className={`flex items-center gap-2 pb-2 border-b-2 transition ${
-                    selectedId === item.id
-                      ? "border-gray-900 dark:border-white text-gray-900 dark:text-white"
-                      : "border-transparent text-gray-400 dark:text-gray-300/80"
-                  }`}
-                >
-                  <Code size={18} />
-                  {item.name}
-                </button>
-              ))}
+              {expertises.map((item, i) => {
+                const Icon = icons[i % icons.length];
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setSelectedId(item.id)}
+                    className={`flex items-center gap-2 pb-2 border-b-2 transition ${
+                      selectedId === item.id
+                        ? "border-gray-900 dark:border-white text-gray-900 dark:text-white"
+                        : "border-transparent text-gray-400 dark:text-gray-300/80"
+                    }`}
+                  >
+                    <Icon size={18} />
+                    <span className="hidden sm:inline">{item.name}</span>
+                    <span className="sm:hidden">
+                      {item.name.split(" ").slice(0, -1).join(" ")}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
 
             <AnimatePresence mode="wait">

@@ -30,6 +30,11 @@ export interface Conversation {
   user: chatUserProps;
 }
 
+interface ConversationApi extends Omit<Conversation, "id"> {
+  id?: string;
+  conversation_id?: string;
+}
+
 interface ConversationMessage {
   id: string;
   sender: "user" | "ai";
@@ -72,9 +77,18 @@ export async function fetchConversationList(page = 1, limit = 10, search = "") {
     offset: ((page - 1) * limit).toString(),
     ...(search ? { search } : {}),
   });
-  return await apiFetch<PaginatedResponse<Conversation[]>>(
+  const response = await apiFetch<PaginatedResponse<ConversationApi[]>>(
     `/chat/conversation/list/?${params.toString()}`,
     { auth: true, cache: "no-store" }
   );
-}
 
+  const normalizedResults = response.results.map((conversation) => ({
+    ...conversation,
+    id: conversation.id ?? conversation.conversation_id ?? "",
+  }));
+
+  return {
+    ...response,
+    results: normalizedResults,
+  };
+}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { Check, Code2, Layers, Link } from "lucide-react";
+import { Check, Code2, Layers, Link, Sparkles } from "lucide-react";
 
 import { colors } from "@/lib/colors";
 
-import { LabelText, Text } from "@/components/ui/typography";
+import { LabelText, Text, Title } from "@/components/ui/typography";
 import { GithubIcon } from "@/assets/icons/social-links";
 
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
@@ -53,8 +53,16 @@ const ProjectDetailsDrawer: React.FC<ProjectDetailsDrawerProps> = ({
 
   if (!isOpen) return null;
 
-  const { title, description, images, features, tech_stacks, type, links } =
-    project || {};
+  const {
+    title,
+    description,
+    case_study,
+    images,
+    features,
+    tech_stacks,
+    type,
+    links,
+  } = project || {};
 
   const getColors = (pt: string) => {
     return colors[pt.toLocaleLowerCase() === "software" ? 1 : 2];
@@ -80,16 +88,41 @@ const ProjectDetailsDrawer: React.FC<ProjectDetailsDrawerProps> = ({
                   {type?.split("_").join(" ")}
                 </TechBadge>
               </div>
-              <h2 className="text-2xl md:text-4xl leading-[32px] md:leading-[48px]">
-                {title}
-              </h2>
-              <Text variant="lg">{description}</Text>
+              <Title variant="lg">{title}</Title>
+              <div>
+                {description && (
+                  <Text variant="lg" className="md:text-justify">
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: description.replace(/\n\n/g, "<br /><br />"),
+                      }}
+                    />
+                  </Text>
+                )}
+              </div>
+              <div className="space-y-4 mt-10">
+                <LabelText icon={Sparkles} variant="sm">
+                  Case Study
+                </LabelText>
+                {case_study && (
+                  <Text variant="lg" className="md:text-justify">
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: case_study.replace(/\n\n/g, "<br /><br />"),
+                      }}
+                    />
+                  </Text>
+                )}
+              </div>
             </div>
             <ImageSlider
-              images={imageUrls.reduce((acc, url, index) => {
-                acc[index.toString()] = url;
-                return acc;
-              }, {} as Record<string, string | null>)}
+              images={imageUrls.reduce(
+                (acc, url, index) => {
+                  acc[index.toString()] = url;
+                  return acc;
+                },
+                {} as Record<string, string | null>
+              )}
               name={title || "Untitled"}
             />
 
