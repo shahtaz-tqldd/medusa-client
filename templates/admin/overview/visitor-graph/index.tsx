@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Title } from "@/components/ui/typography";
+import { Text, Title } from "@/components/ui/typography";
 import {
   CartesianGrid,
   LabelList,
@@ -15,12 +15,16 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { GanttChart } from "lucide-react";
 
 // 2. Chart configuration tailored for the visitor data
 const chartConfig = {
   visitor_count: {
     label: "Visitors",
-    color: "var(--chart-1)", // Uses a CSS variable for theming
+    theme: {
+      light: "#059669", // emerald-600
+      dark: "#a3e635", // lime-400
+    },
   },
 } satisfies ChartConfig;
 
@@ -38,12 +42,21 @@ const VisitorGraph = ({ visitors }: VisitorCycles) => {
   const chartData = visitors;
 
   return (
-    <div className="rounded-2xl p-8 border dark:border-white/20 border-emerald-500">
-      <div className="flex flex-col justify-between h-full gap-4">
-        <Title variant="xs">Visitor Analytics</Title>
+    <div className="rounded-2xl p-8 border dark:border-white/20 border-emerald-800">
+      <div className="flex flex-col justify-between h-full">
+        <div className="space-y-1">
+          <Title variant="xs">Visitor Analytics</Title>
+          <Text
+            variant="xs"
+            className="flx gap-2 dark:!text-lime-400 !text-emerald-600"
+          >
+            <GanttChart className="" size={14} />
+            Site visitors since last {visitors.length} months
+          </Text>
+        </div>
 
         {/* The chart is now rendered directly inside the component */}
-        <ChartContainer config={chartConfig} className="h-92 w-full -ml-8">
+        <ChartContainer config={chartConfig} className="h-84 w-full -ml-8">
           <LineChart
             accessibilityLayer
             data={chartData}
@@ -76,6 +89,7 @@ const VisitorGraph = ({ visitors }: VisitorCycles) => {
               dataKey="visitor_count"
               type="natural"
               strokeWidth={2}
+              stroke="var(--color-visitor_count)"
               dot={{
                 fill: "var(--color-visitor_count)",
               }}

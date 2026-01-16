@@ -42,7 +42,7 @@ const formatLastVisit = (dateString: string) => {
 
 const VisitorList = ({ visitors }: { visitors: Visitor[] }) => {
   return (
-    <div className="rounded-2xl p-6 border dark:border-white/20 border-emerald-500 flex flex-col">
+    <div className="rounded-2xl p-6 border dark:border-white/20 border-emerald-800 flex flex-col">
       <Title variant="xs" className="mb-6">
         Recent Visitors
       </Title>

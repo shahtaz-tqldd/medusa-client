@@ -43,8 +43,8 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
       icon: PenLine,
       total: stats?.blogs?.total_reads || 0,
       subtitle: `total ${stats?.blogs?.total || 0} blogs`,
-      color: "text-emerald-500",
-      bgColor: "bg-emerald-500/10",
+      color: "text-orange-500",
+      bgColor: "bg-orange-500/10",
     },
     {
       label: "Project Views",
@@ -97,12 +97,12 @@ const OverviewMetrics = ({ stats }: OverviewStatsProps) => {
 
               <div className="space-y-2 mt-4">
                 <h2 className="text-3xl">{metric.total}</h2>
-                <Text variant="xs">{metric.subtitle}</Text>
+                <Text variant="xs" className="dark:!text-lime-400 !text-emerald-600">{metric.subtitle}</Text>
               </div>
             </div>
           ))}
         </div>
-        <div className="rounded-2xl p-8 border border-lime-400">
+        <div className="rounded-2xl p-8 border dark:border-lime-400 border-emerald-800">
           <div className="flx gap-3">
             <div className="dark:bg-white/5 bg-emerald-500/10 rounded-lg h-10 w-10 center">
               <Users2

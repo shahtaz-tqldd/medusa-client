@@ -1,5 +1,4 @@
 import React from "react";
-import AnimateDiv from "../animation/animate-div";
 import { Button } from "../ui/button";
 import { Text } from "../ui/typography";
 import { Mail, Phone } from "lucide-react";
@@ -9,20 +8,18 @@ const Footer = () => {
   return (
     <footer>
       <div className="container pb-6 pt-10 border-t dark:border-t-white/20 border-t-blue-500/20 border-dashed flex md:flex-row flex-col-reverse gap-6">
-        <div>
-          <AnimateDiv className="space-y-6 md:space-y-12">
-            <Text variant="xs" className="max-w-md text-center md:text-left">
-              Built with Next.js, TypeScript, Framer motion, ShadCn, Django
-              (REST Framework), PostgreSQL and Google Gemini in Chatbot Agent.
-            </Text>
+        <div className="space-y-6 md:space-y-12">
+          <Text variant="xs" className="max-w-md text-center md:text-left">
+            Built with Next.js, TypeScript, Framer motion, ShadCn, Django (REST
+            Framework), PostgreSQL and Google Gemini in Chatbot Agent.
+          </Text>
 
-            <Text variant="xs" className="text-center md:text-left">
-              All rights reserved to Shahtaz &copy;{new Date().getFullYear()}
-            </Text>
-          </AnimateDiv>
+          <Text variant="xs" className="text-center md:text-left">
+            All rights reserved to Shahtaz &copy;{new Date().getFullYear()}
+          </Text>
         </div>
         <div className="md:mx-auto">
-          <AnimateDiv className="space-y-6 md:space-y-10">
+          <div className="space-y-6 md:space-y-10">
             <div className="grid grid-cols-2 md:gap-32 gap-4">
               <div className="space-y-2.5">
                 <div>
@@ -58,7 +55,7 @@ const Footer = () => {
                 </a>
               ))}
             </div>
-          </AnimateDiv>
+          </div>
         </div>
       </div>
     </footer>
