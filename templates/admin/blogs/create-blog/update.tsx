@@ -140,8 +140,6 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isEditMode = !!initialData && !!slug;
 
-  console.log(initialData);
-
   const {
     register,
     control,
@@ -153,7 +151,6 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
     defaultValues: {
       status: "draft",
       tags: [],
-      category: "",
       content_blocks: [],
     },
   });
@@ -170,7 +167,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
         title: initialData.title || "",
         subtitle: initialData.subtitle || "",
         excerpt: initialData.excerpt || "",
-        existingFeaturedImage: initialData?.featured_image || "",
+        existingFeaturedImage: initialData.featured_image || "",
         status: initialData.status || "draft",
         category: initialData.category?.id || "",
         tags: initialData.tags?.map((tag: any) => tag.name || tag) || [],
@@ -194,8 +191,8 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
       formData.append("category", data.category);
 
       // Append featured image (only if new image uploaded)
-      if (data?.featured_image) {
-        formData.append("featured_image", data?.featured_image);
+      if (data.featured_image) {
+        formData.append("featured_image", data.featured_image);
       }
 
       // Append tags
@@ -345,7 +342,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
       case "text":
         return (
           <Textarea
-            {...register(`content_blocks.${index}.content`)}
+            {...register(`content_blocks.${index}.content` as const)}
             placeholder="Write your paragraph..."
             className="min-h-[100px] !border-none focus-visible:!ring-transparent"
           />
@@ -353,7 +350,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
 
       case "heading":
         return (
-          <div className="flex gap-2">
+          <div className="flx gap-2">
             <Controller
               name={`content_blocks.${index}.level`}
               control={control}
@@ -374,7 +371,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
               )}
             />
             <Input
-              {...register(`content_blocks.${index}.content`)}
+              {...register(`content_blocks.${index}.content` as const)}
               placeholder="Heading text..."
               className="!border-none focus-visible:!ring-transparent"
             />
@@ -385,7 +382,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
         return (
           <div className="space-y-2">
             <Textarea
-              {...register(`content_blocks.${index}.code`)}
+              {...register(`content_blocks.${index}.code` as const)}
               placeholder="Paste your code here..."
               className="min-h-[150px] font-mono text-sm !border-none focus-visible:!ring-transparent !shadow-none"
             />
@@ -413,7 +410,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                 )}
               />
               <Input
-                {...register(`content_blocks.${index}.caption`)}
+                {...register(`content_blocks.${index}.caption` as const)}
                 placeholder="Caption (optional)"
                 className="flex-1"
               />
@@ -430,23 +427,25 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                 control={control}
                 render={({ field }) => (
                   <ImageDropzone
-                    label="Add Image"
+                    label={
+                      block.existingImageUrl ? "Change Image" : "Add Image"
+                    }
                     name={`content_blocks.${index}.image`}
+                    existingImageUrl={block.existingImageUrl}
                     setValue={(name: string, file: File) => {
                       field.onChange(file);
                     }}
-                    // initialImageUrl={block.existingImageUrl}
                   />
                 )}
               />
             </div>
             <div className="grid grid-cols-2 gap-4 p-2">
               <Input
-                {...register(`content_blocks.${index}.caption`)}
+                {...register(`content_blocks.${index}.caption` as const)}
                 placeholder="Image caption (optional)"
               />
               <Input
-                {...register(`content_blocks.${index}.alt_text`)}
+                {...register(`content_blocks.${index}.alt_text` as const)}
                 placeholder="Alt text for accessibility"
               />
             </div>
@@ -457,12 +456,12 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
         return (
           <div className="space-y-2">
             <Textarea
-              {...register(`content_blocks.${index}.content`)}
+              {...register(`content_blocks.${index}.content` as const)}
               placeholder="Quote text..."
               className="min-h-[80px] !text-lg italic !border-none focus-visible:!ring-transparent !shadow-none"
             />
             <Input
-              {...register(`content_blocks.${index}.source`)}
+              {...register(`content_blocks.${index}.source` as const)}
               placeholder="Source (optional)"
               className="!border-none focus-visible:!ring-transparent"
             />
@@ -484,7 +483,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
       remove: removeItem,
     } = useFieldArray({
       control,
-      name: `content_blocks.${blockIndex}.items`,
+      name: `content_blocks.${blockIndex}.items` as const,
     });
 
     return (
@@ -509,7 +508,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
             <div key={item.id} className="flex items-center gap-2">
               <Input
                 {...register(
-                  `content_blocks.${blockIndex}.items.${itemIndex}.content`
+                  `content_blocks.${blockIndex}.items.${itemIndex}.content` as const
                 )}
                 placeholder={`Item ${itemIndex + 1}`}
                 className="flex-1"
@@ -691,15 +690,19 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
 
           {/* Basic Information */}
           <Card className="col-span-2 h-fit space-y-6">
-            <ImageDropzone
-              label="Add a featured Image"
+            <Controller
               name="featured_image"
-              setValue={(name: string, file: File) => {
-                if (name === "featured_image") {
-                  setValue("featured_image", file);
-                }
-              }}
-              initialImageUrl={initialData?.featured_image}
+              control={control}
+              render={({ field }) => (
+                <ImageDropzone
+                  label="Add a featured Image"
+                  name="featured_image"
+                  initialImageUrl={initialData?.featured_image}
+                  setValue={(name: string, file: File) =>
+                    setValue(name as keyof BlogFormData, file)
+                  }
+                />
+              )}
             />
             <div>
               <Label htmlFor="title">Title *</Label>
@@ -733,7 +736,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                 rules={{ required: "Category is required" }}
                 render={({ field }) => (
                   <Select
-                    value={field.value ?? ""}
+                    value={field.value}
                     onValueChange={(value) => {
                       if (value === "__add__") {
                         setCategoryAddDialogOpen(true);
@@ -753,6 +756,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                           Add Category
                         </div>
                       </SelectItem>
+
                       <SelectSeparator />
 
                       {categories?.length ? (

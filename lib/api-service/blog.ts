@@ -14,11 +14,16 @@ export interface BlogBasicProps {
 export interface BlogDetailsProps {
   id: string;
   title: string;
+  subtitle?: string;
+  featured_image?: string;
+  excerpt?: string;
   slug: string;
   category: { id: string; name: string };
   view_count: number;
   published_at: Date;
   reading_time: number;
+  tags: string[];
+  status?: 'published' | 'draft';
   content_blocks: {
     id: string;
     block_type: string,
@@ -26,7 +31,7 @@ export interface BlogDetailsProps {
     text_content?: object;
     code_content?: object;
     heading_content?: object;
-  },
+  }[],
 }
 
 export async function fetchBlogs(page = 1, page_size = 10, exclude_slug = "", sorted_by = "") {
@@ -49,8 +54,12 @@ export async function fetchBlogs(page = 1, page_size = 10, exclude_slug = "", so
 }
 
 
-export async function fetchBlogDetails(slug: string) {
-  return apiFetch<DataResponse<BlogDetailsProps>>(`/blogs/${slug}`, {
+export async function fetchBlogDetails(slug: string, admin_view: boolean = false) {
+  let fetchURL = `/blogs/${slug}/`
+  if (admin_view) {
+    fetchURL += '?admin_view=true'
+  }
+  return apiFetch<DataResponse<BlogDetailsProps>>(fetchURL, {
     cache: "no-store"
   });
 }

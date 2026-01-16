@@ -21,3 +21,10 @@ export async function fetchExperiences() {
     cache: "no-store",
   });
 }
+
+export async function fetchExperienceById(id: string) {
+  return apiFetch<DataResponse<ExperienceProps>>(`/services/experiences/${id}/`, {
+    auth: false,
+    cache: "no-store",
+  });
+}

@@ -89,7 +89,7 @@ const AdminProjectListPage = ({
     })) || [];
 
   const handleDeleteProject = async (id: string) => {
-    const res = await deleteProject(id.toString());
+    const res = await deleteProject(id);
     if (res?.success) {
       toast.success(res?.message || "Projct Deleted Successfully!");
       router.refresh();

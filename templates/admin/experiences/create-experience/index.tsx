@@ -14,9 +14,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Text, Title } from "@/components/ui/typography";
 import { Checkbox } from "@/components/ui/checkbox";
+import { DatePicker } from "@/components/ui/date-picker";
 
 import { Plus, Save, Trash2, X } from "lucide-react";
-import { createExperience } from "@/lib/api-service/experience-action";
+import {
+  createExperience,
+  updateExperience,
+} from "@/lib/api-service/experience-action";
+import { ExperienceProps } from "@/lib/api-service/experiences";
 
 export interface ExperienceFormData {
   position: string;
@@ -31,11 +36,21 @@ export interface ExperienceFormData {
   company_website: string;
 }
 
-const CreateExperiencePage = () => {
+const CreateExperiencePage = ({
+  initialData,
+  experienceId,
+}: {
+  initialData?: ExperienceProps;
+  experienceId?: string;
+}) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [isCurrentlyWorking, setIsCurrentlyWorking] = useState(false);
+  const [isCurrentlyWorking, setIsCurrentlyWorking] = useState(
+    initialData ? !initialData.ended_at : false
+  );
+
+  const isUpdateMode = !!experienceId && !!initialData;
 
   const {
     register,
@@ -43,45 +58,168 @@ const CreateExperiencePage = () => {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm<ExperienceFormData>({
-    defaultValues: {
-      highlights: [{ content: "" }],
-      key_contributions: [{ content: "" }],
-      tech_stacks: [],
-    },
+    defaultValues: initialData
+      ? {
+          position: initialData.position,
+          details: initialData.details,
+          company_name: initialData.company_name,
+          company_location: initialData.company_location,
+          company_website: initialData.company_website,
+          started_at: new Date(initialData.started_at),
+          ended_at: initialData.ended_at
+            ? new Date(initialData.ended_at)
+            : undefined,
+          highlights: initialData.highlights.map((h) => ({ content: h })),
+          key_contributions: initialData.key_contributions.map((k) => ({
+            content: k,
+          })),
+          tech_stacks: initialData.tech_stacks,
+        }
+      : {
+          highlights: [{ content: "" }],
+          key_contributions: [{ content: "" }],
+          tech_stacks: [],
+        },
   });
+
+  // Helper function to check if arrays are different
+  const arraysAreDifferent = (arr1: string[], arr2: string[]): boolean => {
+    if (arr1.length !== arr2.length) return true;
+    return arr1.some((item, index) => item !== arr2[index]);
+  };
+
+  // Helper function to get only changed fields
+  const getChangedFields = (
+    data: ExperienceFormData
+  ): Partial<ExperienceFormData> => {
+    if (!isUpdateMode || !initialData) return data;
+
+    const changedData: any = {};
+
+    // Check simple fields
+    if (dirtyFields.position && data.position !== initialData.position) {
+      changedData.position = data.position;
+    }
+    if (dirtyFields.details && data.details !== initialData.details) {
+      changedData.details = data.details;
+    }
+    if (
+      dirtyFields.company_name &&
+      data.company_name !== initialData.company_name
+    ) {
+      changedData.company_name = data.company_name;
+    }
+    if (
+      dirtyFields.company_location &&
+      data.company_location !== initialData.company_location
+    ) {
+      changedData.company_location = data.company_location;
+    }
+    if (
+      dirtyFields.company_website &&
+      data.company_website !== initialData.company_website
+    ) {
+      changedData.company_website = data.company_website;
+    }
+
+    // Check dates
+    const newStartDate = moment(data.started_at).format("YYYY-MM-DD");
+    const oldStartDate = moment(initialData.started_at).format("YYYY-MM-DD");
+    if (newStartDate !== oldStartDate) {
+      changedData.started_at = newStartDate;
+    }
+
+    const newEndDate = isCurrentlyWorking
+      ? null
+      : moment(data.ended_at).format("YYYY-MM-DD");
+    const oldEndDate = initialData.ended_at
+      ? moment(initialData.ended_at).format("YYYY-MM-DD")
+      : null;
+    if (newEndDate !== oldEndDate) {
+      changedData.ended_at = newEndDate;
+    }
+
+    // Check highlights
+    const newHighlights = data.highlights
+      .filter((h) => h.content?.trim() !== "")
+      .map((h) => h.content);
+    if (arraysAreDifferent(newHighlights, initialData.highlights)) {
+      changedData.highlights = newHighlights;
+    }
+
+    // Check key_contributions
+    const newContributions = data.key_contributions
+      .filter((k) => k.content?.trim() !== "")
+      .map((k) => k.content);
+    if (arraysAreDifferent(newContributions, initialData.key_contributions)) {
+      changedData.key_contributions = newContributions;
+    }
+
+    // Check tech_stacks
+    if (arraysAreDifferent(data.tech_stacks, initialData.tech_stacks)) {
+      changedData.tech_stacks = data.tech_stacks;
+    }
+
+    return changedData;
+  };
 
   const onSubmit = async (data: ExperienceFormData) => {
     setIsSubmitting(true);
 
     try {
-      // Process highlights and key contributions
-      const processedData = {
-        ...data,
-        highlights: data.highlights
-          .filter((h) => h.content?.trim() !== "")
-          .map((h) => h.content),
-        key_contributions: data.key_contributions
-          .filter((k) => k.content?.trim() !== "")
-          .map((k) => k.content),
-        started_at: moment(data.started_at).format("YYYY-MM-DD"),
-        ended_at: isCurrentlyWorking
-          ? null
-          : moment(data.ended_at).format("YYYY-MM-DD"),
-      };
+      if (isUpdateMode) {
+        // Update mode - only send changed fields
+        const changedFields = getChangedFields(data);
 
-      const res = await createExperience(processedData);
+        // Check if there are any changes
+        if (Object.keys(changedFields).length === 0) {
+          toast.info("No changes detected");
+          setIsSubmitting(false);
+          return;
+        }
 
-      if (res?.success) {
-        toast.success("Experience Created Successfully!");
-        router.push("/admin/experiences");
+        const res = await updateExperience(experienceId!, changedFields);
+
+        if (res?.success) {
+          toast.success("Experience Updated Successfully!");
+          router.push("/admin/experiences");
+        } else {
+          toast.error(res?.message || "Failed to update Experience");
+        }
       } else {
-        toast.error(res?.message || "Failed to create Experience");
+        // Create mode - send all data
+        const processedData = {
+          ...data,
+          highlights: data.highlights
+            .filter((h) => h.content?.trim() !== "")
+            .map((h) => h.content),
+          key_contributions: data.key_contributions
+            .filter((k) => k.content?.trim() !== "")
+            .map((k) => k.content),
+          started_at: moment(data.started_at).format("YYYY-MM-DD"),
+          ended_at: isCurrentlyWorking
+            ? null
+            : moment(data.ended_at).format("YYYY-MM-DD"),
+        };
+
+        const res = await createExperience(processedData);
+
+        if (res?.success) {
+          toast.success("Experience Created Successfully!");
+          router.push("/admin/experiences");
+        } else {
+          toast.error(res?.message || "Failed to create Experience");
+        }
       }
     } catch (error) {
-      console.error("Experience creation error:", error);
-      toast.error("An error occurred while creating the experience");
+      console.error("Experience operation error:", error);
+      toast.error(
+        `An error occurred while ${
+          isUpdateMode ? "updating" : "creating"
+        } the experience`
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -109,9 +247,13 @@ const CreateExperiencePage = () => {
     <div className="space-y-12">
       <div className="flex items-start justify-between">
         <div>
-          <Title>Create New Experience</Title>
+          <Title>
+            {isUpdateMode ? "Update Experience" : "Create New Experience"}
+          </Title>
           <Text variant="sm">
-            Add your professional experience and achievements
+            {isUpdateMode
+              ? "Update your professional experience and achievements"
+              : "Add your professional experience and achievements"}
           </Text>
         </div>
         <div className="flex gap-2">
@@ -129,7 +271,13 @@ const CreateExperiencePage = () => {
             disabled={isSubmitting}
           >
             <Save size={14} className="mr-2" />
-            {isSubmitting ? "Publishing..." : "Publish"}
+            {isSubmitting
+              ? isUpdateMode
+                ? "Updating..."
+                : "Publishing..."
+              : isUpdateMode
+              ? "Update"
+              : "Publish"}
           </Button>
         </div>
       </div>
@@ -280,55 +428,57 @@ const CreateExperiencePage = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="started_at">Start Date *</Label>
-                <Input
-                  id="started_at"
-                  type="date"
-                  {...register("started_at", {
-                    required: "Start date is required",
-                    valueAsDate: true,
-                  })}
-                  max={moment().format("YYYY-MM-DD")}
-                />
-                {errors.started_at && (
-                  <Text variant="sm" className="text-red-500 mt-1">
-                    {errors.started_at.message}
-                  </Text>
-                )}
-              </div>
-              {!isCurrentlyWorking && (
-                <div>
-                  <Label htmlFor="ended_at">End Date *</Label>
-                  <Input
-                    id="ended_at"
-                    type="date"
-                    {...register("ended_at", {
-                      required: !isCurrentlyWorking
-                        ? "End date is required"
-                        : false,
-                      valueAsDate: true,
-                      validate: (value) => {
-                        const startDate = watch("started_at");
-                        if (
-                          !isCurrentlyWorking &&
-                          value &&
-                          startDate &&
-                          moment(value).isBefore(moment(startDate))
-                        ) {
-                          return "End date must be after start date";
-                        }
-                        return true;
-                      },
-                    })}
-                    max={moment().format("YYYY-MM-DD")}
+              <Controller
+                name="started_at"
+                control={control}
+                rules={{ required: "Start date is required" }}
+                render={({ field }) => (
+                  <DatePicker
+                    id="started_at"
+                    label="Start Date"
+                    value={field.value}
+                    onChange={field.onChange}
+                    required={true}
+                    maxDate={new Date()}
+                    placeholder="Select start date"
                   />
-                  {errors.ended_at && (
-                    <Text variant="sm" className="text-red-500 mt-1">
-                      {errors.ended_at.message}
-                    </Text>
+                )}
+              />
+
+              {!isCurrentlyWorking && (
+                <Controller
+                  name="ended_at"
+                  control={control}
+                  rules={{
+                    required: !isCurrentlyWorking
+                      ? "End date is required"
+                      : false,
+                    validate: (value) => {
+                      const startDate = watch("started_at");
+                      if (
+                        !isCurrentlyWorking &&
+                        value &&
+                        startDate &&
+                        moment(value).isBefore(moment(startDate))
+                      ) {
+                        return "End date must be after start date";
+                      }
+                      return true;
+                    },
+                  }}
+                  render={({ field }) => (
+                    <DatePicker
+                      id="ended_at"
+                      label="End Date"
+                      value={field.value}
+                      onChange={field.onChange}
+                      required={!isCurrentlyWorking}
+                      maxDate={new Date()}
+                      minDate={watch("started_at")}
+                      placeholder="Select end date"
+                    />
                   )}
-                </div>
+                />
               )}
             </div>
 

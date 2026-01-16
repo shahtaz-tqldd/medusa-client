@@ -1,6 +1,16 @@
 "use client";
 
 import React, { useRef } from "react";
+import moment from "moment";
+import { motion, useInView } from "framer-motion";
+
+import AnimateDiv from "@/components/animation/animate-div";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ExperienceProps } from "@/lib/api-service/experiences";
+import { LabelText, Text } from "@/components/ui/typography";
+
+import { getDuration } from "@/lib/date";
 import {
   Calendar,
   MapPin,
@@ -13,15 +23,7 @@ import {
   ZapIcon,
   ArrowRight,
 } from "lucide-react";
-import { motion, useInView } from "framer-motion";
-
-import { getDuration } from "@/lib/date";
-import { Card } from "@/components/ui/card";
-import { LabelText, Text } from "@/components/ui/typography";
-import AnimateDiv from "@/components/animation/animate-div";
-import { Button } from "@/components/ui/button";
-import { ExperienceProps } from "@/lib/api-service/experiences";
-import moment from "moment";
+import { getCompanyColor } from "./utils";
 
 interface ExperienceCardWithIndexProps {
   item: ExperienceProps;
@@ -44,11 +46,7 @@ const ExperienceCard: React.FC<ExperienceCardWithIndexProps> = ({
     setExpData(data);
   };
 
-  const color = {
-    bg: "bg-emerald-500/10",
-    text: "text-emerald-600",
-  };
-
+  const color = getCompanyColor(item.company_name);
   return (
     <motion.div
       ref={ref}
@@ -81,8 +79,11 @@ const ExperienceCard: React.FC<ExperienceCardWithIndexProps> = ({
                 <div className="flex items-center gap-1.5">
                   <Calendar size={14} />
                   <span>{moment(item.started_at).format("MMM YYYY")}</span>
-                  {item.ended_at && (
-                    <span> - {moment(item.ended_at).format("MMM YYYY")}</span>
+                  <span>-</span>
+                  {item.ended_at ? (
+                    <span>{moment(item.ended_at).format("MMM YYYY")}</span>
+                  ) : (
+                    <span>Present</span>
                   )}
                 </div>
                 <div className="hidden md:flex items-center gap-1.5">

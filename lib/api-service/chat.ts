@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { apiFetch, queryKeys } from "./client";
 import { PaginatedResponse } from "./_types";
 
@@ -44,18 +44,6 @@ interface ConversationResponse {
   };
 }
 
-interface ChatMessagePayload {
-  query: string;
-  visitor_id: string;
-}
-
-interface ChatResponse {
-  success: boolean;
-  data: {
-    conversation_id: string;
-    response: string;
-  };
-}
 
 /* ------------------ QUERY ------------------ */
 
@@ -90,47 +78,3 @@ export async function fetchConversationList(page = 1, limit = 10, search = "") {
   );
 }
 
-
-
-
-
-export const useSendChatMessage = () => {
-  return useMutation({
-    mutationFn: async (query: string) => {
-      const visitorId = localStorage.getItem("visitor_id");
-      if (!visitorId) {
-        throw new Error("Visitor ID not found");
-      }
-
-      const conversationId = localStorage.getItem("conversation_id");
-
-      let endpoint = "chat/create-message/";
-      if (conversationId) {
-        endpoint += `?conversation_id=${conversationId}`;
-      }
-
-      const payload: ChatMessagePayload = {
-        query,
-        visitor_id: visitorId,
-      };
-
-      const data = await apiFetch<ChatResponse>(endpoint, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
-
-      if (!data.success) {
-        throw new Error("Message failed");
-      }
-
-      if (data.data.conversation_id) {
-        localStorage.setItem(
-          "conversation_id",
-          data.data.conversation_id
-        );
-      }
-
-      return data.data.response;
-    },
-  });
-};
