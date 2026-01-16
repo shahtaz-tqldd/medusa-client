@@ -7,7 +7,7 @@ import { colors } from "@/lib/colors";
 import { LabelText, Text } from "@/components/ui/typography";
 import { GithubIcon } from "@/assets/icons/social-links";
 
-import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import ImageSlider from "@/components/slider/img-slider";
 import AnimateDiv from "@/components/animation/animate-div";
 import TechBadge from "@/components/ui/badge";
@@ -21,12 +21,14 @@ interface ProjectDetailsDrawerProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   projectId: string | null;
+  admin_view?: boolean;
 }
 
 const ProjectDetailsDrawer: React.FC<ProjectDetailsDrawerProps> = ({
   isOpen,
   setIsOpen,
   projectId,
+  admin_view,
 }) => {
   const [project, setProject] = useState<ProjectDetailsProps | null>(null);
   const [loading, setLoading] = useState(false);
@@ -37,7 +39,7 @@ const ProjectDetailsDrawer: React.FC<ProjectDetailsDrawerProps> = ({
     const loadProject = async () => {
       setLoading(true);
       try {
-        const res = await fetchProjectById(projectId);
+        const res = await fetchProjectById(projectId, admin_view);
         setProject(res.data);
       } catch (err) {
         console.error("Failed to fetch project", err);
@@ -47,7 +49,7 @@ const ProjectDetailsDrawer: React.FC<ProjectDetailsDrawerProps> = ({
     };
 
     loadProject();
-  }, [isOpen, projectId]);
+  }, [isOpen, projectId, admin_view]);
 
   if (!isOpen) return null;
 
@@ -68,13 +70,14 @@ const ProjectDetailsDrawer: React.FC<ProjectDetailsDrawerProps> = ({
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerContent>
+        <DrawerTitle hidden></DrawerTitle>
         {loading && <p className="p-6">Loading...</p>}
         {!loading && project && (
           <AnimateDiv className="space-y-10">
             <div className="space-y-4">
               <div className="w-fit">
                 <TechBadge color={getColors(type || "default")}>
-                  {type || "Default"}
+                  {type?.split("_").join(" ")}
                 </TechBadge>
               </div>
               <h2 className="text-2xl md:text-4xl leading-[32px] md:leading-[48px]">

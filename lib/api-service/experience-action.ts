@@ -29,6 +29,31 @@ export async function createExperience(payload: Partial<ExperienceProps>) {
   return res.json();
 }
 
+export async function updateExperience(id: string, payload: any) {
+  const cookieState = await cookies()
+  const token = cookieState.get("access_token")?.value;
+
+  if (!token) {
+    throw new Error("Not authenticated");
+  }
+
+  const res = await fetch(`${API_BASE_URL}/services/experiences/update/${id}/`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text);
+  }
+
+  return res.json();
+}
+
 export async function deleteExperience(id: string) {
   const cookieState = await cookies()
   const token = cookieState.get("access_token")?.value;

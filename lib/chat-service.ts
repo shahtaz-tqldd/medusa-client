@@ -1,17 +1,3 @@
-interface ChatMessage {
-  query: string;
-  visitor_id: string;
-  conversation_id?: string;
-}
-
-interface ChatResponse {
-  success: boolean;
-  data: {
-    conversation_id: string;
-    response: string;
-  };
-}
-
 interface ConversationMessage {
   id: string;
   sender: string;
@@ -161,57 +147,5 @@ export const fetchConversationList = async (
   } catch (error) {
     console.error("Failed to fetch conversation list:", error);
     return { convos: [], total: 0 };
-  }
-};
-
-export const sendChatMessage = async (query: string): Promise<string> => {
-  try {
-    const visitorId = localStorage.getItem("visitor_id");
-
-    if (!visitorId) {
-      throw new Error("Visitor ID not found. Please refresh the page.");
-    }
-
-    const conversationId = localStorage.getItem("conversation_id");
-
-    // Build the API URL
-    let apiUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/chat/create-message/`;
-    if (conversationId) {
-      apiUrl += `?conversation_id=${conversationId}`;
-    }
-
-    // Build the payload
-    const payload: ChatMessage = {
-      query,
-      visitor_id: visitorId,
-    };
-
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Server responded with ${response.status}`);
-    }
-
-    const data: ChatResponse = await response.json();
-
-    if (!data.success) {
-      throw new Error("Failed to send message");
-    }
-
-    // Store conversation_id for subsequent messages
-    if (data.data.conversation_id) {
-      localStorage.setItem("conversation_id", data.data.conversation_id);
-    }
-
-    return data.data.response || "I received your message!";
-  } catch (error) {
-    console.error("Chat message failed:", error);
-    throw error;
   }
 };

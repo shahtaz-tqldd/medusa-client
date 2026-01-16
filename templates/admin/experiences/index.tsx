@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,7 @@ import { Eye, PenLine, Plus, Trash2 } from "lucide-react";
 import { ExperienceProps } from "@/lib/api-service/experiences";
 import { deleteExperience } from "@/lib/api-service/experience-action";
 import { getDuration } from "@/lib/date";
+import ExperienceDetailsDrawer from "@/templates/home/experiences/experience-details-drawer";
 
 interface ExperiencePageProps {
   experiences: ExperienceProps[];
@@ -18,6 +19,8 @@ interface ExperiencePageProps {
 
 const AdminExperiencePage = ({ experiences }: ExperiencePageProps) => {
   const router = useRouter();
+  const [experienceView, setExperienceView] = useState(false);
+  const [experienceId, setExperienceId] = useState<string | null>(null);
   const experience_columns = [
     { header: "Position", accessorKey: "position" },
     { header: "Company", accessorKey: "company_name" },
@@ -31,14 +34,15 @@ const AdminExperiencePage = ({ experiences }: ExperiencePageProps) => {
       label: "View",
       icon: Eye,
       action: (id: string) => {
-        console.log("View", id);
+        setExperienceView(true);
+        setExperienceId(id);
       },
     },
     {
       label: "Update",
       icon: PenLine,
       action: (id: string) => {
-        console.log("Update", id);
+        router.push(`/admin/experiences/${id}/update`);
       },
     },
     {
@@ -65,7 +69,7 @@ const AdminExperiencePage = ({ experiences }: ExperiencePageProps) => {
   const handleDeleteExperience = async (id: string | number) => {
     const res = await deleteExperience(id.toString());
     if (res?.success) {
-      toast.success("Experience Deleted Successfully!");
+      toast.success(res?.message || "Experience Deleted Successfully!");
       router.refresh();
     } else {
       toast.error(res?.message || "Failed to delete Experience");
@@ -96,6 +100,11 @@ const AdminExperiencePage = ({ experiences }: ExperiencePageProps) => {
         setPage={() => {}}
         pageSize={10}
         setPageSize={() => {}}
+      />
+      <ExperienceDetailsDrawer
+        isOpen={experienceView}
+        setIsOpen={setExperienceView}
+        data={experiences.find((exp) => exp.id === experienceId) || null}
       />
     </div>
   );

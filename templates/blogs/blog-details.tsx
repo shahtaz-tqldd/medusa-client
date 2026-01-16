@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css";
+
 // Import additional language support as needed
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-typescript";
@@ -130,7 +131,7 @@ interface RenderBlogsProps {
   content_blocks: BlogContentBlock[];
 }
 
-const RenderBlogs: React.FC<RenderBlogsProps> = ({ content_blocks }) => {
+export const RenderBlogs: React.FC<RenderBlogsProps> = ({ content_blocks }) => {
   // Helper function to get Prism language
   const getPrismLanguage = (language: string): Prism.Grammar => {
     const languageMap: Record<string, Prism.Grammar> = {

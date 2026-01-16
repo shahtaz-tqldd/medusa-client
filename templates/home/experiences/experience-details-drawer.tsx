@@ -1,7 +1,7 @@
 import React from "react";
 
 // components
-import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { Title, LabelText, Text } from "@/components/ui/typography";
 // data
 
@@ -12,6 +12,7 @@ import TechBadge from "@/components/ui/badge";
 import { getDuration } from "@/lib/date";
 import { ExperienceProps } from "@/lib/api-service/experiences";
 import moment from "moment";
+import { getCompanyColor } from "./utils";
 
 interface ExperienceDetailsDrawerProps {
   data: ExperienceProps | null;
@@ -28,14 +29,12 @@ const ExperienceDetailsDrawer: React.FC<ExperienceDetailsDrawerProps> = ({
     return null;
   }
 
-  const color = {
-    bg: "bg-emerald-500/10",
-    text: "text-emerald-600",
-  };
+  const color = getCompanyColor(data?.company_name);
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerContent>
+        <DrawerTitle hidden></DrawerTitle>
         <AnimateDiv className="space-y-8 md:space-y-12">
           <div className="space-y-4">
             <div className="flx gap-4">
@@ -43,17 +42,23 @@ const ExperienceDetailsDrawer: React.FC<ExperienceDetailsDrawerProps> = ({
                 <Building2 className={`w-7 h-7 ${color.text}`} />
               </div>
               <div className="space-y-1">
-                <Title variant="sm">{data.position}</Title>
+                <Title variant="sm">
+                  {data.position} at {data.company_name}
+                </Title>
 
                 <div className="flx flex-wrap gap-x-2 gap-y-3">
-                  <Text variant="sm" className={`${color.text}`}>
-                    {data.company_name}
-                  </Text>
                   <div className="hidden md:flex items-center">
-                    <Dot />
-                    <Text variant="sm">
-                      {moment(data.started_at).format("DD MMM YYYY")}
-                    </Text>
+                    <div className="flx gap-2">
+                      <Text variant="sm">
+                        {moment(data.started_at).format("DD MMM YYYY")}
+                      </Text>
+                      <span>-</span>
+                      <Text variant="sm">
+                        {!data?.ended_at
+                          ? "Present"
+                          : moment(data.ended_at).format("MMM YYYY")}
+                      </Text>
+                    </div>
                     <Dot />
                     <Text variant="sm">{data.company_location}</Text>
                   </div>
@@ -61,15 +66,11 @@ const ExperienceDetailsDrawer: React.FC<ExperienceDetailsDrawerProps> = ({
               </div>
             </div>
             <div className="flex gap-1 md:hidden items-center">
-              <Text variant="sm">
-                {moment(data.started_at).format("DD MMM YYYY")}
-              </Text>
+              <Text variant="sm">{data.company_location}</Text>
               <Dot />
               <Text variant="sm">
                 {getDuration(data?.started_at, data?.ended_at || undefined)}
               </Text>
-              <Dot />
-              <Text variant="sm">{data.company_location}</Text>
             </div>
           </div>
           <div className="space-y-4">

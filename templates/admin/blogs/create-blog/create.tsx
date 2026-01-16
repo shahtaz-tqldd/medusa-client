@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,15 +32,14 @@ import {
 } from "lucide-react";
 import IconButton from "@/components/ui/icon-button";
 import ImageDropzone from "@/components/ui/image-upload";
-import { BlogCategory, BlogDetailsProps } from "@/lib/api-service/blog";
-import { createBlog, updateBlog } from "@/lib/api-service/blog-action";
+import { BlogCategory } from "@/lib/api-service/blog";
+import { createBlog } from "@/lib/api-service/blog-action";
 import { useRouter } from "next/navigation";
 import AddCategoryDialog from "./add-category-dialog";
 import { toast } from "sonner";
 
 // Types matching your Django models
 interface ContentBlock {
-  id?: string; // Add id for existing blocks
   block_type: "text" | "heading" | "code" | "image" | "quote" | "list";
   content?: string;
   level?: number;
@@ -48,7 +47,6 @@ interface ContentBlock {
   language?: string;
   caption?: string;
   image?: File;
-  existingImageUrl?: string; // For existing images
   alt_text?: string;
   source?: string;
   list_type?: "ordered" | "unordered";
@@ -60,7 +58,6 @@ interface BlogFormData {
   subtitle?: string;
   excerpt?: string;
   featured_image?: File;
-  existingFeaturedImage?: string; // For existing featured image
   status: "draft" | "published";
   category: string;
   tags: string[];
@@ -69,91 +66,24 @@ interface BlogFormData {
 
 interface CreateBlogProps {
   categories: BlogCategory[];
-  initialData?: BlogDetailsProps | null; // Made optional for create mode
-  slug?: string;
 }
 
-// Helper function to transform content blocks from API to form format
-const transformContentBlocksToForm = (blocks: any[]): ContentBlock[] => {
-  return blocks.map((block) => {
-    const baseBlock: ContentBlock = {
-      id: block.id,
-      block_type: block.block_type,
-    };
-
-    switch (block.block_type) {
-      case "text":
-        return {
-          ...baseBlock,
-          content: block.text_content?.content || "",
-        };
-
-      case "heading":
-        return {
-          ...baseBlock,
-          content: block.heading_content?.content || "",
-          level: block.heading_content?.level || 2,
-        };
-
-      case "code":
-        return {
-          ...baseBlock,
-          code: block.code_content?.code || "",
-          language: block.code_content?.language || "python",
-          caption: block.code_content?.caption || "",
-        };
-
-      case "image":
-        return {
-          ...baseBlock,
-          existingImageUrl: block.image_content?.image || "",
-          caption: block.image_content?.caption || "",
-          alt_text: block.image_content?.alt_text || "",
-        };
-
-      case "quote":
-        return {
-          ...baseBlock,
-          content: block.quote_content?.content || "",
-          source: block.quote_content?.source || "",
-        };
-
-      case "list":
-        return {
-          ...baseBlock,
-          list_type: block.list_content?.list_type || "unordered",
-          items: block.list_content?.items?.map((item: any) => ({
-            content: item.content,
-          })) || [{ content: "" }],
-        };
-
-      default:
-        return baseBlock;
-    }
-  });
-};
-
-const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
+const CreateBlogPage = ({ categories }: CreateBlogProps) => {
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
   const [categoryAddDialogOpen, setCategoryAddDialogOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const isEditMode = !!initialData && !!slug;
-
-  console.log(initialData);
 
   const {
     register,
     control,
     handleSubmit,
     setValue,
-    reset,
     formState: { errors },
   } = useForm<BlogFormData>({
     defaultValues: {
       status: "draft",
       tags: [],
-      category: "",
       content_blocks: [],
     },
   });
@@ -162,24 +92,6 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
     control,
     name: "content_blocks",
   });
-
-  // Load initial data in edit mode
-  useEffect(() => {
-    if (isEditMode && initialData) {
-      reset({
-        title: initialData.title || "",
-        subtitle: initialData.subtitle || "",
-        excerpt: initialData.excerpt || "",
-        existingFeaturedImage: initialData?.featured_image || "",
-        status: initialData.status || "draft",
-        category: initialData.category?.id || "",
-        tags: initialData.tags?.map((tag: any) => tag.name || tag) || [],
-        content_blocks: transformContentBlocksToForm(
-          initialData.content_blocks || []
-        ),
-      });
-    }
-  }, [isEditMode, initialData, reset]);
 
   const onSubmit = async (data: BlogFormData) => {
     setIsSubmitting(true);
@@ -193,12 +105,12 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
       formData.append("status", data.status);
       formData.append("category", data.category);
 
-      // Append featured image (only if new image uploaded)
-      if (data?.featured_image) {
-        formData.append("featured_image", data?.featured_image);
+      // Append featured image
+      if (data.featured_image) {
+        formData.append("featured_image", data.featured_image);
       }
 
-      // Append tags
+      // Append tags - send as array items
       if (data.tags && data.tags.length > 0) {
         data.tags.forEach((tag) => {
           formData.append("tags", tag);
@@ -206,18 +118,34 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
       }
 
       // Process content blocks
-      const processedBlocks: any[] = [];
+      const processedBlocks: {
+        block_type: string;
+        order: number;
+        [key: string]: string | number | boolean | object | undefined;
+      }[] = [];
 
       data.content_blocks.forEach((block, index) => {
-        const processedBlock: any = {
+        const processedBlock: {
+          block_type: string;
+          order: number;
+          text_content?: { content: string };
+          heading_content?: { content: string; level: number };
+          code_content?: {
+            code: string;
+            language: string;
+            caption: string;
+            line_numbers: boolean;
+          };
+          image_content?: { caption: string; alt_text: string };
+          quote_content?: { content: string; source: string };
+          list_content?: {
+            list_type: string;
+            items: { content: string; order: number }[];
+          };
+        } = {
           block_type: block.block_type,
           order: index + 1,
         };
-
-        // Include id if updating existing block
-        if (block.id) {
-          processedBlock.id = block.id;
-        }
 
         switch (block.block_type) {
           case "text":
@@ -244,16 +172,16 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
 
           case "image":
             if (block.image) {
-              // New image uploaded
+              // For images, we need to handle the file separately
               formData.append(
                 `content_blocks[${index}]image_content.image`,
                 block.image
               );
+              processedBlock.image_content = {
+                caption: block.caption || "",
+                alt_text: block.alt_text || "",
+              };
             }
-            processedBlock.image_content = {
-              caption: block.caption || "",
-              alt_text: block.alt_text || "",
-            };
             break;
 
           case "quote":
@@ -278,32 +206,20 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
         processedBlocks.push(processedBlock);
       });
 
+      // Append content_blocks as JSON string
       formData.append("content_blocks", JSON.stringify(processedBlocks));
 
-      // Call appropriate API function
-      const res = isEditMode
-        ? await updateBlog(slug!, formData)
-        : await createBlog(formData);
+      const res = await createBlog(formData);
 
       if (res?.success) {
-        toast.success(
-          isEditMode
-            ? "Blog Updated Successfully!"
-            : "Blog Created Successfully!"
-        );
+        toast.success("Blog Created Successfully!");
         router.push("/admin/blogs");
       } else {
-        toast.error(
-          res?.message || `Failed to ${isEditMode ? "update" : "create"} blog`
-        );
+        toast.error(res?.message || "Failed to create blog");
       }
     } catch (error) {
-      console.error("Blog submission error:", error);
-      toast.error(
-        `An error occurred while ${
-          isEditMode ? "updating" : "creating"
-        } the blog`
-      );
+      console.error("Blog creation error:", error);
+      toast.error("An error occurred while creating the blog");
     } finally {
       setIsSubmitting(false);
     }
@@ -345,7 +261,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
       case "text":
         return (
           <Textarea
-            {...register(`content_blocks.${index}.content`)}
+            {...register(`content_blocks.${index}.content` as const)}
             placeholder="Write your paragraph..."
             className="min-h-[100px] !border-none focus-visible:!ring-transparent"
           />
@@ -353,7 +269,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
 
       case "heading":
         return (
-          <div className="flex gap-2">
+          <div className="flx gap-2">
             <Controller
               name={`content_blocks.${index}.level`}
               control={control}
@@ -374,7 +290,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
               )}
             />
             <Input
-              {...register(`content_blocks.${index}.content`)}
+              {...register(`content_blocks.${index}.content` as const)}
               placeholder="Heading text..."
               className="!border-none focus-visible:!ring-transparent"
             />
@@ -385,7 +301,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
         return (
           <div className="space-y-2">
             <Textarea
-              {...register(`content_blocks.${index}.code`)}
+              {...register(`content_blocks.${index}.code` as const)}
               placeholder="Paste your code here..."
               className="min-h-[150px] font-mono text-sm !border-none focus-visible:!ring-transparent !shadow-none"
             />
@@ -413,7 +329,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                 )}
               />
               <Input
-                {...register(`content_blocks.${index}.caption`)}
+                {...register(`content_blocks.${index}.caption` as const)}
                 placeholder="Caption (optional)"
                 className="flex-1"
               />
@@ -435,18 +351,17 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                     setValue={(name: string, file: File) => {
                       field.onChange(file);
                     }}
-                    initialImageUrl={block.existingImageUrl}
                   />
                 )}
               />
             </div>
             <div className="grid grid-cols-2 gap-4 p-2">
               <Input
-                {...register(`content_blocks.${index}.caption`)}
+                {...register(`content_blocks.${index}.caption` as const)}
                 placeholder="Image caption (optional)"
               />
               <Input
-                {...register(`content_blocks.${index}.alt_text`)}
+                {...register(`content_blocks.${index}.alt_text` as const)}
                 placeholder="Alt text for accessibility"
               />
             </div>
@@ -457,12 +372,12 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
         return (
           <div className="space-y-2">
             <Textarea
-              {...register(`content_blocks.${index}.content`)}
+              {...register(`content_blocks.${index}.content` as const)}
               placeholder="Quote text..."
               className="min-h-[80px] !text-lg italic !border-none focus-visible:!ring-transparent !shadow-none"
             />
             <Input
-              {...register(`content_blocks.${index}.source`)}
+              {...register(`content_blocks.${index}.source` as const)}
               placeholder="Source (optional)"
               className="!border-none focus-visible:!ring-transparent"
             />
@@ -477,6 +392,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
     }
   };
 
+  // Separate component for list blocks to handle useFieldArray properly
   const ListBlockController = ({ blockIndex }: { blockIndex: number }) => {
     const {
       fields: listFields,
@@ -484,7 +400,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
       remove: removeItem,
     } = useFieldArray({
       control,
-      name: `content_blocks.${blockIndex}.items`,
+      name: `content_blocks.${blockIndex}.items` as const,
     });
 
     return (
@@ -509,7 +425,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
             <div key={item.id} className="flex items-center gap-2">
               <Input
                 {...register(
-                  `content_blocks.${blockIndex}.items.${itemIndex}.content`
+                  `content_blocks.${blockIndex}.items.${itemIndex}.content` as const
                 )}
                 placeholder={`Item ${itemIndex + 1}`}
                 className="flex-1"
@@ -558,7 +474,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
     <div className="space-y-6">
       <div className="flex items-start justify-between">
         <div>
-          <Title>{isEditMode ? "Edit Article" : "Write a New Article"}</Title>
+          <Title>Write a New Article</Title>
           <Text variant="sm">
             Technical articles to publish on your portfolio
           </Text>
@@ -582,13 +498,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
             disabled={isSubmitting}
           >
             <Save size={14} className="mr-2" />
-            {isSubmitting
-              ? isEditMode
-                ? "Updating..."
-                : "Publishing..."
-              : isEditMode
-              ? "Update"
-              : "Publish"}
+            {isSubmitting ? "Publishing..." : "Publish"}
           </Button>
         </div>
       </div>
@@ -694,12 +604,9 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
             <ImageDropzone
               label="Add a featured Image"
               name="featured_image"
-              setValue={(name: string, file: File) => {
-                if (name === "featured_image") {
-                  setValue("featured_image", file);
-                }
-              }}
-              initialImageUrl={initialData?.featured_image}
+              setValue={(name: string, file: File) =>
+                setValue(name as keyof BlogFormData, file)
+              }
             />
             <div>
               <Label htmlFor="title">Title *</Label>
@@ -733,7 +640,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                 rules={{ required: "Category is required" }}
                 render={({ field }) => (
                   <Select
-                    value={field.value ?? ""}
+                    value={field.value}
                     onValueChange={(value) => {
                       if (value === "__add__") {
                         setCategoryAddDialogOpen(true);
@@ -747,12 +654,14 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                     </SelectTrigger>
 
                     <SelectContent>
+                      {/* ✅ Add Category must be a SelectItem */}
                       <SelectItem value="__add__" className="font-medium">
                         <div className="flex items-center gap-2">
                           <Plus size={14} />
                           Add Category
                         </div>
                       </SelectItem>
+
                       <SelectSeparator />
 
                       {categories?.length ? (
@@ -797,6 +706,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                           const value = inputValue.trim();
                           if (!value) return;
 
+                          // prevent duplicates
                           if (field.value.includes(value)) {
                             setInputValue("");
                             return;
@@ -808,6 +718,7 @@ const CreateBlogPage = ({ categories, initialData, slug }: CreateBlogProps) => {
                       }}
                     />
 
+                    {/* Tags Display */}
                     {field.value.length > 0 && (
                       <div className="flex flex-wrap gap-2 mt-2">
                         {field.value.map((tag: string) => (

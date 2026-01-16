@@ -1,11 +1,16 @@
 "use client";
 
+import React, { useState, useRef, useEffect } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { toast } from "sonner";
+
+// components
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import IconButton from "@/components/ui/icon-button";
-import ImageDropzone from "@/components/ui/image-upload";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -15,13 +20,18 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Text, Title } from "@/components/ui/typography";
-import { createProject } from "@/lib/api-service/project-action";
+import IconButton from "@/components/ui/icon-button";
+import ImageDropzone from "@/components/ui/image-upload";
+
+// utils
+import {
+  createProject,
+  ProjectDetailsProps,
+  updateProject,
+} from "@/lib/api-service/project-action";
+
+// icons
 import { Plus, Save, Trash2, X, Upload } from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useState, useRef } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { toast } from "sonner";
 
 interface ProjectFormData {
   title: string;
@@ -35,14 +45,24 @@ interface ProjectFormData {
   links: { type: string; label: string; url: string }[];
 }
 
-const CreateProjectPage = () => {
+const CreateProjectPage = ({
+  initialData,
+  projectId,
+}: {
+  initialData?: ProjectDetailsProps;
+  projectId?: string;
+}) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [projectImagePreviews, setProjectImagePreviews] = useState<string[]>(
     []
   );
+  const [existingImages, setExistingImages] = useState<any[]>([]);
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+  const [initialFormData, setInitialFormData] = useState<any>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const isEditMode = !!projectId;
 
   const {
     register,
@@ -50,6 +70,7 @@ const CreateProjectPage = () => {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<ProjectFormData>({
     defaultValues: {
@@ -60,59 +81,179 @@ const CreateProjectPage = () => {
     },
   });
 
+  // Initialize form with existing data
+  useEffect(() => {
+    if (initialData && isEditMode) {
+      // Create a copy of initial data for comparison later
+      const formData = {
+        title: initialData.title || "",
+        description: initialData.description || "",
+        case_study: initialData.case_study || "",
+        project_type: initialData.type || "",
+        tech_stacks: initialData.tech_stacks || [],
+        features: initialData.features?.length
+          ? initialData.features.map((f) => ({ content: f }))
+          : [{ content: "" }],
+        links: initialData.links?.length
+          ? initialData.links.map((link) => ({
+              type: link.type || "",
+              label: link.label || "",
+              url: link.url || "",
+            }))
+          : [{ type: "", label: "", url: "" }],
+        project_images: [],
+      };
+
+      setInitialFormData(formData);
+      reset(formData);
+
+      // Set existing project images
+      if (initialData.images?.length) {
+        setExistingImages(initialData.images);
+        const imagePreviews = initialData.images.map((img) => img.image_url);
+        setProjectImagePreviews(imagePreviews);
+      }
+    }
+  }, [initialData, isEditMode, reset]);
+
   const projectImages = watch("project_images") || [];
+  const featuredImage = watch("featured_image");
 
   const onSubmit = async (data: ProjectFormData) => {
     setIsSubmitting(true);
 
     try {
-      // Create FormData object
       const formData = new FormData();
 
-      // Append simple fields
-      formData.append("title", data.title);
-      formData.append("description", data.description || "");
-      formData.append("case_study", data.case_study || "");
-      formData.append("type", data.project_type || "");
+      if (isEditMode && initialFormData) {
+        // Only send changed fields in edit mode
+        if (data.title !== initialFormData.title) {
+          formData.append("title", data.title);
+        }
 
-      // Append featured image
-      if (data.featured_image) {
-        formData.append("featured_image", data.featured_image);
+        if (data.description !== initialFormData.description) {
+          formData.append("description", data.description || "");
+        }
+
+        if (data.case_study !== initialFormData.case_study) {
+          formData.append("case_study", data.case_study || "");
+        }
+
+        if (data.project_type !== initialFormData.project_type) {
+          formData.append("type", data.project_type || "");
+        }
+
+        // Check if featured image has changed
+        if (featuredImage) {
+          formData.append("featured_image", featuredImage);
+        }
+
+        // Check if project images have changed
+        if (data.project_images && data.project_images.length > 0) {
+          data.project_images.forEach((file) => {
+            formData.append("project_images", file);
+          });
+        }
+
+        // Send images to delete
+        if (imagesToDelete.length > 0) {
+          formData.append("images_to_delete", JSON.stringify(imagesToDelete));
+        }
+
+        // Check if tech stacks have changed
+        if (
+          JSON.stringify(data.tech_stacks) !==
+          JSON.stringify(initialFormData.tech_stacks)
+        ) {
+          formData.append(
+            "tech_stacks",
+            JSON.stringify(data.tech_stacks || [])
+          );
+        }
+
+        // Check if features have changed
+        const features = data.features
+          .filter((f) => f.content.trim() !== "")
+          .map((f) => f.content);
+
+        const initialFeatures = initialFormData.features
+          .filter((f: any) => f.content.trim() !== "")
+          .map((f: any) => f.content);
+
+        if (JSON.stringify(features) !== JSON.stringify(initialFeatures)) {
+          formData.append("features", JSON.stringify(features));
+        }
+
+        // Check if links have changed
+        const links = data.links.filter(
+          (link) => link.type && link.label && link.url
+        );
+
+        const initialLinks = initialFormData.links.filter(
+          (link: any) => link.type && link.label && link.url
+        );
+
+        if (JSON.stringify(links) !== JSON.stringify(initialLinks)) {
+          formData.append("links", JSON.stringify(links));
+        }
+
+        // Add a flag to indicate this is an update
+        formData.append("is_update", "true");
+      } else {
+        // For new projects, send all fields
+        formData.append("title", data.title);
+        formData.append("description", data.description || "");
+        formData.append("case_study", data.case_study || "");
+        formData.append("type", data.project_type || "");
+
+        if (featuredImage) {
+          formData.append("featured_image", featuredImage);
+        }
+
+        if (data.project_images && data.project_images.length > 0) {
+          data.project_images.forEach((file) => {
+            formData.append("project_images", file);
+          });
+        }
+
+        formData.append("tech_stacks", JSON.stringify(data.tech_stacks || []));
+
+        const features = data.features
+          .filter((f) => f.content.trim() !== "")
+          .map((f) => f.content);
+        formData.append("features", JSON.stringify(features));
+
+        const links = data.links.filter(
+          (link) => link.type && link.label && link.url
+        );
+        formData.append("links", JSON.stringify(links));
       }
 
-      // Append project images (Django expects multiple files with same key)
-      if (data.project_images && data.project_images.length > 0) {
-        data.project_images.forEach((file) => {
-          formData.append("project_images", file);
-        });
-      }
-
-      // Append tech stacks as JSON string
-      formData.append("tech_stacks", JSON.stringify(data.tech_stacks || []));
-
-      // Append features as JSON string
-      const features = data.features
-        .filter((f) => f.content.trim() !== "")
-        .map((f) => f.content);
-      formData.append("features", JSON.stringify(features));
-
-      // Append links as JSON string
-      const links = data.links.filter(
-        (link) => link.type && link.label && link.url
-      );
-      formData.append("links", JSON.stringify(links));
-
-      const res = await createProject(formData);
+      // Call the appropriate API function
+      const res = isEditMode
+        ? await updateProject(projectId, formData)
+        : await createProject(formData);
 
       if (res?.success) {
-        toast.success("Project Created Successfully!");
+        toast.success(
+          isEditMode
+            ? "Project Updated Successfully!"
+            : "Project Created Successfully!"
+        );
         router.push("/admin/projects");
       } else {
-        toast.error(res?.message || "Failed to create project");
+        toast.error(
+          res?.message ||
+            `Failed to ${isEditMode ? "update" : "create"} project`
+        );
       }
     } catch (error) {
-      console.error("Project creation error:", error);
-      toast.error("An error occurred while creating the project");
+      console.error("Project submission error:", error);
+      toast.error(
+        `An error occurred while ${
+          isEditMode ? "updating" : "creating"
+        } the project`
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -148,7 +289,7 @@ const CreateProjectPage = () => {
 
     setValue("project_images", newImages);
 
-    // Create previews
+    // Create previews for new images
     filesArray.forEach((file) => {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -159,9 +300,24 @@ const CreateProjectPage = () => {
   };
 
   const handleRemoveProjectImage = (index: number) => {
-    const newImages = projectImages.filter((_, i) => i !== index);
-    setValue("project_images", newImages);
+    const existingImagesCount = existingImages.length;
 
+    // Check if this is an existing image or a new upload
+    if (index < existingImagesCount) {
+      // This is an existing image - mark it for deletion
+      const imageToDelete = existingImages[index];
+      setImagesToDelete((prev) => [...prev, imageToDelete.id]);
+
+      // Remove from existing images
+      setExistingImages((prev) => prev.filter((_, i) => i !== index));
+    } else {
+      // This is a newly uploaded image - remove from the file array
+      const newImageIndex = index - existingImagesCount;
+      const newImages = projectImages.filter((_, i) => i !== newImageIndex);
+      setValue("project_images", newImages);
+    }
+
+    // Remove from previews
     const newPreviews = projectImagePreviews.filter((_, i) => i !== index);
     setProjectImagePreviews(newPreviews);
   };
@@ -203,7 +359,7 @@ const CreateProjectPage = () => {
     <div className="space-y-12">
       <div className="flex items-start justify-between">
         <div>
-          <Title>Create New Project</Title>
+          <Title>{isEditMode ? "Update Project" : "Create New Project"}</Title>
           <Text variant="sm">
             Showcase your portfolio projects describing case study handling
           </Text>
@@ -223,7 +379,13 @@ const CreateProjectPage = () => {
             disabled={isSubmitting}
           >
             <Save size={14} className="mr-2" />
-            {isSubmitting ? "Publishing..." : "Publish"}
+            {isSubmitting
+              ? isEditMode
+                ? "Updating..."
+                : "Publishing..."
+              : isEditMode
+              ? "Update"
+              : "Publish"}
           </Button>
         </div>
       </div>
@@ -355,21 +517,27 @@ const CreateProjectPage = () => {
               setValue={(name: string, file: File) =>
                 setValue(name as keyof ProjectFormData, file)
               }
+              initialImageUrl={initialData?.featured_image_url}
             />
             <div>
-              <Label htmlFor="category">Category *</Label>
+              <Label htmlFor="project_type">Project Type *</Label>
               <Controller
                 name="project_type"
                 control={control}
-                rules={{ required: "Category is required" }}
+                rules={{ required: "Project Type is required" }}
                 render={({ field }) => (
-                  <Select value={field.value} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    defaultValue={initialData?.type || ""}
+                  >
                     <SelectTrigger className="w-full !h-11">
-                      <SelectValue placeholder="Select a category" />
+                      <SelectValue placeholder="Select a Project Type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="software">Software</SelectItem>
                       <SelectItem value="web_app">Web App</SelectItem>
+                      <SelectItem value="software">Software</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 )}
