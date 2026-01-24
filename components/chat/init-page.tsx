@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 
 // icons
-import { MessageSquare, X } from "lucide-react";
+import { MessageSquareDot, X } from "lucide-react";
 import { Text, Title } from "../ui/typography";
 
 interface ChatHeaderProps {
@@ -14,7 +14,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ setIsOpen }) => {
   return (
     <div className="flbx">
       <div className="flx gap-2">
-        <MessageSquare size={20} />
+        <MessageSquareDot size={20} />
         <Title variant="xs">Chatbot Assistant</Title>
       </div>
       <button onClick={() => setIsOpen(false)}>

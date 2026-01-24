@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 // components
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
@@ -25,6 +25,41 @@ const ExperienceDetailsDrawer: React.FC<ExperienceDetailsDrawerProps> = ({
   isOpen,
   setIsOpen,
 }) => {
+  const historyPushed = useRef(false);
+
+  // Handle modal open/close with browser history
+  useEffect(() => {
+    const handlePopState = () => {
+      // Check if we're coming back from a modal state
+      if (isOpen && historyPushed.current) {
+        setIsOpen(false);
+        historyPushed.current = false;
+      }
+    };
+
+    if (isOpen && !historyPushed.current) {
+      // Push a new state when modal opens
+      window.history.pushState({ modal: true }, "");
+      historyPushed.current = true;
+    }
+
+    // Always add the event listener when modal is open
+    if (isOpen) {
+      window.addEventListener("popstate", handlePopState);
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [isOpen, setIsOpen]);
+
+  const handleClose = () => {
+    if (historyPushed.current) {
+      window.history.back();
+    } else {
+      setIsOpen(false);
+    }
+  };
   if (!data) {
     return null;
   }
@@ -32,7 +67,7 @@ const ExperienceDetailsDrawer: React.FC<ExperienceDetailsDrawerProps> = ({
   const color = getCompanyColor(data?.company_name);
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer open={isOpen} onOpenChange={handleClose}>
       <DrawerContent>
         <DrawerTitle hidden></DrawerTitle>
         <AnimateDiv className="space-y-8 md:space-y-12">

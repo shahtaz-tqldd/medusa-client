@@ -6,7 +6,7 @@ const company_color = {
   },
   ayykori: {
     bg: "bg-emerald-500/10",
-    text: "text-emerald-600",
+    text: "dark:text-emerald-400 text-emerald-700",
   },
 };
 

@@ -23,7 +23,8 @@ export async function fetchProjects(page = 1, page_size = 10, sorted_by = "") {
   return apiFetch<DataResponse<PaginatedResponse<ProjectBasicProps[]>>>(
     `/projects/list/?${params.toString()}`,
     {
-      cache: "no-store"
+      revalidate: 1800, // Revalidate every 30 minutes
+      tags: ["projects"],
     }
   );
 }

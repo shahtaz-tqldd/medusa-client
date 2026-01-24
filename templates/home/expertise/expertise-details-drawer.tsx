@@ -6,6 +6,7 @@ import { Check, Code2 } from "lucide-react";
 import AnimateDiv from "@/components/animation/animate-div";
 import TechBadge from "@/components/ui/badge";
 import { ExpertiseProps } from "@/lib/api-service/expertise";
+import { useEffect, useRef } from "react";
 
 interface FeatureDetailsDrawerProps {
   data: ExpertiseProps | null;
@@ -18,10 +19,46 @@ const ExpertiseDetailsDrawer = ({
   isOpen,
   setIsOpen,
 }: FeatureDetailsDrawerProps) => {
+  const historyPushed = useRef(false);
+
+  // Handle modal open/close with browser history
+  useEffect(() => {
+    const handlePopState = () => {
+      // Check if we're coming back from a modal state
+      if (isOpen && historyPushed.current) {
+        setIsOpen(false);
+        historyPushed.current = false;
+      }
+    };
+
+    if (isOpen && !historyPushed.current) {
+      // Push a new state when modal opens
+      window.history.pushState({ modal: true }, "");
+      historyPushed.current = true;
+    }
+
+    // Always add the event listener when modal is open
+    if (isOpen) {
+      window.addEventListener("popstate", handlePopState);
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [isOpen, setIsOpen]);
+
+  const handleClose = () => {
+    if (historyPushed.current) {
+      window.history.back();
+    } else {
+      setIsOpen(false);
+    }
+  };
+
   if (!data) return null;
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer open={isOpen} onOpenChange={handleClose}>
       <DrawerContent>
         <AnimateDiv className="space-y-10 p-6">
           {/* Header */}

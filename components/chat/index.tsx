@@ -308,8 +308,8 @@ const ChatWidget: React.FC = () => {
                         <div
                           className={`px-4 py-2 rounded-xl text-sm whitespace-pre-line ${
                             item.sender === "user"
-                              ? "bg-[#2b7fff] text-white rounded-br-none"
-                              : "bg-blue-500/10 dark:bg-white/10 text-black dark:text-white"
+                              ? "bg-emerald-600 text-white rounded-br-none"
+                              : "bg-emerald-500/5 dark:bg-white/10 text-black dark:text-white"
                           }`}
                         >
                           {item.text}

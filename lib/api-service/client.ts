@@ -3,18 +3,36 @@ import { redirect } from "next/navigation";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
-interface FetchOptions extends RequestInit {
+interface FetchOptions extends Omit<RequestInit, "next"> {
   auth?: boolean;
+  revalidate?: number | false; // ISR revalidation in seconds, false for no-store
+  tags?: string[]; // Cache tags for on-demand revalidation
 }
 
 export async function apiFetch<T>(
   endpoint: string,
-  { auth = false, headers, ...options }: FetchOptions = {}
+  { auth = false, revalidate, tags, headers, ...options }: FetchOptions = {}
 ): Promise<T> {
   let token: string | null = null;
 
   const cookieStore = await cookies();
   token = cookieStore.get("access_token")?.value ?? null;
+
+  // Determine caching strategy
+  const cacheOptions: RequestInit = {};
+  if (auth) {
+    // Authenticated requests should never be cached
+    cacheOptions.cache = "no-store";
+  } else if (revalidate === false) {
+    // Explicitly disable caching
+    cacheOptions.cache = "no-store";
+  } else {
+    // Use ISR with revalidation (default 1 hour for public data)
+    cacheOptions.next = {
+      revalidate: revalidate ?? 3600,
+      ...(tags ? { tags } : {}),
+    };
+  }
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
@@ -23,7 +41,7 @@ export async function apiFetch<T>(
       ...(auth && token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
-    cache: options.cache ?? "no-store",
+    ...cacheOptions,
   });
 
   // Access token expired

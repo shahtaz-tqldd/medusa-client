@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 // components
 import AnimateDiv from "@/components/animation/animate-div";
@@ -20,8 +20,43 @@ const MyStoryDrawer: React.FC<MyStoryDialogProps> = ({
   content,
   setIsOpen,
 }) => {
+  const historyPushed = useRef(false);
+
+  // Handle modal open/close with browser history
+  useEffect(() => {
+    const handlePopState = () => {
+      // Check if we're coming back from a modal state
+      if (isOpen && historyPushed.current) {
+        setIsOpen(false);
+        historyPushed.current = false;
+      }
+    };
+
+    if (isOpen && !historyPushed.current) {
+      // Push a new state when modal opens
+      window.history.pushState({ modal: true }, "");
+      historyPushed.current = true;
+    }
+
+    // Always add the event listener when modal is open
+    if (isOpen) {
+      window.addEventListener("popstate", handlePopState);
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [isOpen, setIsOpen]);
+
+  const handleClose = () => {
+    if (historyPushed.current) {
+      window.history.back();
+    } else {
+      setIsOpen(false);
+    }
+  };
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer open={isOpen} onOpenChange={handleClose}>
       <DrawerContent>
         <AnimateDiv className="space-y-6">
           <Title variant="lg">
