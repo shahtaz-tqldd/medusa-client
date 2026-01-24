@@ -14,6 +14,7 @@ export interface AchievementProps {
 export async function fetchAchievements() {
   return apiFetch<DataResponse<AchievementProps[]>>("/services/achievements/", {
     auth: false,
-    cache: "no-store",
+    revalidate: 3600, // Revalidate every hour
+    tags: ["achievements"],
   });
 }

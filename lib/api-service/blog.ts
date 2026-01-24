@@ -48,7 +48,8 @@ export async function fetchBlogs(page = 1, page_size = 10, exclude_slug = "", so
   return apiFetch<DataResponse<PaginatedResponse<BlogBasicProps[]>>>(
     `/blogs/list?${params.toString()}`,
     {
-      cache: "no-store"
+      revalidate: 900, // Revalidate every 15 minutes
+      tags: ["blogs"],
     }
   );
 }
@@ -60,7 +61,8 @@ export async function fetchBlogDetails(slug: string, admin_view: boolean = false
     fetchURL += '?admin_view=true'
   }
   return apiFetch<DataResponse<BlogDetailsProps>>(fetchURL, {
-    cache: "no-store"
+    revalidate: admin_view ? false : 900, // No cache for admin, 15 min for public
+    tags: ["blogs", `blog-${slug}`],
   });
 }
 
@@ -73,9 +75,7 @@ export interface BlogCategory {
 export async function fetchBlogCategory() {
   return apiFetch<DataResponse<BlogCategory[]>>("/blogs/categories/list", {
     auth: true,
-    cache: "no-store",
-    next: {
-      tags: ["blog-categories"],
-    },
+    revalidate: false, // No cache for auth endpoints
+    tags: ["blog-categories"],
   });
 }

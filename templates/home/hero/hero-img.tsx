@@ -29,6 +29,7 @@ export default function HeroImage() {
               alt="Hero"
               width={500}
               height={500}
+              priority
               className="object-cover mask-fade"
             />
           </div>

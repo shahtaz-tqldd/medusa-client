@@ -14,6 +14,7 @@ export interface SkillsProps {
 export async function fetchSkills() {
   return apiFetch<DataResponse<SkillsProps>>("/services/skills/", {
     auth: false,
-    cache: "no-store",
+    revalidate: 3600, // Revalidate every hour
+    tags: ["skills"],
   });
 }

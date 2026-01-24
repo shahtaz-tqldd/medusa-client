@@ -18,13 +18,15 @@ export interface ExperienceProps {
 export async function fetchExperiences() {
   return apiFetch<DataResponse<ExperienceProps[]>>("/services/experiences/", {
     auth: false,
-    cache: "no-store",
+    revalidate: 3600, // Revalidate every hour
+    tags: ["experiences"],
   });
 }
 
 export async function fetchExperienceById(id: string) {
   return apiFetch<DataResponse<ExperienceProps>>(`/services/experiences/${id}/`, {
     auth: false,
-    cache: "no-store",
+    revalidate: 3600,
+    tags: ["experiences", `experience-${id}`],
   });
 }

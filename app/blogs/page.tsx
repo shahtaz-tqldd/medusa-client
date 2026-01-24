@@ -3,7 +3,7 @@ import { fetchBlogs } from "@/lib/api-service/blog";
 import BlogPage from "@/templates/blogs";
 
 export default async function Blog() {
-  const blogResponse = await fetchBlogs(1, 10);
+  const blogResponse = await fetchBlogs(1, 24);
   return (
     <MainLayout>
       <BlogPage blogs={blogResponse?.data?.results.flat() || []} />

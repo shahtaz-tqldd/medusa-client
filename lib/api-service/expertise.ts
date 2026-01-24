@@ -20,13 +20,15 @@ export interface ExpertiseProps {
 export async function fetchExpertise() {
   return apiFetch<DataResponse<ExpertiseProps[]>>("/services/", {
     auth: false,
-    cache: "no-store",
+    revalidate: 3600, // Revalidate every hour
+    tags: ["expertise"],
   });
 }
 
 export async function fetchExpertiseById(id: string) {
   return apiFetch<DataResponse<ExpertiseProps>>(`/services/${id}/`, {
     auth: false,
-    cache: "no-store",
+    revalidate: 3600,
+    tags: ["expertise", `expertise-${id}`],
   });
 }
