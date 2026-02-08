@@ -61,7 +61,7 @@ export async function fetchBlogDetails(slug: string, admin_view: boolean = false
     fetchURL += '?admin_view=true'
   }
   return apiFetch<DataResponse<BlogDetailsProps>>(fetchURL, {
-    revalidate: admin_view ? false : 900, // No cache for admin, 15 min for public
+    revalidate: admin_view ? false : 900,
     tags: ["blogs", `blog-${slug}`],
   });
 }

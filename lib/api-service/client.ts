@@ -15,8 +15,10 @@ export async function apiFetch<T>(
 ): Promise<T> {
   let token: string | null = null;
 
-  const cookieStore = await cookies();
-  token = cookieStore.get("access_token")?.value ?? null;
+  if (auth) {
+    const cookieStore = await cookies();
+    token = cookieStore.get("access_token")?.value ?? null;
+  }
 
   // Determine caching strategy
   const cacheOptions: RequestInit = {};
@@ -53,7 +55,7 @@ export async function apiFetch<T>(
     }
 
     // Retry original request
-    return apiFetch<T>(`${API_BASE_URL}${endpoint}`, options);
+    return apiFetch<T>(endpoint, { auth, revalidate, tags, headers, ...options });
   }
 
   if (!response.ok) {
